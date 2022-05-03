@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import { ChakraProvider } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
 import { extendTheme } from "@chakra-ui/react";
+import "@fontsource/nunito"
 
 const theme = extendTheme({
   fonts: {

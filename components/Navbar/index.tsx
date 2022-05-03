@@ -45,7 +45,7 @@ const Navbar = () => {
           </Box>
         </Link>
       </Flex>
-      <Button colorScheme="whiteAlpha" _hover={{ bgColor: "red" }}>
+      <Button colorScheme="whiteAlpha" _hover={{ bgColor: "red.400" }}>
         Login
       </Button>
     </Flex>
