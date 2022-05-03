@@ -2,6 +2,7 @@ import { Box, Button, Flex, Icon, Text } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import Image from "next/image";
 import { FaUserGraduate, FaUserAlt } from "react-icons/fa";
+import { StakeHolderCarousel } from "../components/Carousel";
 
 const Home: NextPage = () => {
   return (
@@ -49,7 +50,7 @@ const Home: NextPage = () => {
           src="/data-alumni-mhs.jpg"
           layout="fill"
           alt="ub"
-          objectFit='cover'
+          objectFit="cover"
           role="presentation"
           objectPosition="center"
         />
@@ -62,7 +63,14 @@ const Home: NextPage = () => {
           bgColor="red.600"
           opacity={0.9}
         />
-        <Flex maxW="container.xl" mx="auto" py={20} alignItems="center" zIndex={10} pos='relative'>
+        <Flex
+          maxW="container.xl"
+          mx="auto"
+          py={20}
+          alignItems="center"
+          zIndex={10}
+          pos="relative"
+        >
           <Box w="50%">
             <Text fontSize="3xl" mb={4} fontWeight="semibold">
               Data Anggota Dara Daeng Brawijaya
@@ -97,6 +105,12 @@ const Home: NextPage = () => {
             </Flex>
           </Box>
         </Flex>
+      </Box>
+      <Box py={16}>
+        <Text fontSize="3xl" fontWeight="semibold" textAlign="center" mb={6}>
+          Ketua dan Wakil Ketua Dara Daeng Brawijaya
+        </Text>
+        <StakeHolderCarousel />
       </Box>
     </Box>
   );
