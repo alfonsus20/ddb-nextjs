@@ -1,17 +1,20 @@
-import { Box, Button, Flex, Icon, Text } from "@chakra-ui/react";
 import type { NextPage } from "next";
+import { Box, Button, Flex, Icon, Text } from "@chakra-ui/react";
 import Image from "next/image";
-import { useRef } from "react";
 import { FaUserGraduate, FaUserAlt } from "react-icons/fa";
 import { StakeHolderCarousel } from "../components/Carousel";
 
 import Kb19Image from "../public/kambud19.jpg";
+import Footer from "../components/Footer";
+import Head from "next/head";
 
 const Home: NextPage = () => {
-  const lazyRoot = useRef(null);
-
   return (
     <Box>
+      <Head>
+        <title>Dara Daeng Brawijaya</title>
+        <link rel="icon" href="/logo.png" />
+      </Head>
       <Flex
         h="100vh"
         justifyContent="center"
@@ -58,11 +61,7 @@ const Home: NextPage = () => {
         columnGap={12}
       >
         <Box width="50%" pos="relative">
-          <Image
-            src={Kb19Image}
-            alt="tentang"
-            placeholder="blur"
-          />
+          <Image src={Kb19Image} alt="tentang" placeholder="blur" />
         </Box>
         <Box width="50%">
           <Text fontSize="3xl" mb={2} fontWeight="semibold">
@@ -146,6 +145,7 @@ const Home: NextPage = () => {
         </Text>
         <StakeHolderCarousel />
       </Box>
+      <Footer />
     </Box>
   );
 };
