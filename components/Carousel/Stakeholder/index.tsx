@@ -48,7 +48,7 @@ const StakeHolder = () => {
           period="2020-2021"
         />
         <StakeHolderCard
-          imageURL="/pengurus/rato.jpg"
+          imageURL="/pengurus/fuady.jpg"
           name="Rato Ahmad"
           role="wakil"
           enterYear={2018}
@@ -64,7 +64,7 @@ const StakeHolder = () => {
           period="2020-2021"
         />
         <StakeHolderCard
-          imageURL="/pengurus/rato.jpg"
+          imageURL="/pengurus/fuady.jpg"
           name="Rato Ahmad"
           role="wakil"
           enterYear={2018}
@@ -80,7 +80,7 @@ const StakeHolder = () => {
           period="2020-2021"
         />
         <StakeHolderCard
-          imageURL="/pengurus/rato.jpg"
+          imageURL="/pengurus/fuady.jpg"
           name="Rato Ahmad"
           role="wakil"
           enterYear={2018}

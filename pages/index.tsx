@@ -1,10 +1,15 @@
 import { Box, Button, Flex, Icon, Text } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import Image from "next/image";
+import { useRef } from "react";
 import { FaUserGraduate, FaUserAlt } from "react-icons/fa";
 import { StakeHolderCarousel } from "../components/Carousel";
 
+import Kb19Image from "../public/kambud19.jpg";
+
 const Home: NextPage = () => {
+  const lazyRoot = useRef(null);
+
   return (
     <Box>
       <Flex
@@ -44,6 +49,35 @@ const Home: NextPage = () => {
             Tentang Kami
           </Button>
         </Flex>
+      </Flex>
+      <Flex
+        maxW="container.xl"
+        mx="auto"
+        py={20}
+        alignItems="center"
+        columnGap={12}
+      >
+        <Box width="50%" pos="relative">
+          <Image
+            src={Kb19Image}
+            alt="tentang"
+            placeholder="blur"
+          />
+        </Box>
+        <Box width="50%">
+          <Text fontSize="3xl" mb={2} fontWeight="semibold">
+            Tentang Dara Daeng Brawijaya
+          </Text>
+          <Text textAlign="justify" fontSize="lg">
+            Suatu komunitas yang terbentuk di Universitas Brawijaya yang
+            beranggotakan seluruh mahasiswa Sul-Sel yang sudah lama terbentuk
+            dan sampai sekarang beranggotakan kurang lebih 400 orang. Komunitas
+            Dara Daeng Brawijaya atau sering disingkat DDB ini bertujuan untuk
+            sebagai tempat berkumpul seluruh mahasiswa(i) asal Sulawesi Selatan
+            untuk berinteraksi sesama teman se-daerah agar saling dapat melepas
+            rindu.
+          </Text>
+        </Box>
       </Flex>
       <Box color="white" pos="relative">
         <Image

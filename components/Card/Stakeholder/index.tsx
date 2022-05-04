@@ -1,4 +1,4 @@
-import { Box, Flex, Square, Text, VStack } from "@chakra-ui/react";
+import { Box, Circle, Flex, Square, Text, VStack } from "@chakra-ui/react";
 import Image from "next/image";
 import React from "react";
 
@@ -21,12 +21,11 @@ const StakeHolder = ({
 }: StakeholderCardProps) => {
   return (
     <Box p={4}>
-      <Flex alignItems="center" shadow="lg">
-        <Square
+      <Flex alignItems="center" >
+        <Circle
           pos="relative"
-          size={48}
-          borderRightRadius="100%"
-          bg="green.400"
+          size={44}
+          // borderRightRadius="100%"
           flexShrink={0}
           overflow="hidden"
         >
@@ -35,9 +34,10 @@ const StakeHolder = ({
             alt="fuady"
             layout="fill"
             objectFit="cover"
-            objectPosition="center"
+            objectPosition="top"
+            quality={100}
           />
-        </Square>
+        </Circle>
         <VStack spacing={1} align="flex-start" px={6}>
           <Box
             fontSize="xs"
@@ -57,7 +57,7 @@ const StakeHolder = ({
           <Text>
             {faculty}, {enterYear}
           </Text>
-          <Text fontSize="sm">{period}</Text>
+          <Text fontSize="sm">Periode {period}</Text>
         </VStack>
       </Flex>
     </Box>
