@@ -1,9 +1,10 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { ChakraProvider } from "@chakra-ui/react";
+import { Box, ChakraProvider, Flex } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
 import { extendTheme } from "@chakra-ui/react";
-import "@fontsource/nunito"
+import "@fontsource/nunito";
+import Footer from "../components/Footer";
 
 const theme = extendTheme({
   fonts: {
@@ -15,8 +16,13 @@ const theme = extendTheme({
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
-      <Navbar />
-      <Component {...pageProps} />
+      <Flex minH="100vh" direction="column">
+        <Navbar />
+        <Box flex='1 1 auto'>
+          <Component {...pageProps} />
+        </Box>
+        <Footer />
+      </Flex>
     </ChakraProvider>
   );
 }

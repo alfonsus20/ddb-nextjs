@@ -5,7 +5,6 @@ import { FaUserGraduate, FaUserAlt } from "react-icons/fa";
 import { StakeHolderCarousel } from "../components/Carousel";
 
 import Kb19Image from "../public/kambud19.jpg";
-import Footer from "../components/Footer";
 import Head from "next/head";
 
 const Home: NextPage = () => {
@@ -145,7 +144,6 @@ const Home: NextPage = () => {
         </Text>
         <StakeHolderCarousel />
       </Box>
-      <Footer />
     </Box>
   );
 };
