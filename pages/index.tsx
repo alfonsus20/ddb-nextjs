@@ -12,7 +12,6 @@ const Home: NextPage = () => {
     <Box>
       <Head>
         <title>Dara Daeng Brawijaya</title>
-        <link rel="icon" href="/logo.png" />
       </Head>
       <Flex
         h="100vh"

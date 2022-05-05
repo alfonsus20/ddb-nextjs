@@ -14,7 +14,7 @@ const Berita: NextPage = () => {
         <Text fontSize="3xl" fontWeight="bold" mb={4}>
           Berita
         </Text>
-        <Flex flexWrap="wrap" gap={5}>
+        <Flex flexWrap="wrap" gap={8} justifyContent='center'>
           <NewsCard />
           <NewsCard />
           <NewsCard />
