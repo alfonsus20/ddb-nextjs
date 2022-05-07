@@ -5,6 +5,7 @@ import {
   AspectRatio,
   Box,
   Text,
+  Container,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import Slider, { Settings } from "react-slick";
@@ -24,20 +25,22 @@ const Gallery = () => {
     slidesToScroll: 1,
     nextArrow: <></>,
     prevArrow: <></>,
-    beforeChange: (_, next) => setActiveSlide(next),
+    afterChange(currentSlide) {
+      setActiveSlide(currentSlide);
+    },
   };
 
   return (
-    <Box overflowX='hidden'>
+    <Box overflowX="hidden">
       <Slider
         ref={(c) => {
           setSlider(c!);
         }}
         {...settings}
       >
-        {["Halal Bi Halal", "DDB Sehat", "Badminton", "TEST" , "mantap"].map(
+        {["Halal Bi Halal", "DDB Sehat", "Badminton", "TEST", "mantap"].map(
           (item, idx) => (
-            <Box key={idx} px={2} >
+            <Box key={idx} px={2}>
               <AspectRatio width="full" ratio={21 / 9} mb={2}>
                 <Flex gap={3}>
                   <Box width="65%" bg="green.400" pos="relative" height="full">
