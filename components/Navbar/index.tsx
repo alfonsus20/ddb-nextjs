@@ -54,12 +54,15 @@ const Navbar = () => {
           </Box>
         </Link>
       </Flex>
-      <Button
-        colorScheme={pathname === "/" ? "whiteAlpha" : "red"}
-        _hover={{ bgColor: "red.400" }}
-      >
-        Login
-      </Button>
+      <Link href="/login" passHref>
+        <Button
+          as="a"
+          colorScheme={pathname === "/" ? "whiteAlpha" : "red"}
+          _hover={{ bgColor: "red.400" }}
+        >
+          Login
+        </Button>
+      </Link>
     </Flex>
   );
 };
