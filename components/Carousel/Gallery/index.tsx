@@ -19,7 +19,6 @@ const Gallery = () => {
   const [activeSlide, setActiveSlide] = useState<number>(0);
 
   const settings: Settings = {
-    infinite: true,
     speed: 1000,
     slidesToShow: 3,
     slidesToScroll: 1,
@@ -29,16 +28,16 @@ const Gallery = () => {
   };
 
   return (
-    <Box>
+    <Box overflowX='hidden'>
       <Slider
         ref={(c) => {
           setSlider(c!);
         }}
         {...settings}
       >
-        {["Halal Bi Halal", "DDB Sehat", "Badminton", "TEST"].map(
+        {["Halal Bi Halal", "DDB Sehat", "Badminton", "TEST" , "mantap"].map(
           (item, idx) => (
-            <Box key={idx} px={2}>
+            <Box key={idx} px={2} >
               <AspectRatio width="full" ratio={21 / 9} mb={2}>
                 <Flex gap={3}>
                   <Box width="65%" bg="green.400" pos="relative" height="full">
@@ -101,7 +100,7 @@ const Gallery = () => {
           onClick={() => slider?.slickPrev()}
           icon={<Icon as={MdOutlineArrowBackIosNew} w={6} h={6} color="red" />}
         />
-        <Box>{activeSlide + 1} / 4</Box>
+        <Box>{activeSlide + 1} / 5</Box>
         <IconButton
           aria-label="Next"
           colorScheme="white"

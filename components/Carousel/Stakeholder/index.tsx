@@ -11,7 +11,6 @@ const StakeHolder = () => {
   const [slider, setSlider] = useState<Slider>();
 
   const settings: Settings = {
-    infinite: true,
     speed: 1000,
     slidesToShow: 2,
     slidesToScroll: 2,
