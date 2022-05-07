@@ -1,16 +1,15 @@
-import { AspectRatio, Box, Container, Flex, Text } from "@chakra-ui/react";
-import Image from "next/image";
+import { Box, Text } from "@chakra-ui/react";
 import React from "react";
 import { GalleryCarousel } from "../components/Carousel";
 
 const Galeri = () => {
   return (
-    <Container maxW="container.xl" pt={4} pb={20}>
-      <Text fontSize="3xl" fontWeight="bold" mb={4}>
+    <Box pt={4} pb={16}>
+      <Text fontSize="3xl" textAlign="center" fontWeight="bold" mb={4}>
         Galeri
       </Text>
       <GalleryCarousel />
-    </Container>
+    </Box>
   );
 };
 

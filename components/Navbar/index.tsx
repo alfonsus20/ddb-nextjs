@@ -38,7 +38,7 @@ const Navbar = () => {
             Berita
           </Box>
         </Link>
-        <Link href="/" passHref>
+        <Link href="/mahasiswa" passHref>
           <Box px={2} as="a">
             Mahasiswa
           </Box>
