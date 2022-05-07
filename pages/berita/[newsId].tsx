@@ -98,7 +98,7 @@ const BeritaDetail: NextPage<Props> = () => {
         </VStack>
       </Box>
       <Box>
-        <Text fontSize="2xl" fontWeight="semibold" mb={4}>
+        <Text fontSize="2xl" fontWeight="semibold" mb={4} textAlign='center'>
           Baca Berita Lainnya
         </Text>
         <Flex flexWrap="wrap" gap={8} justifyContent="center">

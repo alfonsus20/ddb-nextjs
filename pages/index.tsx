@@ -1,11 +1,11 @@
 import type { NextPage } from "next";
-import { Box, Button, Flex, Icon, Text } from "@chakra-ui/react";
+import { Box, Button, Container, Flex, Icon, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import { FaUserGraduate, FaUserAlt } from "react-icons/fa";
 import { StakeHolderCarousel } from "../components/Carousel";
-
 import Kb19Image from "../public/kambud19.jpg";
 import Head from "next/head";
+import { HiAnnotation } from "react-icons/hi";
 
 const Home: NextPage = () => {
   return (
@@ -76,6 +76,57 @@ const Home: NextPage = () => {
           </Text>
         </Box>
       </Flex>
+      <Container maxW="container.xl" pt={6} pb={20}>
+        <Text textAlign="center" fontSize="3xl" fontWeight="bold" mb={4}>
+          Visi dan Misi Dara Daeng Brawijaya
+        </Text>
+        <Box mb={8}>
+          <Text fontSize="2xl" fontWeight="semibold" mb={4}>
+            Visi
+          </Text>
+          <Flex gap={4}>
+            {[...Array(4)].map((_, idx) => (
+              <Box shadow="md" key={idx} p={4}>
+                <Flex gap={2} alignItems="center" mb={2} color="red.500">
+                  <Box flex="0 0 auto">
+                    <HiAnnotation fontSize={40} />
+                  </Box>
+                  <Text fontWeight="semibold">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit
+                  </Text>
+                </Flex>
+                <Text fontSize="sm">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit Lorem
+                  ipsum dolor sit amet consectetur adipisicing elit
+                </Text>
+              </Box>
+            ))}
+          </Flex>
+        </Box>
+        <Box>
+          <Text fontSize="2xl" fontWeight="semibold" mb={4}>
+            Misi
+          </Text>
+          <Flex gap={4}>
+            {[...Array(4)].map((_, idx) => (
+              <Box shadow="md" key={idx} p={4}>
+                <Flex gap={2} alignItems="center" mb={2} color="red.500">
+                  <Box flex="0 0 auto">
+                    <HiAnnotation fontSize={40} />
+                  </Box>
+                  <Text fontWeight="semibold">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit
+                  </Text>
+                </Flex>
+                <Text fontSize="sm">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit Lorem
+                  ipsum dolor sit amet consectetur adipisicing elit
+                </Text>
+              </Box>
+            ))}
+          </Flex>
+        </Box>
+      </Container>
       <Box color="white" pos="relative">
         <Image
           src="/data-alumni-mhs.jpg"

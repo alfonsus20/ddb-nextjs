@@ -45,11 +45,6 @@ const Navbar = () => {
         </Link>
         <Link href="/" passHref>
           <Box px={2} as="a">
-            Tentang
-          </Box>
-        </Link>
-        <Link href="/" passHref>
-          <Box px={2} as="a">
             Galeri
           </Box>
         </Link>
