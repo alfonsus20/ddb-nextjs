@@ -1,4 +1,4 @@
-import { Container, Flex, Text } from "@chakra-ui/react";
+import { Container, Flex, Grid, Text } from "@chakra-ui/react";
 import React from "react";
 import { StudentCard } from "../../components/Card";
 
@@ -8,7 +8,7 @@ const Alumni = () => {
       <Text fontSize="3xl" textAlign="center" fontWeight="bold" mb={4}>
         Alumni Aktif
       </Text>
-      <Flex flexWrap="wrap" gap={8} justifyContent="center">
+      <Grid gridTemplateColumns="repeat(4,1fr)" gap={8}>
         <StudentCard />
         <StudentCard />
         <StudentCard />
@@ -17,7 +17,7 @@ const Alumni = () => {
         <StudentCard />
         <StudentCard />
         <StudentCard />
-      </Flex>
+      </Grid>
     </Container>
   );
 };

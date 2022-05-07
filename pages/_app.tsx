@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import { extendTheme } from "@chakra-ui/react";
 import "@fontsource/nunito";
 import Footer from "../components/Footer";
+import { setLocale } from "yup";
 
 const theme = extendTheme({
   fonts: {
@@ -13,12 +14,18 @@ const theme = extendTheme({
   },
 });
 
+setLocale({
+  mixed: {
+    required: (params) => `${params.label} wajib diisi`,
+  },
+});
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <Flex minH="100vh" direction="column">
         <Navbar />
-        <Box flex='1 1 auto'>
+        <Box flex="1 1 auto">
           <Component {...pageProps} />
         </Box>
         <Footer />
