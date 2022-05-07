@@ -6,36 +6,63 @@ import {
   Box,
   Text,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
-import Slider, { Settings } from "react-slick";
+import React from "react";
 import {
   MdOutlineArrowBackIosNew,
   MdOutlineArrowForwardIos,
 } from "react-icons/md";
 import Image from "next/image";
+import Carousel, { ButtonGroupProps } from "react-multi-carousel";
+
+const ButtonGroup = ({ next, previous, carouselState }: ButtonGroupProps) => {
+  return (
+    <Flex justifyContent="center" columnGap={4} py={2} alignItems="center">
+      <IconButton
+        aria-label="Prev"
+        colorScheme="white"
+        shadow="lg"
+        onClick={previous}
+        icon={<Icon as={MdOutlineArrowBackIosNew} w={6} h={6} color="red" />}
+      />
+      <Box>{(carouselState?.currentSlide! % 5) + 1} / 5</Box>
+      <IconButton
+        aria-label="Next"
+        colorScheme="white"
+        shadow="lg"
+        onClick={next}
+        icon={<Icon as={MdOutlineArrowForwardIos} w={6} h={6} color="red" />}
+      />
+    </Flex>
+  );
+};
+
+const responsive = {
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 3,
+    slidesToSlide: 1,
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 768 },
+    items: 2,
+    slidesToSlide: 1,
+  },
+  mobile: {
+    breakpoint: { max: 768, min: 0 },
+    items: 1,
+    slidesToSlide: 1,
+  },
+};
 
 const Gallery = () => {
-  const [slider, setSlider] = useState<Slider>();
-  const [activeSlide, setActiveSlide] = useState<number>(0);
-
-  const settings: Settings = {
-    speed: 1000,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    nextArrow: <></>,
-    prevArrow: <></>,
-    afterChange(currentSlide) {
-      setActiveSlide(currentSlide);
-    },
-  };
-
   return (
     <Box overflowX="hidden">
-      <Slider
-        ref={(c) => {
-          setSlider(c!);
-        }}
-        {...settings}
+      <Carousel
+        responsive={responsive}
+        arrows={false}
+        renderButtonGroupOutside={true}
+        customButtonGroup={<ButtonGroup />}
+        infinite={true}
       >
         {["Halal Bi Halal", "DDB Sehat", "Badminton", "TEST", "mantap"].map(
           (item, idx) => (
@@ -93,24 +120,7 @@ const Gallery = () => {
             </Box>
           )
         )}
-      </Slider>
-      <Flex justifyContent="center" columnGap={4} py={2} alignItems="center">
-        <IconButton
-          aria-label="Prev"
-          colorScheme="white"
-          shadow="lg"
-          onClick={() => slider?.slickPrev()}
-          icon={<Icon as={MdOutlineArrowBackIosNew} w={6} h={6} color="red" />}
-        />
-        <Box>{activeSlide + 1} / 5</Box>
-        <IconButton
-          aria-label="Next"
-          colorScheme="white"
-          shadow="lg"
-          onClick={() => slider?.slickNext()}
-          icon={<Icon as={MdOutlineArrowForwardIos} w={6} h={6} color="red" />}
-        />
-      </Flex>
+      </Carousel>
     </Box>
   );
 };

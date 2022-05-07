@@ -28,20 +28,20 @@ const ButtonGroup = ({ next, previous }: ButtonGroupProps) => {
   );
 };
 
-const StakeHolder = () => {
-  const responsive = {
-    desktop: {
-      breakpoint: { max: 3000, min: 768 },
-      items: 2,
-      slidesToSlide: 2,
-    },
-    tablet: {
-      breakpoint: { max: 768, min: 0 },
-      items: 1,
-      slidesToSlide: 1,
-    },
-  };
+const responsive = {
+  desktop: {
+    breakpoint: { max: 3000, min: 768 },
+    items: 2,
+    slidesToSlide: 2,
+  },
+  tablet: {
+    breakpoint: { max: 768, min: 0 },
+    items: 1,
+    slidesToSlide: 1,
+  },
+};
 
+const StakeHolder = () => {
   return (
     <Container maxW="container.xl">
       <Carousel
