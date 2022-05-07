@@ -5,7 +5,6 @@ import {
   AspectRatio,
   Box,
   Text,
-  Container,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import Slider, { Settings } from "react-slick";

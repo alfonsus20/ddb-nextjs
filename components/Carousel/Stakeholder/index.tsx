@@ -1,46 +1,56 @@
 import { Container, Flex, Icon, IconButton } from "@chakra-ui/react";
-import React, { useState } from "react";
-import Slider, { Settings } from "react-slick";
+import React from "react";
 import { StakeHolderCard } from "../../Card";
 import {
   MdOutlineArrowBackIosNew,
   MdOutlineArrowForwardIos,
 } from "react-icons/md";
+import Carousel, { ButtonGroupProps } from "react-multi-carousel";
+
+const ButtonGroup = ({ next, previous }: ButtonGroupProps) => {
+  return (
+    <Flex justifyContent="flex-end" columnGap={4} py={2}>
+      <IconButton
+        aria-label="Prev"
+        colorScheme="white"
+        shadow="md"
+        onClick={previous}
+        icon={<Icon as={MdOutlineArrowBackIosNew} w={6} h={6} color="red" />}
+      />
+      <IconButton
+        aria-label="Next"
+        colorScheme="red"
+        shadow="md"
+        onClick={next}
+        icon={<Icon as={MdOutlineArrowForwardIos} w={6} h={6} />}
+      />
+    </Flex>
+  );
+};
 
 const StakeHolder = () => {
-  const [slider, setSlider] = useState<Slider>();
-
-  const settings: Settings = {
-    speed: 1000,
-    slidesToShow: 2,
-    slidesToScroll: 2,
-    nextArrow: <></>,
-    prevArrow: <></>,
+  const responsive = {
+    desktop: {
+      breakpoint: { max: 3000, min: 768 },
+      items: 2,
+      slidesToSlide: 2,
+    },
+    tablet: {
+      breakpoint: { max: 768, min: 0 },
+      items: 1,
+      slidesToSlide: 1,
+    },
   };
 
   return (
-    <Container maxW="container.xl" overflowX="hidden">
-      <Flex justifyContent="flex-end" columnGap={4} py={2}>
-        <IconButton
-          aria-label="Prev"
-          colorScheme="white"
-          shadow="md"
-          onClick={() => slider?.slickPrev()}
-          icon={<Icon as={MdOutlineArrowBackIosNew} w={6} h={6} color="red" />}
-        />
-        <IconButton
-          aria-label="Next"
-          colorScheme="red"
-          shadow="md"
-          onClick={() => slider?.slickNext()}
-          icon={<Icon as={MdOutlineArrowForwardIos} w={6} h={6} />}
-        />
-      </Flex>
-      <Slider
-        ref={(c) => {
-          setSlider(c!);
-        }}
-        {...settings}
+    <Container maxW="container.xl">
+      <Carousel
+        arrows={false}
+        responsive={responsive}
+        infinite={true}
+        autoPlay={false}
+        renderButtonGroupOutside={true}
+        customButtonGroup={<ButtonGroup />}
       >
         <StakeHolderCard
           imageURL="/pengurus/fuady.jpg"
@@ -90,7 +100,7 @@ const StakeHolder = () => {
           faculty="D3 Ilmu Perminyakan"
           period="2020-2021"
         />
-      </Slider>
+      </Carousel>
     </Container>
   );
 };
