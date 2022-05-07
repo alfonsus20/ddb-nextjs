@@ -43,7 +43,7 @@ const Navbar = () => {
             Mahasiswa
           </Box>
         </Link>
-        <Link href="/" passHref>
+        <Link href="/alumni" passHref>
           <Box px={2} as="a">
             Alumni
           </Box>
