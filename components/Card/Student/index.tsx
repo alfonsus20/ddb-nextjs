@@ -6,7 +6,7 @@ import React from "react";
 const Student = () => {
   return (
     <Link href="/mahasiswa/1" passHref>
-      <Box as='a' flex="1 1 250px" maxW={280}>
+      <Box as="a">
         <AspectRatio pos="relative" width="full" ratio={1}>
           <Image
             src="/pengurus/fuady.jpg"

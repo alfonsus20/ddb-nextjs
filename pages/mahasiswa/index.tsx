@@ -1,14 +1,64 @@
-import { Container, Flex, Text } from "@chakra-ui/react";
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+  Box,
+  CloseButton,
+  Container,
+  Flex,
+  Grid,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
+import Link from "next/link";
 import React from "react";
 import { StudentCard } from "../../components/Card";
 
 const Mahasiswa = () => {
+  const {
+    isOpen: isVisible,
+    onClose,
+    onOpen,
+  } = useDisclosure({ defaultIsOpen: true });
+
   return (
     <Container maxW="container.xl" pt={4} pb={16}>
       <Text fontSize="3xl" textAlign="center" fontWeight="bold" mb={4}>
         Mahasiswa Aktif
       </Text>
-      <Flex flexWrap='wrap' gap={8} justifyContent='center'>
+      <Alert status="info" mb={4}>
+        <AlertIcon />
+        <Box>
+          <AlertTitle>Halo Dara Daeng!</AlertTitle>
+          <AlertDescription>
+            Kamu anggota DDB (mahasiswa aktif / alumni), tapi belum punya akun
+            pada website ini? Yuk klik{" "}
+            <Link href="/register" passHref>
+              <Box as="a" color="blue.500">
+                di sini
+              </Box>
+            </Link>{" "}
+            ya
+            <br />
+            Kamu sudah punya akun? Langsung{" "}
+            <Link href="/login" passHref>
+              <Box as="a" color="blue.500">
+                login
+              </Box>
+            </Link>{" "}
+            yuk
+          </AlertDescription>
+        </Box>
+        <CloseButton
+          alignSelf="flex-start"
+          position="absolute"
+          right={1}
+          top={1}
+          onClick={onClose}
+        />
+      </Alert>
+      <Grid gridTemplateColumns="repeat(4,1fr)" gap={8}>
         <StudentCard />
         <StudentCard />
         <StudentCard />
@@ -17,7 +67,7 @@ const Mahasiswa = () => {
         <StudentCard />
         <StudentCard />
         <StudentCard />
-      </Flex>
+      </Grid>
     </Container>
   );
 };
