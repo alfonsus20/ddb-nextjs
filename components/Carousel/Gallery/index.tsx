@@ -6,7 +6,7 @@ import {
   Box,
   Text,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Slider, { Settings } from "react-slick";
 import {
   MdOutlineArrowBackIosNew,
@@ -15,7 +15,7 @@ import {
 import Image from "next/image";
 
 const Gallery = () => {
-  const [slider, setSlider] = useState<Slider>();
+  const slider = useRef<Slider | null>(null);
   const [activeSlide, setActiveSlide] = useState<number>(0);
 
   const settings: Settings = {
@@ -31,14 +31,14 @@ const Gallery = () => {
     <Box overflowX="hidden">
       <Slider
         ref={(c) => {
-          setSlider(c!);
+          slider.current = c;
         }}
         {...settings}
       >
         {["Halal Bi Halal", "DDB Sehat", "Badminton", "TEST"].map(
           (item, idx) => (
             <Box key={idx} px={2}>
-              <AspectRatio width="full" ratio={21/9} mb={2}>
+              <AspectRatio width="full" ratio={21 / 9} mb={2}>
                 <Flex gap={3}>
                   <Box width="65%" bg="green.400" pos="relative" height="full">
                     <Image
@@ -60,7 +60,7 @@ const Gallery = () => {
                   </Box>
                 </Flex>
               </AspectRatio>
-              <AspectRatio width="full" ratio={21/9} mb={4}>
+              <AspectRatio width="full" ratio={21 / 9} mb={4}>
                 <Flex gap={3}>
                   <Box width="35%" bg="blue.400" pos="relative" height="full">
                     <Image
@@ -92,17 +92,12 @@ const Gallery = () => {
           )
         )}
       </Slider>
-      <Flex
-        justifyContent="center"
-        columnGap={4}
-        py={2}
-        alignItems="center"
-      >
+      <Flex justifyContent="center" columnGap={4} py={2} alignItems="center">
         <IconButton
           aria-label="Prev"
           colorScheme="white"
           shadow="lg"
-          onClick={() => slider?.slickPrev()}
+          onClick={() => slider.current?.slickPrev()}
           icon={<Icon as={MdOutlineArrowBackIosNew} w={6} h={6} color="red" />}
         />
         <Box>{activeSlide + 1} / 4</Box>
@@ -110,7 +105,7 @@ const Gallery = () => {
           aria-label="Next"
           colorScheme="white"
           shadow="lg"
-          onClick={() => slider?.slickNext()}
+          onClick={() => slider.current?.slickNext()}
           icon={<Icon as={MdOutlineArrowForwardIos} w={6} h={6} color="red" />}
         />
       </Flex>

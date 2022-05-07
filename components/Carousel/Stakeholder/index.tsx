@@ -1,11 +1,12 @@
 import { Container, Flex, Icon, IconButton } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React from "react";
 import Slider from "react-slick";
 import { StakeHolderCard } from "../../Card";
 import {
   MdOutlineArrowBackIosNew,
   MdOutlineArrowForwardIos,
 } from "react-icons/md";
+import { useRef } from "react";
 
 const settings = {
   speed: 500,
@@ -16,7 +17,7 @@ const settings = {
 };
 
 const StakeHolder = () => {
-  const [slider, setSlider] = useState<Slider>();
+  const slider = useRef<Slider | null>(null);
 
   return (
     <Container maxW="container.xl" overflowX="hidden">
@@ -25,20 +26,20 @@ const StakeHolder = () => {
           aria-label="Prev"
           colorScheme="white"
           shadow="md"
-          onClick={() => slider?.slickPrev()}
+          onClick={() => slider.current?.slickPrev()}
           icon={<Icon as={MdOutlineArrowBackIosNew} w={6} h={6} color="red" />}
         />
         <IconButton
           aria-label="Next"
           colorScheme="red"
           shadow="md"
-          onClick={() => slider?.slickNext()}
+          onClick={() => slider.current?.slickNext()}
           icon={<Icon as={MdOutlineArrowForwardIos} w={6} h={6} />}
         />
       </Flex>
       <Slider
         ref={(c) => {
-          setSlider(c!);
+          slider.current = c;
         }}
         {...settings}
       >
