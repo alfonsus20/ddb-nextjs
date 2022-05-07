@@ -6,7 +6,7 @@ import {
   Box,
   Text,
 } from "@chakra-ui/react";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import Slider, { Settings } from "react-slick";
 import {
   MdOutlineArrowBackIosNew,
@@ -15,23 +15,24 @@ import {
 import Image from "next/image";
 
 const Gallery = () => {
-  const slider = useRef<Slider | null>(null);
+  const [slider, setSlider] = useState<Slider>();
   const [activeSlide, setActiveSlide] = useState<number>(0);
 
   const settings: Settings = {
-    speed: 500,
+    infinite: true,
+    speed: 1000,
     slidesToShow: 3,
     slidesToScroll: 1,
     nextArrow: <></>,
     prevArrow: <></>,
-    afterChange: (current) => setActiveSlide(current),
+    beforeChange: (_, next) => setActiveSlide(next),
   };
 
   return (
-    <Box overflowX="hidden">
+    <Box>
       <Slider
         ref={(c) => {
-          slider.current = c;
+          setSlider(c!);
         }}
         {...settings}
       >
@@ -97,7 +98,7 @@ const Gallery = () => {
           aria-label="Prev"
           colorScheme="white"
           shadow="lg"
-          onClick={() => slider.current?.slickPrev()}
+          onClick={() => slider?.slickPrev()}
           icon={<Icon as={MdOutlineArrowBackIosNew} w={6} h={6} color="red" />}
         />
         <Box>{activeSlide + 1} / 4</Box>
@@ -105,7 +106,7 @@ const Gallery = () => {
           aria-label="Next"
           colorScheme="white"
           shadow="lg"
-          onClick={() => slider.current?.slickNext()}
+          onClick={() => slider?.slickNext()}
           icon={<Icon as={MdOutlineArrowForwardIos} w={6} h={6} color="red" />}
         />
       </Flex>
