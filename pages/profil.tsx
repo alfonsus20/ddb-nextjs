@@ -22,14 +22,18 @@ import { FaEdit } from "react-icons/fa";
 
 const Profil = () => {
   return (
-    <Container maxW="container.xl" pt={4} pb={16}>
+    <Container maxW="container.xl" pt={4} pb={16} px={{ base: 8, "2xl": 0 }}>
       <Text fontSize="3xl" fontWeight="bold" mb={4}>
         Profil Anda
       </Text>
-      <Flex gap={8}>
-        <Flex direction="column" flex="0 0 300px">
+      <Flex gap={8} direction={{ base: "column", md: "row" }}>
+        <Flex direction="column" flex={{ base: "1 1 100%", sm: "0 0 300px" }}>
           <Box pos="relative" alignSelf="center">
-            <Circle pos="relative" size={300} overflow="hidden">
+            <Circle
+              pos="relative"
+              size={{ base: 250, md: 300 }}
+              overflow="hidden"
+            >
               <Image
                 src="/pengurus/fuady.jpg"
                 alt="fuady"
