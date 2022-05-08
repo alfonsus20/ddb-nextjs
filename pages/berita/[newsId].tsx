@@ -1,4 +1,11 @@
-import { Box, Container, VStack, Text, Flex } from "@chakra-ui/react";
+import {
+  Box,
+  Container,
+  VStack,
+  Text,
+  Flex,
+  AspectRatio,
+} from "@chakra-ui/react";
 import {
   GetStaticPaths,
   GetStaticProps,
@@ -20,16 +27,20 @@ const BeritaDetail: NextPage<Props> = () => {
         <Text fontSize="3xl" fontWeight="bold" mb={4}>
           Kostum Burung Pada Kampung Budaya 2021
         </Text>
-        <Box mb={4}>
+        <AspectRatio
+          mb={4}
+          pos="relative"
+          width='full'
+          ratio={{ base: 4 / 3, md: 16 / 9 }}
+        >
           <Image
             src="/ub.jpg"
-            width={1280}
-            height={600}
             alt="berita"
             objectFit="cover"
             objectPosition="center"
+            layout="fill"
           />
-        </Box>
+        </AspectRatio>
         <VStack textAlign="justify">
           <Text>
             dignissimos ut quaerat sit! Distinctio commodi officia in impedit
@@ -98,7 +109,7 @@ const BeritaDetail: NextPage<Props> = () => {
         </VStack>
       </Box>
       <Box>
-        <Text fontSize="2xl" fontWeight="semibold" mb={4} textAlign='center'>
+        <Text fontSize="2xl" fontWeight="semibold" mb={4} textAlign="center">
           Baca Berita Lainnya
         </Text>
         <Flex flexWrap="wrap" gap={8} justifyContent="center">

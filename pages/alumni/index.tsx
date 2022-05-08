@@ -12,7 +12,15 @@ const Alumni = () => {
       <Text fontSize="3xl" textAlign="center" fontWeight="bold" mb={4}>
         Alumni Aktif
       </Text>
-      <Grid gridTemplateColumns="repeat(4,1fr)" gap={8}>
+      <Grid
+        gridTemplateColumns={{
+          base: "repeat(1,1fr)",
+          sm: "repeat(2,1fr)",
+          md: "repeat(3,1fr)",
+          xl: "repeat(4,1fr)",
+        }}
+        gap={8}
+      >
         <StudentCard />
         <StudentCard />
         <StudentCard />
