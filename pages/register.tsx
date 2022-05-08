@@ -16,28 +16,36 @@ import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 import { FaFacebookF, FaGoogle, FaLinkedinIn } from "react-icons/fa";
-import { object, string } from "yup";
+import { object, ref, string } from "yup";
 
-const LoginSchema = object({
+const RegisterSchema = object({
   email: string().required().email().label("email"),
-  password: string().required().label("password"),
+  password: string().required().label("password").min(8),
+  passwordConfirmation: string()
+    .required()
+    .label("konfirmasi password")
+    .oneOf([ref("password")], "password harus sama"),
 });
 
-const Login = () => {
+const Register = () => {
   return (
     <Box bg="red.500">
       <Head>
-        <title>Login</title>
+        <title>Register</title>
       </Head>
       <Container maxW="lg" py={20}>
         <Box shadow="lg" px={6} py={12} bg="white">
           <Text textAlign="center" fontSize="3xl" fontWeight="semibold" mb={6}>
-            Login
+            Register
           </Text>
           <Formik
-            initialValues={{ email: "", password: "" }}
+            initialValues={{
+              email: "",
+              password: "",
+              passwordConfirmation: "",
+            }}
             onSubmit={(res) => alert(JSON.stringify(res))}
-            validationSchema={LoginSchema}
+            validationSchema={RegisterSchema}
           >
             {({ errors, handleSubmit }) => (
               <form onSubmit={handleSubmit}>
@@ -62,31 +70,45 @@ const Login = () => {
                     />
                     <FormErrorMessage>{errors.password}</FormErrorMessage>
                   </FormControl>
+                  <FormControl isInvalid={!!errors.passwordConfirmation}>
+                    <Field
+                      as={Input}
+                      id="passwordConfirmation"
+                      name="passwordConfirmation"
+                      type="password"
+                      placeholder="Konfirmasi Password"
+                    />
+                    <FormErrorMessage>
+                      {errors.passwordConfirmation}
+                    </FormErrorMessage>
+                  </FormControl>
                   <Button type="submit" colorScheme="red">
-                    Login
+                    Daftar
                   </Button>
-                  <Text>atau login dengan</Text>
+                  <Text>atau daftar dengan</Text>
                   <Flex gap={2}>
                     <IconButton
                       colorScheme="red"
                       icon={<Icon as={FaGoogle} />}
-                      aria-label="Login with Google"
+                      aria-label="Register with Google"
                     />
                     <IconButton
                       colorScheme="facebook"
                       icon={<Icon as={FaFacebookF} />}
-                      aria-label="Login with Facebook"
+                      aria-label="Register with Facebook"
                     />
                     <IconButton
                       colorScheme="linkedin"
                       icon={<Icon as={FaLinkedinIn} />}
-                      aria-label="Login with Google"
+                      aria-label="Register with Google"
                     />
                   </Flex>
                   <Text>
-                    Belum punya akun? Daftar di{" "}
-                    <Link href="/register" passHref>
-                      <Box as="a" color='blue.500'>sini</Box>
+                    Sudah punya akun? Login di{" "}
+                    <Link href="/login" passHref>
+                      <Box as="a" color="blue.500">
+                        sini
+                      </Box>
                     </Link>{" "}
                   </Text>
                 </VStack>
@@ -99,4 +121,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

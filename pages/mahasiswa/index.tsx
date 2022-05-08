@@ -10,6 +10,7 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
+import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 import { StudentCard } from "../../components/Card";
@@ -23,6 +24,9 @@ const Mahasiswa = () => {
 
   return (
     <Container maxW="container.xl" pt={4} pb={16}>
+      <Head>
+        <title>Mahasiswa Aktif</title>
+      </Head>
       <Text fontSize="3xl" textAlign="center" fontWeight="bold" mb={4}>
         Mahasiswa Aktif
       </Text>
