@@ -4,7 +4,6 @@ import {
   Button,
   Container,
   Flex,
-  Grid,
   Icon,
   Text,
 } from "@chakra-ui/react";
@@ -15,6 +14,7 @@ import Kb19Image from "../public/kambud19.jpg";
 import Head from "next/head";
 import { VisionCard } from "../components/Card";
 import { ChakraBox, Slide } from "../components/Animation";
+import { InView } from "react-intersection-observer";
 
 const bigTitleAnimation = {
   animate: {
@@ -39,6 +39,26 @@ const letterAnimation = {
   initial: { y: 100 },
   animate: {
     y: 0,
+    transition: {
+      ease: [0.6, 0.01, -0.05, 0.95],
+      duration: 1,
+    },
+  },
+};
+
+const visionCardWrapperAnim = {
+  animate: {
+    transition: {
+      staggerChildren: 0.3,
+    },
+  },
+};
+
+const visionCardAnim = {
+  initial: { y: 100, opacity: 0 },
+  animate: {
+    y: 0,
+    opacity: 1,
     transition: {
       ease: [0.6, 0.01, -0.05, 0.95],
       duration: 1,
@@ -157,7 +177,7 @@ const Home: NextPage = () => {
               bertujuan untuk sebagai tempat berkumpul seluruh mahasiswa(i) asal
               Sulawesi Selatan untuk berinteraksi sesama teman se-daerah agar
               saling dapat melepas rindu.
-            </Text>{" "}
+            </Text>
           </Slide>
         </Box>
       </Flex>
@@ -169,35 +189,59 @@ const Home: NextPage = () => {
           <Text fontSize="2xl" fontWeight="semibold" mb={4}>
             Visi
           </Text>
-          <Grid
-            gridTemplateColumns={{
-              base: "repeat(1,1fr)",
-              md: "repeat(2,1fr)",
-              lg: "repeat(4,1fr)",
-            }}
-            gap={4}
-          >
-            {[...Array(4)].map((_, idx) => (
-              <VisionCard key={idx} />
-            ))}
-          </Grid>
+          <InView>
+            {({ ref, inView }) => (
+              <ChakraBox
+                ref={ref}
+                variants={visionCardWrapperAnim}
+                display="grid"
+                gridTemplateColumns={{
+                  base: "repeat(1,1fr)",
+                  md: "repeat(2,1fr)",
+                  lg: "repeat(4,1fr)",
+                }}
+                initial="initial"
+                animate={inView && "animate"}
+                gap={4}
+                overflowY="hidden"
+              >
+                {[...Array(4)].map((_, idx) => (
+                  <ChakraBox key={idx} variants={visionCardAnim}>
+                    <VisionCard />
+                  </ChakraBox>
+                ))}
+              </ChakraBox>
+            )}
+          </InView>
         </Box>
         <Box>
           <Text fontSize="2xl" fontWeight="semibold" mb={4}>
             Misi
           </Text>
-          <Grid
-            gridTemplateColumns={{
-              base: "repeat(1,1fr)",
-              md: "repeat(2,1fr)",
-              lg: "repeat(4,1fr)",
-            }}
-            gap={4}
-          >
-            {[...Array(4)].map((_, idx) => (
-              <VisionCard key={idx} />
-            ))}
-          </Grid>
+          <InView>
+            {({ ref, inView }) => (
+              <ChakraBox
+                ref={ref}
+                variants={visionCardWrapperAnim}
+                display="grid"
+                gridTemplateColumns={{
+                  base: "repeat(1,1fr)",
+                  md: "repeat(2,1fr)",
+                  lg: "repeat(4,1fr)",
+                }}
+                initial="initial"
+                animate={inView && "animate"}
+                gap={4}
+                overflowY="hidden"
+              >
+                {[...Array(4)].map((_, idx) => (
+                  <ChakraBox key={idx} variants={visionCardAnim}>
+                    <VisionCard />
+                  </ChakraBox>
+                ))}
+              </ChakraBox>
+            )}
+          </InView>
         </Box>
       </Container>
       <Box color="white" pos="relative">
@@ -228,43 +272,49 @@ const Home: NextPage = () => {
           px={{ base: 8, "2xl": 0 }}
           direction={{ base: "column", md: "row" }}
           gap={8}
+          overflow="hidden"
         >
           <Box width={{ base: "full", md: "50%" }}>
-            <Text fontSize="3xl" mb={4} fontWeight="semibold">
-              Data Anggota Dara Daeng Brawijaya
-            </Text>
-            <Button
-              colorScheme="white"
-              variant="outline"
-              _hover={{ bg: "white", color: "red.500" }}
-            >
-              Selengkapnya
-            </Button>
+            <Slide direction="left">
+              <Text fontSize="3xl" mb={4} fontWeight="semibold">
+                Data Anggota Dara Daeng Brawijaya
+              </Text>
+              <Button
+                colorScheme="white"
+                variant="outline"
+                _hover={{ bg: "white", color: "red.500" }}
+              >
+                Selengkapnya
+              </Button>
+            </Slide>
           </Box>
           <Box width={{ base: "full", md: "50%" }}>
-            <Text mb={8}>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Suscipit
-              fuga incidunt maiores quas, dicta dolor earum ducimus ab optio
-              nihil numquam corrupti quos cumque veniam quia exercitationem
-              laborum dolorum sunt? Quod fugiat veniam distinctio itaque
-              voluptatum saepe modi enim, magni aperiam quos velit voluptatem
-            </Text>
-            <Flex justifyContent="space-around">
-              <Box textAlign="center">
-                <Icon as={FaUserGraduate} w={20} h={20} />
-                <Text fontSize="xl" fontWeight="semibold">
-                  100
-                </Text>
-                <Text>Alumni</Text>
-              </Box>
-              <Box textAlign="center">
-                <Icon as={FaUserAlt} w={20} h={20} />
-                <Text fontSize="xl" fontWeight="semibold">
-                  200
-                </Text>
-                <Text>Mahasiswa Aktif</Text>
-              </Box>
-            </Flex>
+            <Slide direction="right">
+              <Text mb={8}>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Suscipit fuga incidunt maiores quas, dicta dolor earum ducimus
+                ab optio nihil numquam corrupti quos cumque veniam quia
+                exercitationem laborum dolorum sunt? Quod fugiat veniam
+                distinctio itaque voluptatum saepe modi enim, magni aperiam quos
+                velit voluptatem
+              </Text>
+              <Flex justifyContent="space-around">
+                <Box textAlign="center">
+                  <Icon as={FaUserGraduate} w={20} h={20} />
+                  <Text fontSize="xl" fontWeight="semibold">
+                    100
+                  </Text>
+                  <Text>Alumni</Text>
+                </Box>
+                <Box textAlign="center">
+                  <Icon as={FaUserAlt} w={20} h={20} />
+                  <Text fontSize="xl" fontWeight="semibold">
+                    200
+                  </Text>
+                  <Text>Mahasiswa Aktif</Text>
+                </Box>
+              </Flex>
+            </Slide>
           </Box>
         </Flex>
       </Box>
