@@ -157,7 +157,11 @@ const Home: NextPage = () => {
             <Text fontSize="3xl" mb={4} fontWeight="semibold">
               Data Anggota Dara Daeng Brawijaya
             </Text>
-            <Button colorScheme="white" variant="outline">
+            <Button
+              colorScheme="white"
+              variant="outline"
+              _hover={{ bg: "white", color: "red.500" }}
+            >
               Selengkapnya
             </Button>
           </Box>

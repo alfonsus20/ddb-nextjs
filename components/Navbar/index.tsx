@@ -1,11 +1,29 @@
+import React, { useEffect, useState } from "react";
 import { Box, Button, Flex } from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
 
 const Navbar = () => {
   const { pathname } = useRouter();
+  const [isNavbarBgShown, setIsNavbarBgShown] = useState<boolean>(false);
+
+  useEffect(() => {
+    const watchPageScroll = () =>
+      document.addEventListener("scroll", () => {
+        if (window.scrollY > 90) {
+          setIsNavbarBgShown(true);
+        } else {
+          setIsNavbarBgShown(false);
+        }
+      });
+
+    watchPageScroll();
+
+    return () => {
+      document.removeEventListener("scroll", watchPageScroll);
+    };
+  });
 
   return (
     <Flex
@@ -19,15 +37,19 @@ const Navbar = () => {
       left={0}
       right={0}
       zIndex={20}
-      shadow={pathname === "/" ? "none" : "md"}
-      bgColor={pathname === "/" ? "transparent" : "white"}
+      shadow={pathname === "/" && !isNavbarBgShown ? "none" : "md"}
+      bgColor={pathname === "/" && !isNavbarBgShown ? "transparent" : "white"}
+      transition='background 0.3s ease-out'
     >
       <Link href="/" passHref>
         <Box as="a">
           <Image src="/logo.png" width={80} height={50} alt="logo" />
         </Box>
       </Link>
-      <Flex columnGap="4" color={pathname === "/" ? "white" : "black"}>
+      <Flex
+        columnGap="4"
+        color={pathname === "/" && !isNavbarBgShown ? "white" : "black"}
+      >
         <Link href="/" passHref>
           <Box px={2} as="a">
             Beranda
@@ -57,7 +79,9 @@ const Navbar = () => {
       <Link href="/login" passHref>
         <Button
           as="a"
-          colorScheme={pathname === "/" ? "whiteAlpha" : "red"}
+          colorScheme={
+            pathname === "/" && !isNavbarBgShown ? "whiteAlpha" : "red"
+          }
           _hover={{ bgColor: "red.400" }}
         >
           Login
