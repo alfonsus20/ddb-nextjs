@@ -22,10 +22,10 @@ const Home: NextPage = () => {
         <title>Dara Daeng Brawijaya</title>
       </Head>
       <Flex
-        minH="100vh"
         justifyContent="center"
         alignItems="center"
         pos="relative"
+        py={28}
       >
         <Image
           src="/ub.jpg"
