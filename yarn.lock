@@ -936,6 +936,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-hamburger-menu@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@types/react-hamburger-menu/-/react-hamburger-menu-0.0.4.tgz#6669e4400368c83aadf560b0fc4887c69020de16"
+  integrity sha512-Px9Qd/+ux/AjBu8/GIkY1Kf+U09YUbC9HWRLDKnghic/P5CpeMhZTi3mwnSct1E0xqyXn+VTFuZi1w2gTEktcQ==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-slick@^0.23.8":
   version "0.23.8"
   resolved "https://registry.yarnpkg.com/@types/react-slick/-/react-slick-0.23.8.tgz#91654e657158da57f082c7b213e20756d3a37502"
@@ -2463,6 +2470,11 @@ react-focus-lock@2.5.2:
     react-clientside-effect "^1.2.5"
     use-callback-ref "^1.2.5"
     use-sidecar "^1.0.5"
+
+react-hamburger-menu@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/react-hamburger-menu/-/react-hamburger-menu-1.2.1.tgz#bcaca08bf7d1ae96aa97553828765dce8f912eeb"
+  integrity sha512-It5Jque8bx9lYn8q/NFtu9Ci20fBMsyunFSp06ZGgWXbMZlTFrN0IxKguGZ0igYQr6RvJ3S9CN3rTjrObmq/Cw==
 
 react-icons@^4.3.1:
   version "4.3.1"

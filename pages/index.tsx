@@ -1,11 +1,19 @@
 import type { NextPage } from "next";
-import { Box, Button, Container, Flex, Icon, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Container,
+  Flex,
+  Grid,
+  Icon,
+  Text,
+} from "@chakra-ui/react";
 import Image from "next/image";
 import { FaUserGraduate, FaUserAlt } from "react-icons/fa";
 import { StakeHolderCarousel } from "../components/Carousel";
 import Kb19Image from "../public/kambud19.jpg";
 import Head from "next/head";
-import { HiAnnotation } from "react-icons/hi";
+import { VisionCard } from "../components/Card";
 
 const Home: NextPage = () => {
   return (
@@ -42,6 +50,7 @@ const Home: NextPage = () => {
           zIndex={10}
           justifyContent="center"
           alignItems="center"
+          px={{ base: 8, "2xl": 0 }}
         >
           <Text color="white" mb={4} fontSize="6xl" textAlign="center">
             Dara Daeng Brawijaya
@@ -57,11 +66,13 @@ const Home: NextPage = () => {
         py={20}
         alignItems="center"
         columnGap={12}
+        px={{ base: 8, "2xl": 0 }}
+        direction={{ base: "column", md: "row" }}
       >
-        <Box width="50%" pos="relative">
+        <Box width={{ base: "full", md: "50%" }} pos="relative">
           <Image src={Kb19Image} alt="tentang" placeholder="blur" />
         </Box>
-        <Box width="50%">
+        <Box width={{ base: "full", md: "50%" }}>
           <Text fontSize="3xl" mb={2} fontWeight="semibold">
             Tentang Dara Daeng Brawijaya
           </Text>
@@ -76,7 +87,7 @@ const Home: NextPage = () => {
           </Text>
         </Box>
       </Flex>
-      <Container maxW="container.xl" pt={6} pb={20}>
+      <Container maxW="container.xl" pt={6} pb={20} px={{ base: 8, "2xl": 0 }}>
         <Text textAlign="center" fontSize="3xl" fontWeight="bold" mb={4}>
           Visi dan Misi Dara Daeng Brawijaya
         </Text>
@@ -84,47 +95,35 @@ const Home: NextPage = () => {
           <Text fontSize="2xl" fontWeight="semibold" mb={4}>
             Visi
           </Text>
-          <Flex gap={4}>
+          <Grid
+            gridTemplateColumns={{
+              base: "repeat(1,1fr)",
+              md: "repeat(2,1fr)",
+              lg: "repeat(4,1fr)",
+            }}
+            gap={4}
+          >
             {[...Array(4)].map((_, idx) => (
-              <Box shadow="md" key={idx} p={4}>
-                <Flex gap={2} alignItems="center" mb={2} color="red.500">
-                  <Box flex="0 0 auto">
-                    <HiAnnotation fontSize={40} />
-                  </Box>
-                  <Text fontWeight="semibold">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit
-                  </Text>
-                </Flex>
-                <Text fontSize="sm">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit Lorem
-                  ipsum dolor sit amet consectetur adipisicing elit
-                </Text>
-              </Box>
+              <VisionCard key={idx} />
             ))}
-          </Flex>
+          </Grid>
         </Box>
         <Box>
           <Text fontSize="2xl" fontWeight="semibold" mb={4}>
             Misi
           </Text>
-          <Flex gap={4}>
+          <Grid
+            gridTemplateColumns={{
+              base: "repeat(1,1fr)",
+              md: "repeat(2,1fr)",
+              lg: "repeat(4,1fr)",
+            }}
+            gap={4}
+          >
             {[...Array(4)].map((_, idx) => (
-              <Box shadow="md" key={idx} p={4}>
-                <Flex gap={2} alignItems="center" mb={2} color="red.500">
-                  <Box flex="0 0 auto">
-                    <HiAnnotation fontSize={40} />
-                  </Box>
-                  <Text fontWeight="semibold">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit
-                  </Text>
-                </Flex>
-                <Text fontSize="sm">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit Lorem
-                  ipsum dolor sit amet consectetur adipisicing elit
-                </Text>
-              </Box>
+              <VisionCard key={idx} />
             ))}
-          </Flex>
+          </Grid>
         </Box>
       </Container>
       <Box color="white" pos="relative">
@@ -152,8 +151,11 @@ const Home: NextPage = () => {
           alignItems="center"
           zIndex={10}
           pos="relative"
+          px={{ base: 8, "2xl": 0 }}
+          direction={{ base: "column", md: "row" }}
+          gap={8}
         >
-          <Box w="50%">
+          <Box width={{ base: "full", md: "50%" }}>
             <Text fontSize="3xl" mb={4} fontWeight="semibold">
               Data Anggota Dara Daeng Brawijaya
             </Text>
@@ -165,7 +167,7 @@ const Home: NextPage = () => {
               Selengkapnya
             </Button>
           </Box>
-          <Box w="50%">
+          <Box width={{ base: "full", md: "50%" }}>
             <Text mb={8}>
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Suscipit
               fuga incidunt maiores quas, dicta dolor earum ducimus ab optio
@@ -193,7 +195,13 @@ const Home: NextPage = () => {
         </Flex>
       </Box>
       <Box py={16}>
-        <Text fontSize="3xl" fontWeight="semibold" textAlign="center" mb={6}>
+        <Text
+          fontSize="3xl"
+          fontWeight="semibold"
+          textAlign="center"
+          px={{ base: 8, "2xl": 0 }}
+          mb={6}
+        >
           Ketua dan Wakil Ketua Dara Daeng Brawijaya
         </Text>
         <StakeHolderCarousel />

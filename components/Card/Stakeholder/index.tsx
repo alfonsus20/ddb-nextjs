@@ -20,12 +20,11 @@ const StakeHolder = ({
   period,
 }: StakeholderCardProps) => {
   return (
-    <Box p={4}>
-      <Flex alignItems="center" >
+    <Box p={{ base: 0, md: 4 }}>
+      <Flex alignItems="center">
         <Circle
           pos="relative"
-          size={44}
-          // borderRightRadius="100%"
+          size={{ base: 32, md: 44 }}
           flexShrink={0}
           overflow="hidden"
         >
@@ -38,7 +37,7 @@ const StakeHolder = ({
             quality={100}
           />
         </Circle>
-        <VStack spacing={1} align="flex-start" px={6}>
+        <VStack spacing={1} align="flex-start" px={{ base: 2, md: 6 }}>
           <Box
             fontSize="xs"
             bg="red.300"

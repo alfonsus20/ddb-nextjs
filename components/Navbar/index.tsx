@@ -3,6 +3,7 @@ import { Box, Button, Flex } from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import HamburgerMenu from "react-hamburger-menu";
 
 const Navbar = () => {
   const { pathname } = useRouter();
@@ -38,8 +39,11 @@ const Navbar = () => {
       right={0}
       zIndex={20}
       shadow={pathname === "/" && !isNavbarBgShown ? "none" : "md"}
-      bgColor={pathname === "/" && !isNavbarBgShown ? "transparent" : "white"}
-      transition='background 0.3s ease-out'
+      bgColor={{
+        base: "white",
+        md: pathname === "/" && !isNavbarBgShown ? "transparent" : "white",
+      }}
+      transition="background 0.3s ease-out"
     >
       <Link href="/" passHref>
         <Box as="a">
@@ -49,6 +53,7 @@ const Navbar = () => {
       <Flex
         columnGap="4"
         color={pathname === "/" && !isNavbarBgShown ? "white" : "black"}
+        display={{ base: "none", md: "flex" }}
       >
         <Link href="/" passHref>
           <Box px={2} as="a">
@@ -83,10 +88,24 @@ const Navbar = () => {
             pathname === "/" && !isNavbarBgShown ? "whiteAlpha" : "red"
           }
           _hover={{ bgColor: "red.400" }}
+          display={{ base: "none", md: "inherit" }}
         >
           Login
         </Button>
       </Link>
+      <Box display={{ base: "inherit", md: "none" }}>
+        <HamburgerMenu
+          isOpen={false}
+          menuClicked={() => {}}
+          width={18}
+          height={15}
+          strokeWidth={2}
+          rotate={0}
+          color="black"
+          borderRadius={2}
+          animationDuration={0.5}
+        />
+      </Box>
     </Flex>
   );
 };
