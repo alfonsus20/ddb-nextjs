@@ -22,7 +22,7 @@ const Home: NextPage = () => {
         <title>Dara Daeng Brawijaya</title>
       </Head>
       <Flex
-        h="100vh"
+        minH="100vh"
         justifyContent="center"
         alignItems="center"
         pos="relative"
@@ -51,6 +51,7 @@ const Home: NextPage = () => {
           justifyContent="center"
           alignItems="center"
           px={{ base: 8, "2xl": 0 }}
+          minH='500px'
         >
           <Text color="white" mb={4} fontSize="6xl" textAlign="center">
             Dara Daeng Brawijaya
