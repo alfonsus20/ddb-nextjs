@@ -6,6 +6,8 @@ import { extendTheme } from "@chakra-ui/react";
 import "@fontsource/nunito";
 import Footer from "../components/Footer";
 import { setLocale } from "yup";
+import NavbarMobile from "../components/Navbar/navbar.mobile";
+import { useState } from "react";
 
 const theme = extendTheme({
   fonts: {
@@ -21,10 +23,24 @@ setLocale({
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+
+  const closeSidebar = () => {
+    setIsSidebarOpen(false);
+  };
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen((prev) => !prev);
+  };
+
   return (
     <ChakraProvider theme={theme}>
       <Flex minH="100vh" direction="column">
-        <Navbar />
+        <Navbar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+        <NavbarMobile
+          isSidebarOpen={isSidebarOpen}
+          closeSidebar={closeSidebar}
+        />
         <Box flex="1 1 auto">
           <Component {...pageProps} />
         </Box>

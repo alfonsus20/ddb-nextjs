@@ -5,7 +5,12 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import HamburgerMenu from "react-hamburger-menu";
 
-const Navbar = () => {
+type NavbarMobileProps = {
+  isSidebarOpen: boolean;
+  toggleSidebar: () => void;
+};
+
+const Navbar = ({ isSidebarOpen, toggleSidebar }: NavbarMobileProps) => {
   const { pathname } = useRouter();
   const [isNavbarBgShown, setIsNavbarBgShown] = useState<boolean>(false);
 
@@ -20,7 +25,6 @@ const Navbar = () => {
       });
 
     watchPageScroll();
-
     return () => {
       document.removeEventListener("scroll", watchPageScroll);
     };
@@ -95,8 +99,8 @@ const Navbar = () => {
       </Link>
       <Box display={{ base: "inherit", md: "none" }}>
         <HamburgerMenu
-          isOpen={false}
-          menuClicked={() => {}}
+          isOpen={isSidebarOpen}
+          menuClicked={toggleSidebar}
           width={18}
           height={15}
           strokeWidth={2}
