@@ -14,19 +14,57 @@ import { StakeHolderCarousel } from "../components/Carousel";
 import Kb19Image from "../public/kambud19.jpg";
 import Head from "next/head";
 import { VisionCard } from "../components/Card";
+import { ChakraBox, Slide } from "../components/Animation";
+
+const bigTitleAnimation = {
+  animate: {
+    transition: {
+      delayChildren: 0.6,
+      staggerChildren: 0.04,
+      staggerDirection: 1,
+    },
+  },
+};
+
+const titleWrapperAnimation = {
+  animate: {
+    transition: {
+      staggerChildren: 0.3,
+      staggerDirection: 1,
+    },
+  },
+};
+
+const letterAnimation = {
+  initial: { y: 100 },
+  animate: {
+    y: 0,
+    transition: {
+      ease: [0.6, 0.01, -0.05, 0.95],
+      duration: 1,
+    },
+  },
+};
+
+const buttonAboutUsAnimation = {
+  initial: { y: 100 },
+  animate: {
+    y: 0,
+    transition: {
+      ease: [0.6, 0.01, -0.05, 0.95],
+      duration: 1,
+      delay: 1,
+    },
+  },
+};
 
 const Home: NextPage = () => {
   return (
-    <Box>
+    <ChakraBox initial="initial" animate="animate" exit="exit">
       <Head>
         <title>Dara Daeng Brawijaya</title>
       </Head>
-      <Flex
-        justifyContent="center"
-        alignItems="center"
-        pos="relative"
-        py={28}
-      >
+      <Flex justifyContent="center" alignItems="center" pos="relative" py={28}>
         <Image
           src="/ub.jpg"
           layout="fill"
@@ -51,14 +89,44 @@ const Home: NextPage = () => {
           justifyContent="center"
           alignItems="center"
           px={{ base: 8, "2xl": 0 }}
-          minH='500px'
+          minH="500px"
         >
-          <Text color="white" mb={4} fontSize="6xl" textAlign="center">
-            Dara Daeng Brawijaya
-          </Text>
-          <Button colorScheme="red" width="fit-content">
-            Tentang Kami
-          </Button>
+          <ChakraBox
+            display="flex"
+            variants={titleWrapperAnimation}
+            columnGap={4}
+            flexWrap="wrap"
+            justifyContent="center"
+            overflow="hidden"
+          >
+            {[..."Dara Daeng Brawijaya".split(" ")].map((word, index) => (
+              <ChakraBox
+                variants={bigTitleAnimation}
+                key={index}
+                overflow="hidden"
+              >
+                {[...Array.from(word)].map((a, idx) => (
+                  <ChakraBox
+                    key={idx}
+                    variants={letterAnimation}
+                    color="white"
+                    fontSize="6xl"
+                    textAlign="center"
+                    display="inline-block"
+                  >
+                    {a}
+                  </ChakraBox>
+                ))}
+              </ChakraBox>
+            ))}
+          </ChakraBox>
+          <Box overflow="hidden">
+            <ChakraBox variants={buttonAboutUsAnimation}>
+              <Button colorScheme="red" width="fit-content">
+                Tentang Kami
+              </Button>
+            </ChakraBox>
+          </Box>
         </Flex>
       </Flex>
       <Flex
@@ -69,23 +137,28 @@ const Home: NextPage = () => {
         columnGap={12}
         px={{ base: 8, "2xl": 0 }}
         direction={{ base: "column", md: "row" }}
+        overflowX="hidden"
       >
         <Box width={{ base: "full", md: "50%" }} pos="relative">
-          <Image src={Kb19Image} alt="tentang" placeholder="blur" />
+          <Slide direction="left">
+            <Image src={Kb19Image} alt="tentang" placeholder="blur" />
+          </Slide>
         </Box>
         <Box width={{ base: "full", md: "50%" }}>
-          <Text fontSize="3xl" mb={2} fontWeight="semibold">
-            Tentang Dara Daeng Brawijaya
-          </Text>
-          <Text textAlign="justify" fontSize="lg">
-            Suatu komunitas yang terbentuk di Universitas Brawijaya yang
-            beranggotakan seluruh mahasiswa Sul-Sel yang sudah lama terbentuk
-            dan sampai sekarang beranggotakan kurang lebih 400 orang. Komunitas
-            Dara Daeng Brawijaya atau sering disingkat DDB ini bertujuan untuk
-            sebagai tempat berkumpul seluruh mahasiswa(i) asal Sulawesi Selatan
-            untuk berinteraksi sesama teman se-daerah agar saling dapat melepas
-            rindu.
-          </Text>
+          <Slide direction="right">
+            <Text fontSize="3xl" mb={2} fontWeight="semibold">
+              Tentang Dara Daeng Brawijaya
+            </Text>
+            <Text textAlign="justify" fontSize="lg">
+              Suatu komunitas yang terbentuk di Universitas Brawijaya yang
+              beranggotakan seluruh mahasiswa Sul-Sel yang sudah lama terbentuk
+              dan sampai sekarang beranggotakan kurang lebih 400 orang.
+              Komunitas Dara Daeng Brawijaya atau sering disingkat DDB ini
+              bertujuan untuk sebagai tempat berkumpul seluruh mahasiswa(i) asal
+              Sulawesi Selatan untuk berinteraksi sesama teman se-daerah agar
+              saling dapat melepas rindu.
+            </Text>{" "}
+          </Slide>
         </Box>
       </Flex>
       <Container maxW="container.xl" pt={6} pb={20} px={{ base: 8, "2xl": 0 }}>
@@ -207,7 +280,7 @@ const Home: NextPage = () => {
         </Text>
         <StakeHolderCarousel />
       </Box>
-    </Box>
+    </ChakraBox>
   );
 };
 
