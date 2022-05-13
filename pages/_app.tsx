@@ -38,8 +38,12 @@ function MyApp({ Component, pageProps }: AppProps) {
   };
 
   useEffect(() => {
-    document.onreadystatechange = () => {
+    const listenToPageLoad = window.addEventListener("load", function () {
       setLoading(false);
+    });
+
+    return () => {
+      window.removeEventListener("load", listenToPageLoad);
     };
   }, []);
 
