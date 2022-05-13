@@ -1,5 +1,4 @@
-import { Box, Flex, Spinner } from "@chakra-ui/react";
-import { AnimatePresence } from "framer-motion";
+import { Spinner } from "@chakra-ui/react";
 import React from "react";
 import { ChakraBox } from "../Animation";
 
@@ -18,7 +17,7 @@ const LoadingLayer = () => {
         opacity: 0,
         transition: {
           ease: "easeInOut",
-          duration: 1,
+          duration: 2,
         },
       }}
     >
