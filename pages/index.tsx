@@ -84,7 +84,7 @@ const Home: NextPage = () => {
       <Head>
         <title>Dara Daeng Brawijaya</title>
       </Head>
-      <Flex justifyContent="center" alignItems="center" pos="relative" py={28}>
+      <Flex justifyContent="center" alignItems="center" pos="relative" minH='100vh'>
         <Image
           src="/ub.jpg"
           layout="fill"
