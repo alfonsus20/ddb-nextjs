@@ -15,7 +15,7 @@ import {
 import Image from "next/image";
 import React from "react";
 import { NewsCard } from "../../components/Card";
-import { getArticles, getArticleById } from "../../fetches/article";
+import { getArticles, getArticleById, getAllArticles } from "../../fetches/article";
 import { ArticleData } from "../../types/entities/article";
 
 type Props = {
@@ -81,7 +81,7 @@ export const getStaticProps: GetStaticProps = async (
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { data } = await getArticles();
+  const { data } = await getAllArticles();
   const paths = data.data.map((article) => ({
     params: { newsId: article.id.toString() },
   }));

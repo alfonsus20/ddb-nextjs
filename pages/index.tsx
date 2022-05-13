@@ -1,12 +1,5 @@
 import type { NextPage } from "next";
-import {
-  Box,
-  Button,
-  Container,
-  Flex,
-  Icon,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Button, Container, Flex, Icon, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import { FaUserGraduate, FaUserAlt } from "react-icons/fa";
 import { StakeHolderCarousel } from "../components/Carousel";
@@ -15,6 +8,7 @@ import Head from "next/head";
 import { VisionCard } from "../components/Card";
 import { ChakraBox, Slide } from "../components/Animation";
 import { InView } from "react-intersection-observer";
+import { MISI_LIST, VISI_LIST } from "../utils/constant";
 
 const bigTitleAnimation = {
   animate: {
@@ -84,7 +78,12 @@ const Home: NextPage = () => {
       <Head>
         <title>Dara Daeng Brawijaya</title>
       </Head>
-      <Flex justifyContent="center" alignItems="center" pos="relative" minH='100vh'>
+      <Flex
+        justifyContent="center"
+        alignItems="center"
+        pos="relative"
+        minH="100vh"
+      >
         <Image
           src="/ub.jpg"
           layout="fill"
@@ -197,17 +196,16 @@ const Home: NextPage = () => {
                 display="grid"
                 gridTemplateColumns={{
                   base: "repeat(1,1fr)",
-                  md: "repeat(2,1fr)",
-                  lg: "repeat(4,1fr)",
+                  md: "repeat(3,1fr)",
                 }}
                 initial="initial"
                 animate={inView && "animate"}
                 gap={4}
                 overflowY="hidden"
               >
-                {[...Array(4)].map((_, idx) => (
+                {VISI_LIST.map((visi, idx) => (
                   <ChakraBox key={idx} variants={visionCardAnim}>
-                    <VisionCard />
+                    <VisionCard {...visi} />
                   </ChakraBox>
                 ))}
               </ChakraBox>
@@ -234,9 +232,9 @@ const Home: NextPage = () => {
                 gap={4}
                 overflowY="hidden"
               >
-                {[...Array(4)].map((_, idx) => (
+                {MISI_LIST.map((misi, idx) => (
                   <ChakraBox key={idx} variants={visionCardAnim}>
-                    <VisionCard />
+                    <VisionCard {...misi} />
                   </ChakraBox>
                 ))}
               </ChakraBox>
