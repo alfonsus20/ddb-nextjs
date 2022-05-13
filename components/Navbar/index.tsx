@@ -12,8 +12,8 @@ type NavbarMobileProps = {
 };
 
 const Navbar = ({ isSidebarOpen, toggleSidebar }: NavbarMobileProps) => {
-  const { pathname } = useRouter();
   const [isNavbarBgShown, setIsNavbarBgShown] = useState<boolean>(false);
+  const { pathname } = useRouter();
 
   const animation = {
     initial: {
@@ -52,7 +52,7 @@ const Navbar = ({ isSidebarOpen, toggleSidebar }: NavbarMobileProps) => {
       left={0}
       right={0}
       zIndex={20}
-      initial="initial"
+      initial={pathname === "/" ? "initial" : "animate"}
       animate="animate"
     >
       <Flex

@@ -7,7 +7,10 @@ import "@fontsource/nunito";
 import Footer from "../components/Footer";
 import { setLocale } from "yup";
 import NavbarMobile from "../components/Navbar/navbar.mobile";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import LoadingLayer from "../components/LoadingLayer";
+import { AnimatePresence } from "framer-motion";
+import { ChakraBox } from "../components/Animation";
 
 const theme = extendTheme({
   fonts: {
@@ -24,6 +27,7 @@ setLocale({
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const closeSidebar = () => {
     setIsSidebarOpen(false);
@@ -33,18 +37,38 @@ function MyApp({ Component, pageProps }: AppProps) {
     setIsSidebarOpen((prev) => !prev);
   };
 
+  useEffect(() => {
+    document.onreadystatechange = () => {
+      setLoading(false);
+    };
+  }, []);
+
   return (
     <ChakraProvider theme={theme}>
       <Flex minH="100vh" direction="column">
-        <Navbar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-        <NavbarMobile
-          isSidebarOpen={isSidebarOpen}
-          closeSidebar={closeSidebar}
-        />
-        <Box flex="1 1 auto">
-          <Component {...pageProps} />
-        </Box>
-        <Footer />
+        <AnimatePresence exitBeforeEnter>
+          {loading ? (
+            <LoadingLayer key="loader" />
+          ) : (
+            <ChakraBox
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, transition: { stiffness: 0 } }}
+            >
+              <Navbar
+                isSidebarOpen={isSidebarOpen}
+                toggleSidebar={toggleSidebar}
+              />
+              <NavbarMobile
+                isSidebarOpen={isSidebarOpen}
+                closeSidebar={closeSidebar}
+              />
+              <Box flex="1 1 auto">
+                <Component {...pageProps} />
+              </Box>
+              <Footer />
+            </ChakraBox>
+          )}
+        </AnimatePresence>
       </Flex>
     </ChakraProvider>
   );
