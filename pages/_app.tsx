@@ -38,9 +38,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   };
 
   useEffect(() => {
-    const listenToPageLoad = window.addEventListener("load", function () {
+    const listenToPageLoad = () => {
       setLoading(false);
-    });
+    };
+
+    window.addEventListener("load", listenToPageLoad);
 
     return () => {
       window.removeEventListener("load", listenToPageLoad);
