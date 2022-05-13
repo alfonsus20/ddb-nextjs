@@ -42,10 +42,10 @@ function MyApp({ Component, pageProps }: AppProps) {
       setLoading(false);
     };
 
-    window.addEventListener("load", listenToPageLoad);
+    window.addEventListener("DOMContentLoaded", listenToPageLoad);
 
     return () => {
-      window.removeEventListener("load", listenToPageLoad);
+      window.removeEventListener("DOMContentLoaded", listenToPageLoad);
     };
   }, []);
 
