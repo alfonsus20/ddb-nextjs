@@ -38,14 +38,14 @@ function MyApp({ Component, pageProps }: AppProps) {
   };
 
   useEffect(() => {
-    const listenToPageLoad = () => {
+    const listener = () => {
       setLoading(false);
     };
 
-    window.addEventListener("DOMContentLoaded", listenToPageLoad);
+    window.addEventListener("DOMContentLoaded", listener);
 
     return () => {
-      window.removeEventListener("DOMContentLoaded", listenToPageLoad);
+      window.removeEventListener("DOMContentLoaded", listener);
     };
   }, []);
 
