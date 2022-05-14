@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import LoadingLayer from "../components/LoadingLayer";
 import { AnimatePresence } from "framer-motion";
 import { ChakraBox } from "../components/Animation";
+import NextNProgress from "nextjs-progressbar";
 
 const theme = extendTheme({
   fonts: {
@@ -38,19 +39,14 @@ function MyApp({ Component, pageProps }: AppProps) {
   };
 
   useEffect(() => {
-    const listener = () => {
+    setTimeout(() => {
       setLoading(false);
-    };
-
-    window.addEventListener("DOMContentLoaded", listener);
-
-    return () => {
-      window.removeEventListener("DOMContentLoaded", listener);
-    };
+    }, 500);
   }, []);
 
   return (
     <ChakraProvider theme={theme}>
+      <NextNProgress color="red" />
       <Flex minH="100vh" direction="column">
         <AnimatePresence exitBeforeEnter>
           {loading ? (
