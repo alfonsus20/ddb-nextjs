@@ -65,28 +65,12 @@ const Login = () => {
                   <Button type="submit" colorScheme="red">
                     Login
                   </Button>
-                  <Text>atau login dengan</Text>
-                  <Flex gap={2}>
-                    <IconButton
-                      colorScheme="red"
-                      icon={<Icon as={FaGoogle} />}
-                      aria-label="Login with Google"
-                    />
-                    <IconButton
-                      colorScheme="facebook"
-                      icon={<Icon as={FaFacebookF} />}
-                      aria-label="Login with Facebook"
-                    />
-                    <IconButton
-                      colorScheme="linkedin"
-                      icon={<Icon as={FaLinkedinIn} />}
-                      aria-label="Login with Google"
-                    />
-                  </Flex>
                   <Text>
                     Belum punya akun? Daftar di{" "}
                     <Link href="/register" passHref>
-                      <Box as="a" color='blue.500'>sini</Box>
+                      <Box as="a" color="blue.500">
+                        sini
+                      </Box>
                     </Link>{" "}
                   </Text>
                 </VStack>

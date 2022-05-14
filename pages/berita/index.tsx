@@ -1,4 +1,4 @@
-import { Box, Container, Flex, Text } from "@chakra-ui/react";
+import { Box, Container, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
 import { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import React from "react";
@@ -20,17 +20,25 @@ const Berita: NextPage<BeritaPageProps> = ({ data }) => {
         <Text fontSize="3xl" fontWeight="bold" mb={4}>
           Berita
         </Text>
-        <Flex flexWrap="wrap" gap={8} justifyContent="center">
+        <Grid
+          gridTemplateColumns={{
+            base: "repeat(1,1fr)",
+            sm: "repeat(2,1fr)",
+            md: "repeat(3,1fr)",
+          }}
+          gap={8}
+        >
           {data?.map((article) => (
-            <NewsCard
-              key={article.id}
-              id={article.id}
-              title={article.title}
-              content={article.content}
-              image={article.imageURL}
-            />
+            <GridItem key={article.id}>
+              <NewsCard
+                id={article.id}
+                title={article.title}
+                content={article.content}
+                image={article.imageURL}
+              />
+            </GridItem>
           ))}
-        </Flex>
+        </Grid>
       </Container>
     </Box>
   );

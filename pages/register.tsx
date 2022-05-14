@@ -85,24 +85,6 @@ const Register = () => {
                   <Button type="submit" colorScheme="red">
                     Daftar
                   </Button>
-                  <Text>atau daftar dengan</Text>
-                  <Flex gap={2}>
-                    <IconButton
-                      colorScheme="red"
-                      icon={<Icon as={FaGoogle} />}
-                      aria-label="Register with Google"
-                    />
-                    <IconButton
-                      colorScheme="facebook"
-                      icon={<Icon as={FaFacebookF} />}
-                      aria-label="Register with Facebook"
-                    />
-                    <IconButton
-                      colorScheme="linkedin"
-                      icon={<Icon as={FaLinkedinIn} />}
-                      aria-label="Register with Google"
-                    />
-                  </Flex>
                   <Text>
                     Sudah punya akun? Login di{" "}
                     <Link href="/login" passHref>

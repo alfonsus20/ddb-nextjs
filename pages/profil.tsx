@@ -17,6 +17,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { Field, Formik } from "formik";
+import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -25,6 +26,9 @@ import { FaEdit } from "react-icons/fa";
 const Profil = () => {
   return (
     <Container maxW="container.xl" pt={4} pb={16} px={{ base: 8, "2xl": 0 }}>
+      <Head>
+        <title>Profil</title>
+      </Head>
       <Text fontSize="3xl" fontWeight="bold" mb={4}>
         Profil Anda
       </Text>

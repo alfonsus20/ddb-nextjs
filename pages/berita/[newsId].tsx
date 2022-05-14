@@ -15,7 +15,11 @@ import {
 import Image from "next/image";
 import React from "react";
 import { NewsCard } from "../../components/Card";
-import { getArticles, getArticleById, getAllArticles } from "../../fetches/article";
+import {
+  getArticles,
+  getArticleById,
+  getAllArticles,
+} from "../../fetches/article";
 import { ArticleData } from "../../types/entities/article";
 
 type Props = {
@@ -26,8 +30,8 @@ type Props = {
 const BeritaDetail: NextPage<Props> = ({ data, otherArticles }) => {
   return (
     <Container maxW="container.xl" pt={6} pb={20}>
-      <Flex gap={8}>
-        <Box mb={6} w="65%">
+      <Flex gap={8} flexDirection={{ base: "column", md: "row" }}>
+        <Box mb={6} w={{ base: "full", md: "65%" }}>
           <Text fontSize="3xl" fontWeight="bold" mb={4}>
             {data.title}
           </Text>
@@ -49,8 +53,8 @@ const BeritaDetail: NextPage<Props> = ({ data, otherArticles }) => {
             <Text>{data.content}</Text>
           </VStack>
         </Box>
-        <Box w="35%" pt={2}>
-          <Text fontSize="2xl" fontWeight="semibold" mb={4} >
+        <Box w={{ base: "full", md: "35%" }} pt={2}>
+          <Text fontSize="2xl" fontWeight="semibold" mb={4}>
             Baca Berita Lainnya
           </Text>
           <Flex flexWrap="wrap" gap={8} justifyContent="center">

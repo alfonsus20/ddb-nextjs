@@ -13,7 +13,7 @@ type NewsProps = {
 const News = ({ title, content, image, id }: NewsProps) => {
   return (
     <Link href={`/berita/${id}`} passHref>
-      <Box as="a" maxW={400} flex="1 1 300px">
+      <Box as="a" maxW={400} w='full'>
         <Box pos="relative" width="full" height={60} mb={3}>
           <Image
             src={image}
