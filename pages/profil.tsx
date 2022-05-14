@@ -1,4 +1,5 @@
 import {
+  Badge,
   Box,
   Button,
   Circle,
@@ -17,6 +18,7 @@ import {
 } from "@chakra-ui/react";
 import { Field, Formik } from "formik";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { FaEdit } from "react-icons/fa";
 
@@ -55,9 +57,19 @@ const Profil = () => {
           </Box>
           <Box pt={2} pb={6}>
             <Text fontWeight="bold" color="red.500" fontSize="2xl" mb={1}>
-              Budi Iswanto
+              Budi Iswanto{" "}
+              <Badge ml="1" variant="solid" colorScheme="red">
+                Admin
+              </Badge>
             </Text>
             <Text>Ilmu Bisnis, 2017</Text>
+          </Box>
+          <Box>
+            <Link href="/admin" passHref>
+              <Button width="full" colorScheme="red">
+                Halaman Admin
+              </Button>
+            </Link>
           </Box>
         </Flex>
         <Box flex="1 1 auto">

@@ -26,8 +26,8 @@ type Props = {
 const BeritaDetail: NextPage<Props> = ({ data, otherArticles }) => {
   return (
     <Container maxW="container.xl" pt={6} pb={20}>
-      <Flex gap={4}>
-        <Box mb={6} w="60%">
+      <Flex gap={8}>
+        <Box mb={6} w="65%">
           <Text fontSize="3xl" fontWeight="bold" mb={4}>
             {data.title}
           </Text>
@@ -49,8 +49,8 @@ const BeritaDetail: NextPage<Props> = ({ data, otherArticles }) => {
             <Text>{data.content}</Text>
           </VStack>
         </Box>
-        <Box w="40%" pt={2}>
-          <Text fontSize="2xl" fontWeight="semibold" mb={4} textAlign="center">
+        <Box w="35%" pt={2}>
+          <Text fontSize="2xl" fontWeight="semibold" mb={4} >
             Baca Berita Lainnya
           </Text>
           <Flex flexWrap="wrap" gap={8} justifyContent="center">

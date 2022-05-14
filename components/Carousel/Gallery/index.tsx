@@ -69,7 +69,7 @@ const Gallery = () => {
             <Box key={idx} px={2}>
               <AspectRatio width="full" ratio={21 / 9} mb={2}>
                 <Flex gap={3}>
-                  <Box width="65%" bg="green.400" pos="relative" height="full">
+                  <Box width="65%" pos="relative" height="full">
                     <Image
                       src="/hbh2022/hbh-1.jpg"
                       alt="hbh"
@@ -78,7 +78,7 @@ const Gallery = () => {
                       objectPosition="center"
                     />
                   </Box>
-                  <Box width="35%" bg="red.500" height="full" pos="relative">
+                  <Box width="35%" height="full" pos="relative">
                     <Image
                       src="/hbh2022/hbh-3.jpg"
                       alt="hbh"
@@ -91,7 +91,7 @@ const Gallery = () => {
               </AspectRatio>
               <AspectRatio width="full" ratio={21 / 9} mb={4}>
                 <Flex gap={3}>
-                  <Box width="35%" bg="blue.400" pos="relative" height="full">
+                  <Box width="35%" pos="relative" height="full">
                     <Image
                       src="/hbh2022/hbh-2.jpg"
                       alt="hbh"
@@ -100,7 +100,7 @@ const Gallery = () => {
                       objectPosition="center"
                     />
                   </Box>
-                  <Box width="65%" bg="green.400" pos="relative" height="full">
+                  <Box width="65%" pos="relative" height="full">
                     <Image
                       src="/hbh2022/hbh-1.jpg"
                       alt="hbh"

@@ -46,8 +46,8 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <ChakraProvider theme={theme}>
-      <NextNProgress color="red" />
-      <Flex minH="100vh" direction="column">
+      <NextNProgress color="red" options={{ showSpinner: false }} />
+      <Box>
         <AnimatePresence exitBeforeEnter>
           {loading ? (
             <LoadingLayer key="loader" />
@@ -55,6 +55,9 @@ function MyApp({ Component, pageProps }: AppProps) {
             <ChakraBox
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { stiffness: 0 } }}
+              minH="100vh"
+              flexDirection="column"
+              display='flex'
             >
               <Navbar
                 isSidebarOpen={isSidebarOpen}
@@ -71,7 +74,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             </ChakraBox>
           )}
         </AnimatePresence>
-      </Flex>
+      </Box>
     </ChakraProvider>
   );
 }
