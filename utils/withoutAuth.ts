@@ -15,14 +15,14 @@ const withoutAuth = (WrappedComponent: NextPage) => {
     if (token) {
       if (context.res) {
         context.res?.writeHead(302, {
-          Location: "/",
+          Location: "/profil",
         });
         context.res?.end();
       } else {
-        Router.replace("/");
+        Router.replace("/profil");
       }
     }
-    return {};
+    return { token };
   };
 
   return hocComponent;

@@ -73,7 +73,7 @@ const Profil: NextPage<Props> = ({ user }) => {
                 shadow="lg"
               />
             </Box>
-            <Box pt={2} pb={6}>
+            <Box pt={2} pb={4}>
               <Text fontWeight="bold" color="red.500" fontSize="2xl" mb={1}>
                 {user?.name}
                 {user?.isAdmin && (
@@ -86,7 +86,7 @@ const Profil: NextPage<Props> = ({ user }) => {
             </Box>
             {user?.isAdmin && (
               <Link href="/admin" passHref>
-                <Button width="full" colorScheme="red">
+                <Button width="full" colorScheme="red" mb={2}>
                   Halaman Admin
                 </Button>
               </Link>

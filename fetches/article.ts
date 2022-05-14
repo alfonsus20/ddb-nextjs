@@ -1,8 +1,10 @@
 import api from "../api";
 import { APIResponse } from "../types/apiResponse";
-import {  ArticleData } from "../types/entities/article";
+import { ArticleData } from "../types/entities/article";
 
-export const getArticles = (params ?: string): APIResponse<Array<ArticleData>> => {
+export const getArticles = (
+  params?: string
+): APIResponse<Array<ArticleData>> => {
   return api.get(`articles?${params}`);
 };
 

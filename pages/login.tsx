@@ -36,7 +36,6 @@ const Login = () => {
     try {
       setLoading(true);
       const { data } = await login(body);
-      console.log(data.data);
       Cookie.set("token", data.data.token);
       Router.push("/profil");
     } catch (e) {

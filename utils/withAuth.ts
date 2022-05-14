@@ -10,9 +10,14 @@ const checkUserAuthentication = async (cookieString: string) => {
   let user = null;
 
   try {
-    const { data } = await axios.get("https://ddb-backend.herokuapp.com/profile", {
-      headers: { Authorization: `Bearer ${cookie.parse(cookieString).token}` },
-    });
+    const { data } = await axios.get(
+      "https://ddb-backend.herokuapp.com/profile",
+      {
+        headers: {
+          Authorization: `Bearer ${cookie.parse(cookieString).token}`,
+        },
+      }
+    );
     user = data.data;
   } catch (e) {
     console.log((e as AxiosError).message);
@@ -43,7 +48,7 @@ const withAuth = (
       } else {
         Router.replace(loginPath);
       }
-      return {};
+      return { user };
     }
 
     if (isAdminRoute && !user.isAdmin) {
@@ -55,7 +60,7 @@ const withAuth = (
       } else {
         Router.replace("/profil");
       }
-      return {};
+      return { user };
     }
 
     return { user };

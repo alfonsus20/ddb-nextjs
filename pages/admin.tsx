@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Badge,
   Button,
   ButtonGroup,
   Container,
+  Flex,
   Tab,
   Table,
   TableContainer,
@@ -19,14 +20,51 @@ import {
 } from "@chakra-ui/react";
 import Head from "next/head";
 import withAuth from "../utils/withAuth";
+import { getUsers } from "../fetches/user";
+import { User } from "../types/entities/user";
+import useError from "../hooks/useError";
+import { getArticles } from "../fetches/article";
+import { Article } from "../types/entities/article";
 
 const Admin = () => {
+  const [users, setUsers] = useState<Array<User>>([]);
+  const [articles, setArticles] = useState<Array<Article>>([]);
+  const [tabIndex, setTabIndex] = useState<number>(0);
+
+  const { handleError } = useError();
+
+  const fetchUsers = async () => {
+    try {
+      const { data } = await getUsers();
+      setUsers(data.data);
+    } catch (e) {
+      handleError(e);
+    }
+  };
+
+  const fetchArticles = async () => {
+    try {
+      const { data } = await getArticles();
+      setArticles(data.data);
+    } catch (e) {
+      handleError(e);
+    }
+  };
+
+  useEffect(() => {
+    if (tabIndex === 0) {
+      fetchUsers();
+    } else {
+      fetchArticles();
+    }
+  }, []);
+
   return (
     <Container maxW="container.2xl" pt={4} pb={12} px={12}>
       <Head>
         <title>Halaman Admin</title>
       </Head>
-      <Tabs isFitted>
+      <Tabs isFitted onChange={(index: number) => setTabIndex(index)}>
         <TabList>
           <Tab>Daftar Mahasiswa</Tab>
           <Tab>Daftar Berita</Tab>
@@ -45,19 +83,31 @@ const Admin = () => {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {[...Array(10)].map((_, idx) => (
+                  {users.map((user, idx) => (
                     <Tr key={idx}>
                       <Td>{idx + 1}.</Td>
-                      <Td>Alfonsus Avianto Chandrawan</Td>
+                      <Td>{user.name}</Td>
                       <Td>
-                        <Badge variant="solid" colorScheme="cyan">
-                          Mahasiswa Aktif
-                        </Badge>
+                        {user.isGraduated ? (
+                          <Badge variant="solid" colorScheme="green">
+                            Alumni
+                          </Badge>
+                        ) : (
+                          <Badge variant="solid" colorScheme="cyan">
+                            Mahasiswa Aktif
+                          </Badge>
+                        )}
                       </Td>
                       <Td>
-                        <Badge variant="solid" colorScheme="green">
-                          Sudah
-                        </Badge>
+                        {user.isVerified ? (
+                          <Badge variant="solid" colorScheme="green">
+                            Sudah
+                          </Badge>
+                        ) : (
+                          <Badge variant="solid" colorScheme="red">
+                            Belum
+                          </Badge>
+                        )}
                       </Td>
                       <Td>
                         <ButtonGroup>
@@ -72,7 +122,9 @@ const Admin = () => {
             </TableContainer>
           </TabPanel>
           <TabPanel>
-            {" "}
+            <Flex justifyContent='flex-end' mb={4}>
+              <Button colorScheme='green'>Tambah Berita</Button>
+            </Flex>
             <TableContainer>
               <Table>
                 <Thead>
@@ -84,10 +136,10 @@ const Admin = () => {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {[...Array(10)].map((_, idx) => (
+                  {articles.map((article, idx) => (
                     <Tr key={idx}>
                       <Td>{idx + 1}.</Td>
-                      <Td>Kustom Burung di Kampung Budaya</Td>
+                      <Td>{article.title}</Td>
                       <Td>28 Oktober 2021 19:03</Td>
                       <Td>
                         <ButtonGroup>
