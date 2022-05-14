@@ -18,6 +18,7 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import Head from "next/head";
+import withAuth from "../utils/withAuth";
 
 const Admin = () => {
   return (
@@ -106,4 +107,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default withAuth(Admin, true);

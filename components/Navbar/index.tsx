@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import HamburgerMenu from "react-hamburger-menu";
 import { ChakraBox } from "../Animation";
+import cookie from "cookie";
 
 type NavbarMobileProps = {
   isSidebarOpen: boolean;
@@ -14,6 +15,7 @@ type NavbarMobileProps = {
 const Navbar = ({ isSidebarOpen, toggleSidebar }: NavbarMobileProps) => {
   const [isNavbarBgShown, setIsNavbarBgShown] = useState<boolean>(false);
   const { pathname } = useRouter();
+  const isLoggedIn = !!cookie.parse(document.cookie).token;
 
   const animation = {
     initial: {
@@ -104,7 +106,7 @@ const Navbar = ({ isSidebarOpen, toggleSidebar }: NavbarMobileProps) => {
             </Box>
           </Link>
         </Flex>
-        <Link href="/login" passHref>
+        <Link href={isLoggedIn ? "/profil" : "/login"} passHref>
           <Button
             as="a"
             colorScheme={
@@ -113,7 +115,7 @@ const Navbar = ({ isSidebarOpen, toggleSidebar }: NavbarMobileProps) => {
             _hover={{ bgColor: "red.400" }}
             display={{ base: "none", md: "inherit" }}
           >
-            Login
+            {isLoggedIn ? "Profil" : "Login"}
           </Button>
         </Link>
         <Box display={{ base: "inherit", md: "none" }}>

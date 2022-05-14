@@ -17,6 +17,7 @@ import Link from "next/link";
 import React from "react";
 import { FaFacebookF, FaGoogle, FaLinkedinIn } from "react-icons/fa";
 import { object, string } from "yup";
+import withoutAuth from "../utils/withoutAuth";
 
 const LoginSchema = object({
   email: string().required().email().label("email"),
@@ -83,4 +84,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default withoutAuth(Login);
