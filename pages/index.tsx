@@ -82,7 +82,7 @@ const Home: NextPage = () => {
         justifyContent="center"
         alignItems="center"
         pos="relative"
-        minH="100vh"
+        minH={{ base: "auto", md: "100vh" }}
       >
         <Image
           src="/ub.jpg"
@@ -108,7 +108,7 @@ const Home: NextPage = () => {
           justifyContent="center"
           alignItems="center"
           px={{ base: 8, "2xl": 0 }}
-          minH="500px"
+          minH="700px"
         >
           <ChakraBox
             display="flex"
