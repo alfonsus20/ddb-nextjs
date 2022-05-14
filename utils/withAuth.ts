@@ -10,7 +10,7 @@ const checkUserAuthentication = async (cookieString: string) => {
   let user = null;
 
   try {
-    const { data } = await axios.get("http://localhost:4000/profile", {
+    const { data } = await axios.get("https://ddb-backend.herokuapp.com/profile", {
       headers: { Authorization: `Bearer ${cookie.parse(cookieString).token}` },
     });
     user = data.data;

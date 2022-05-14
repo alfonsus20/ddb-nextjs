@@ -11,7 +11,6 @@ import {
   Icon,
   IconButton,
   Input,
-  Select,
   Switch,
   Text,
   VStack,
@@ -26,12 +25,18 @@ import { FaEdit } from "react-icons/fa";
 import withAuth from "../utils/withAuth";
 import Layout from "../components/Layout";
 import { UserData } from "../types/entities/user";
+import Router from "next/router";
+import Cookie from "js-cookie";
 
 type Props = {
   user?: UserData;
 };
 
 const Profil: NextPage<Props> = ({ user }) => {
+  const handleLogout = () => {
+    Cookie.remove("token");
+    Router.push("/login");
+  };
   return (
     <Layout>
       <Container maxW="container.xl" pt={4} pb={16} px={{ base: 8, "2xl": 0 }}>
@@ -86,6 +91,14 @@ const Profil: NextPage<Props> = ({ user }) => {
                 </Button>
               </Link>
             )}
+            <Button
+              width="full"
+              colorScheme="red"
+              variant="outline"
+              onClick={handleLogout}
+            >
+              Logout
+            </Button>
           </Flex>
           <Box flex="1 1 auto">
             <Formik

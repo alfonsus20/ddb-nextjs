@@ -14,10 +14,14 @@ import {
 import { Field, Formik } from "formik";
 import Head from "next/head";
 import Link from "next/link";
-import React from "react";
-import { FaFacebookF, FaGoogle, FaLinkedinIn } from "react-icons/fa";
+import React, { useState } from "react";
 import { object, string } from "yup";
+import { login } from "../fetches/auth";
+import { LoginParams } from "../types/entities/auth";
 import withoutAuth from "../utils/withoutAuth";
+import Cookie from "js-cookie";
+import Router from "next/router";
+import useError from "../hooks/useError";
 
 const LoginSchema = object({
   email: string().required().email().label("email"),
@@ -25,6 +29,23 @@ const LoginSchema = object({
 });
 
 const Login = () => {
+  const { handleError } = useError();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const handleSubmit = async (body: LoginParams) => {
+    try {
+      setLoading(true);
+      const { data } = await login(body);
+      console.log(data.data);
+      Cookie.set("token", data.data.token);
+      Router.push("/profil");
+    } catch (e) {
+      handleError(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Box bg="red.500">
       <Head>
@@ -37,7 +58,7 @@ const Login = () => {
           </Text>
           <Formik
             initialValues={{ email: "", password: "" }}
-            onSubmit={(res) => alert(JSON.stringify(res))}
+            onSubmit={handleSubmit}
             validationSchema={LoginSchema}
           >
             {({ errors, handleSubmit }) => (
@@ -63,7 +84,7 @@ const Login = () => {
                     />
                     <FormErrorMessage>{errors.password}</FormErrorMessage>
                   </FormControl>
-                  <Button type="submit" colorScheme="red">
+                  <Button type="submit" colorScheme="red" isLoading={loading}>
                     Login
                   </Button>
                   <Text>
