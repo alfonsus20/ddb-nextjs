@@ -28,7 +28,7 @@ const RegisterSchema = object({
     .required()
     .label("konfirmasi password")
     .oneOf([ref("password")], "password harus sama"),
-  entryYear: number().required().nullable().label("angkatan"),
+  entryYear: number().required().label("angkatan"),
   majority: string().required().label("program studi"),
 });
 
@@ -72,9 +72,14 @@ const Register = () => {
               password: "",
               passwordConfirmation: "",
               majority: "",
-              entryYear: new Date().getFullYear(),
+              entryYear: "",
             }}
-            onSubmit={handleSubmit}
+            onSubmit={(data) => {
+              handleSubmit({
+                ...data,
+                entryYear: parseInt(data.entryYear, 10),
+              });
+            }}
             validationSchema={RegisterSchema}
           >
             {({ errors, handleSubmit }) => (

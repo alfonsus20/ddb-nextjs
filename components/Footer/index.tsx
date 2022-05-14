@@ -11,7 +11,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <Box bgColor="red.600" color="white">
+    <Box bgColor="#383434" color="white">
       <Flex
         maxW="container.xl"
         mx="auto"
@@ -53,13 +53,7 @@ const Footer = () => {
           </VStack>
         </Box>
       </Flex>
-      <Box
-        as="footer"
-        textAlign="center"
-        px={{ base: 8, "2xl": 0 }}
-        py={4}
-        bgColor="#333333"
-      >
+      <Box as="footer" textAlign="center" px={{ base: 8, "2xl": 0 }} py={4}>
         &copy; Dara Daeng Brawijaya 2022. All Rights Reserved.
       </Box>
     </Box>
