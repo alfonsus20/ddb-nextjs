@@ -1,5 +1,5 @@
 import React from "react";
-import LayoutAdmin from "../../components/LayoutAdmin";
+import LayoutAdmin from "../../../components/LayoutAdmin";
 import {
   Badge,
   Box,
@@ -20,7 +20,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-const Admin = () => {
+const BeritaDetail = () => {
   return (
     <LayoutAdmin>
       <TableContainer>
@@ -28,31 +28,21 @@ const Admin = () => {
           <Thead>
             <Tr>
               <Th>No.</Th>
-              <Th>Nama</Th>
-              <Th>Status</Th>
-              <Th>Terverifikasi</Th>
-              <Th>Action</Th>
+              <Th>Judul</Th>
+              <Th>Tanggal Posting</Th>
+              <Th>Aksi</Th>
             </Tr>
           </Thead>
           <Tbody>
             {[...Array(10)].map((_, idx) => (
               <Tr key={idx}>
                 <Td>{idx + 1}.</Td>
-                <Td>Alfonsus Avianto Chandrawan</Td>
-                <Td>
-                  <Badge variant="solid" colorScheme="cyan">
-                    Mahasiswa Aktif
-                  </Badge>
-                </Td>
-                <Td>
-                  <Badge variant="solid" colorScheme="green">
-                    Sudah
-                  </Badge>
-                </Td>
+                <Td>Kustom Burung di Kampung Budaya</Td>
+                <Td>28 Oktober 2021 19:03</Td>
                 <Td>
                   <ButtonGroup>
                     <Button colorScheme="blue">Edit</Button>
-                    <Button colorScheme="red">Delete</Button>
+                    <Button colorScheme="red">Hapus</Button>
                   </ButtonGroup>
                 </Td>
               </Tr>
@@ -64,4 +54,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default BeritaDetail;
