@@ -15,3 +15,7 @@ export const getAllArticles = (): APIResponse<Array<ArticleData>> => {
 export const getArticleById = (id: number): APIResponse<ArticleData> => {
   return api.get(`articles/${id}`);
 };
+
+export const deleteArticleById = (id: number): APIResponse<ArticleData> => {
+  return api.delete(`articles/${id}`);
+};
