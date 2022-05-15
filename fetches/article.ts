@@ -1,6 +1,6 @@
 import api from "../api";
 import { APIResponse } from "../types/apiResponse";
-import { ArticleData } from "../types/entities/article";
+import { ArticleData, ArticleParams } from "../types/entities/article";
 
 export const getArticles = (
   params?: string
@@ -16,6 +16,18 @@ export const getArticleById = (id: number): APIResponse<ArticleData> => {
   return api.get(`articles/${id}`);
 };
 
+export const createArticle = (
+  data: ArticleParams
+): APIResponse<ArticleData> => {
+  return api.post("articles", data);
+};
+
 export const deleteArticleById = (id: number): APIResponse<ArticleData> => {
   return api.delete(`articles/${id}`);
+};
+
+export const uploadArticleImage = (file: File): APIResponse<string> => {
+  const formData = new FormData();
+  formData.append("image", file);
+  return api.post("articles/imageUpload", formData);
 };

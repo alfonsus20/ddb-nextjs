@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Badge,
+  Box,
   Button,
   ButtonGroup,
   Container,
   Flex,
+  FormControl,
+  FormErrorMessage,
+  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -21,27 +25,50 @@ import {
   Tabs,
   Tbody,
   Td,
+  Textarea,
   Th,
   Thead,
   Tr,
   useToast,
+  VStack,
 } from "@chakra-ui/react";
 import Head from "next/head";
 import withAuth from "../utils/withAuth";
 import { getUsers } from "../fetches/user";
 import { User } from "../types/entities/user";
 import useError from "../hooks/useError";
-import { deleteArticleById, getArticles } from "../fetches/article";
-import { ArticleData } from "../types/entities/article";
+import {
+  createArticle,
+  deleteArticleById,
+  getArticles,
+  uploadArticleImage,
+} from "../fetches/article";
+import { ArticleData, ArticleParams } from "../types/entities/article";
+import { Field, Formik } from "formik";
+import dynamic from "next/dynamic";
+import { EditorProps } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { ContentState, convertToRaw, EditorState } from "draft-js";
+import draftToHtml from "draftjs-to-html";
+import htmlToDraft from "html-to-draftjs";
+import Image from "next/image";
+
+const Editor = dynamic<EditorProps>(
+  () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
+  { ssr: false }
+);
 
 const Admin = () => {
   const [users, setUsers] = useState<Array<User>>([]);
   const [articles, setArticles] = useState<Array<ArticleData>>([]);
   const [tabIndex, setTabIndex] = useState<number>(0);
   const [modalDeleteShown, setModalDeleteShown] = useState<boolean>(false);
-  const [isDeleting, setIsDeleting] = useState<boolean>(false);
+  const [modalFormShown, setModalFormShown] = useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [deletedArticleId, setDeletedArticleId] = useState<number>(0);
   const [deletedStudentId, setDeletedStudentId] = useState<number>(0);
+
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
   const { handleError } = useError();
   const toast = useToast();
@@ -66,14 +93,14 @@ const Admin = () => {
 
   const handleDeleteArticle = async () => {
     try {
-      setIsDeleting(true);
+      setIsSubmitting(true);
       await deleteArticleById(deletedArticleId);
       toast({ description: "Berhasil menghapus artikel", status: "success" });
       await fetchArticles();
     } catch (e) {
       handleError(e);
     } finally {
-      setIsDeleting(false);
+      setIsSubmitting(false);
       setModalDeleteShown(false);
     }
   };
@@ -85,6 +112,29 @@ const Admin = () => {
     } else {
       setDeletedArticleId(id);
     }
+  };
+
+  const handleCreateArticle = async (body: ArticleParams) => {
+    try {
+      setIsSubmitting(true);
+      await createArticle(body);
+      toast({ description: "Berita berhasil ditambahkan", status: "success" });
+      await fetchArticles();
+    } catch (e) {
+      handleError(e);
+    } finally {
+      setIsSubmitting(false);
+      setModalFormShown(false);
+    }
+  };
+
+  const handleShowPopupForm = () => {
+    setModalFormShown(true);
+    // if (tabIndex === 0) {
+    //   setDeletedStudentId(id);
+    // } else {
+    //   setDeletedArticleId(id);
+    // }
   };
 
   useEffect(() => {
@@ -160,7 +210,12 @@ const Admin = () => {
           </TabPanel>
           <TabPanel>
             <Flex justifyContent="flex-end" mb={4}>
-              <Button colorScheme="green">Tambah Berita</Button>
+              <Button
+                colorScheme="green"
+                onClick={() => setModalFormShown(true)}
+              >
+                Tambah Berita
+              </Button>
             </Flex>
             <TableContainer>
               <Table>
@@ -197,6 +252,8 @@ const Admin = () => {
           </TabPanel>
         </TabPanels>
       </Tabs>
+
+      {/* Delete Modal*/}
       <Modal
         isOpen={modalDeleteShown}
         onClose={() => setModalDeleteShown(false)}
@@ -210,17 +267,119 @@ const Admin = () => {
           </ModalHeader>
           <ModalBody>Apakah Anda yakin ingin menghapus data ini ?</ModalBody>
           <ModalFooter>
-            <Button mr={3} isDisabled={isDeleting}>
+            <Button mr={3} isDisabled={isSubmitting}>
               Batal
             </Button>
             <Button
               colorScheme="blue"
               onClick={handleDeleteArticle}
-              isLoading={isDeleting}
+              isLoading={isSubmitting}
             >
               Yakin
             </Button>
           </ModalFooter>
+        </ModalContent>
+      </Modal>
+
+      {/* Form Modal (add and edit)*/}
+      <Modal
+        closeOnOverlayClick={false}
+        isOpen={modalFormShown && tabIndex == 1}
+        onClose={() => setModalFormShown(false)}
+        isCentered
+        size="3xl"
+        scrollBehavior="inside"
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalCloseButton />
+          <ModalHeader>Tambah Data Berita</ModalHeader>
+          <ModalBody>
+            <Formik
+              initialValues={{
+                title: "",
+                content: draftToHtml(
+                  convertToRaw(EditorState.createEmpty().getCurrentContent())
+                ),
+                imageURL: "",
+              }}
+              onSubmit={handleCreateArticle}
+            >
+              {({ errors, handleSubmit, values, handleChange }) => (
+                <form onSubmit={handleSubmit}>
+                  <VStack spacing={4}>
+                    <FormControl isInvalid={!!errors.title}>
+                      <Field
+                        as={Input}
+                        id="title"
+                        name="title"
+                        placeholder="Judul Berita"
+                      />
+                      <FormErrorMessage>{errors.title}</FormErrorMessage>
+                    </FormControl>
+                    <Editor
+                      editorState={editorState}
+                      onEditorStateChange={(val) => {
+                        setEditorState(val);
+                        const event = {
+                          target: {
+                            name: "content",
+                            value: draftToHtml(
+                              convertToRaw(val.getCurrentContent())
+                            ),
+                          },
+                        } as React.ChangeEvent<HTMLTextAreaElement>;
+                        handleChange(event);
+                      }}
+                    />
+                    <FormControl>
+                      <Input
+                        type="file"
+                        name="imageURL"
+                        onChange={async (
+                          e: React.ChangeEvent<HTMLInputElement>
+                        ) => {
+                          const files = e.target.files;
+                          if (files != null) {
+                            const { data } = await uploadArticleImage(files[0]);
+                            console.log(data.data);
+                            handleChange({
+                              ...e,
+                              target: { name: "imageURL", value: data.data },
+                            });
+                          }
+                        }}
+                      />
+                    </FormControl>
+                    <Box pos="relative">
+                      {values.imageURL && (
+                        <Image
+                          src={values.imageURL}
+                          alt="gambar"
+                          width={480}
+                          height={270}
+                          objectFit="cover"
+                          objectPosition="center"
+                        />
+                      )}
+                    </Box>
+                  </VStack>
+                  <ButtonGroup py={4} display="flex" justifyContent="flex-end">
+                    <Button mr={3} isDisabled={isSubmitting}>
+                      Batal
+                    </Button>
+                    <Button
+                      colorScheme="blue"
+                      type="submit"
+                      isLoading={isSubmitting}
+                    >
+                      Submit
+                    </Button>
+                  </ButtonGroup>
+                </form>
+              )}
+            </Formik>
+          </ModalBody>
         </ModalContent>
       </Modal>
     </Container>

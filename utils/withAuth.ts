@@ -42,6 +42,7 @@ const withAuth = (
       if (context.res) {
         context.res?.writeHead(302, {
           Location: loginPath,
+          "Set-Cookie": "token=",
         });
 
         context.res?.end();
