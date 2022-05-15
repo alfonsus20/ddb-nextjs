@@ -2,18 +2,20 @@ import { Box, Text, VStack } from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { getBlurDataURL } from "../../../utils/helper";
 
 type NewsProps = {
   id: number;
   title: string;
   content: string;
   image: string;
+  blurHash: string;
 };
 
-const News = ({ title, content, image, id }: NewsProps) => {
+const News = ({ title, content, image, id, blurHash }: NewsProps) => {
   return (
     <Link href={`/berita/${id}`} passHref>
-      <Box as="a" maxW={400} w='full'>
+      <Box as="a" maxW={400} w="full">
         <Box pos="relative" width="full" height={60} mb={3}>
           <Image
             src={image}
@@ -21,6 +23,8 @@ const News = ({ title, content, image, id }: NewsProps) => {
             layout="fill"
             objectFit="cover"
             objectPosition="center"
+            placeholder="blur"
+            blurDataURL={getBlurDataURL(blurHash)}
           />
         </Box>
         <VStack spacing={2} align="flex-start">

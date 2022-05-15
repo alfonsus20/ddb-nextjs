@@ -1,4 +1,4 @@
-import { Box, Container, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
+import { Box, Container, Grid, GridItem, Text } from "@chakra-ui/react";
 import { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import React from "react";
@@ -35,6 +35,7 @@ const Berita: NextPage<BeritaPageProps> = ({ data }) => {
                 title={article.title}
                 content={article.content}
                 image={article.imageURL}
+                blurHash={article.blurHash}
               />
             </GridItem>
           ))}

@@ -12,6 +12,7 @@ import {
   GetStaticPropsContext,
   NextPage,
 } from "next";
+import Head from "next/head";
 import Image from "next/image";
 import React from "react";
 import { NewsCard } from "../../components/Card";
@@ -30,6 +31,9 @@ type Props = {
 const BeritaDetail: NextPage<Props> = ({ data, otherArticles }) => {
   return (
     <Container maxW="container.xl" pt={6} pb={20}>
+      <Head>
+        <title>{data.title}</title>
+      </Head>
       <Flex gap={8} flexDirection={{ base: "column", md: "row" }}>
         <Box mb={6} w={{ base: "full", md: "65%" }}>
           <Text fontSize="3xl" fontWeight="bold" mb={4}>
@@ -65,6 +69,7 @@ const BeritaDetail: NextPage<Props> = ({ data, otherArticles }) => {
                 content={article.content}
                 title={article.title}
                 image={article.imageURL}
+                blurHash={article.blurHash || "12345622"}
               />
             ))}
           </Flex>

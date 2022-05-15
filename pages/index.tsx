@@ -108,7 +108,7 @@ const Home: NextPage = () => {
           justifyContent="center"
           alignItems="center"
           px={{ base: 8, "2xl": 0 }}
-          minH="700px"
+          minH="600px"
         >
           <ChakraBox
             display="flex"

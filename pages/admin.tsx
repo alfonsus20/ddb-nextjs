@@ -57,7 +57,7 @@ const Admin = () => {
     } else {
       fetchArticles();
     }
-  }, []);
+  }, [tabIndex]);
 
   return (
     <Container maxW="container.2xl" pt={4} pb={12} px={12}>
@@ -122,8 +122,8 @@ const Admin = () => {
             </TableContainer>
           </TabPanel>
           <TabPanel>
-            <Flex justifyContent='flex-end' mb={4}>
-              <Button colorScheme='green'>Tambah Berita</Button>
+            <Flex justifyContent="flex-end" mb={4}>
+              <Button colorScheme="green">Tambah Berita</Button>
             </Flex>
             <TableContainer>
               <Table>
