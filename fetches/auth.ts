@@ -18,3 +18,9 @@ export const getAuthenticatedUser = (): APIResponse<UserData> => {
 export const editProfile = (body: User): APIResponse<UserData> => {
   return api.put(`profile`, body);
 };
+
+export const editProfileImage = (file: File): APIResponse<string> => {
+  const formData = new FormData();
+  formData.append("image", file);
+  return api.put("profile/profileImage", formData);
+};

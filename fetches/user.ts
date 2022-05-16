@@ -12,7 +12,9 @@ export const getUsers = (
 export const getAllUsers = (
   isGraduated: boolean = false
 ): APIResponse<Array<UserData>> => {
-  return api.get("users/findAll", { params: { isGraduated } });
+  return api.get("users/findAll", {
+    params: { isGraduated, isVerified: true },
+  });
 };
 
 export const getUserById = (id: number): APIResponse<UserData> => {

@@ -11,5 +11,7 @@ export const getBlurDataURL = (blurHash: string) => {
 };
 
 export const convertHtmlToPlainText = (html: string) => {
-  return html.replace(/<[^>]+>/g, "");
+  var tempDivElement = document.createElement("div");
+  tempDivElement.innerHTML = html;
+  return tempDivElement.textContent || tempDivElement.innerText || "";
 };

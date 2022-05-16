@@ -165,11 +165,17 @@ const Admin = () => {
                         >
                           Edit
                         </Button>
+                        <Button colorScheme="green" onClick={() => {}}>
+                          Verifikasi
+                        </Button>
+                        <Button colorScheme="yellow" color='white' onClick={() => {}}>
+                          Jadikan Admin
+                        </Button>
                         <Button
                           colorScheme="red"
                           onClick={() => handleShowPopupDelete(user.id)}
                         >
-                          Delete
+                          Hapus
                         </Button>
                       </ButtonGroup>
                     </Td>

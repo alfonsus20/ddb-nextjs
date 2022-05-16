@@ -8,6 +8,7 @@ export type User = {
   graduationYear?: number;
   thesisURL?: string;
   profileImageURL?: string;
+  hashBlur?: string;
   isGraduated: boolean;
   isAdmin: boolean;
   isVerified: boolean;

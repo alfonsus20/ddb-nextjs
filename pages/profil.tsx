@@ -28,8 +28,8 @@ import Layout from "../components/Layout";
 import { UserData } from "../types/entities/user";
 import Router from "next/router";
 import Cookie from "js-cookie";
-import { uploadProfileImage } from "../fetches/user";
-import { editProfile } from "../fetches/auth";
+import { editProfile, editProfileImage } from "../fetches/auth";
+import { getBlurDataURL } from "../utils/helper";
 
 type Props = {
   user?: UserData;
@@ -81,15 +81,15 @@ const Profil: NextPage<Props> = ({ user }) => {
                       overflow="hidden"
                     >
                       <Image
-                        src={
-                          values.profileImageURL
-                            ? values.profileImageURL
-                            : "/pengurus/fuady.jpg"
-                        }
+                        src={values.profileImageURL || "/pengurus/fuady.jpg"}
                         alt="fuady"
                         layout="fill"
                         objectFit="cover"
                         objectPosition="center"
+                        placeholder="blur"
+                        blurDataURL={getBlurDataURL(
+                          values.hashBlur || "12312312"
+                        )}
                       />
                     </Circle>
                     <label htmlFor="profile-image">
@@ -116,19 +116,12 @@ const Profil: NextPage<Props> = ({ user }) => {
                         const files = e.target.files;
                         if (files != null) {
                           try {
-                            const { data } = await uploadProfileImage(files[0]);
-                            const event = {
-                              target: {
-                                name: "profileImageURL",
-                                value: data.data,
-                              },
-                            } as React.ChangeEvent<HTMLInputElement>;
-                            handleChange(event);
+                            const { data } = await editProfileImage(files[0]);
                             toast({
-                              description:
-                                "Foto berhasil di upload, jangan lupa tekan tombol simpan",
+                              description: "Foto berhasil di update",
                               status: "success",
                             });
+                            window.location.reload();
                           } catch (e) {
                             console.log(e);
                           }
