@@ -3,3 +3,7 @@ export type Data = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type Paginated = {
+  totalData: number;
+};

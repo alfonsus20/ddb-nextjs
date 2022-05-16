@@ -1,11 +1,13 @@
 import api from "../api";
-import { APIResponse } from "../types/apiResponse";
+import { APIResponse, APIResponsePaginated } from "../types/apiResponse";
+import { Paginated } from "../types/entities";
 import { ArticleData, ArticleParams } from "../types/entities/article";
 
 export const getArticles = (
-  params?: string
-): APIResponse<Array<ArticleData>> => {
-  return api.get(`articles?${params}`);
+  params?: object
+): APIResponsePaginated<Array<ArticleData>> => {
+  console.log(params)
+  return api.get(`articles`, { params });
 };
 
 export const getAllArticles = (): APIResponse<Array<ArticleData>> => {
@@ -16,7 +18,10 @@ export const getArticleById = (id: number): APIResponse<ArticleData> => {
   return api.get(`articles/${id}`);
 };
 
-export const editArticle = (id: number, body : ArticleParams): APIResponse<ArticleData> => {
+export const editArticle = (
+  id: number,
+  body: ArticleParams
+): APIResponse<ArticleData> => {
   return api.put(`articles/${id}`, body);
 };
 

@@ -52,6 +52,8 @@ import { ContentState, convertToRaw, EditorState } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
 import Image from "next/image";
+import Pagination from "../components/Pagination";
+import { useRouter } from "next/router";
 
 const Editor = dynamic<EditorProps>(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -66,13 +68,13 @@ const Admin = () => {
   const [modalFormShown, setModalFormShown] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  const [articleId, setArticleId] = useState<number>(0);
-  const [studentId, setStudentId] = useState<number>(0);
+  const [totalData, setTotalData] = useState<number>(0);
 
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
   const { handleError } = useError();
   const toast = useToast();
+  const router = useRouter();
 
   const [choosenArticle, setChoosenArticle] = useState<
     ArticleData | undefined
@@ -81,8 +83,9 @@ const Admin = () => {
 
   const fetchUsers = async () => {
     try {
-      const { data } = await getUsers();
+      const { data } = await getUsers({ ...router.query });
       setUsers(data.data);
+      setTotalData(data.totalData);
     } catch (e) {
       handleError(e);
     }
@@ -90,8 +93,9 @@ const Admin = () => {
 
   const fetchArticles = async () => {
     try {
-      const { data } = await getArticles();
+      const { data } = await getArticles({ ...router.query });
       setArticles(data.data);
+      setTotalData(data.totalData);
     } catch (e) {
       handleError(e);
     }
@@ -147,22 +151,7 @@ const Admin = () => {
   };
 
   const handleShowPopupForm = (id: number) => {
-    if (tabIndex === 0) {
-      setStudentId(id);
-    } else {
-      setArticleId(id);
-      const article = articles.find((article) => article.id === id);
-      if (article) {
-        setChoosenArticle(article);
-        setEditorState(
-          EditorState.createWithContent(
-            ContentState.createFromBlockArray(
-              htmlToDraft(article.content).contentBlocks
-            )
-          )
-        );
-      }
-    }
+    setChoosenValue(id);
     setModalFormShown(true);
   };
 
@@ -177,7 +166,16 @@ const Admin = () => {
       setChoosenUser(user);
     } else {
       const article = articles.find((article) => article.id === id);
-      setChoosenArticle(article);
+      if (article) {
+        setChoosenArticle(article);
+        setEditorState(
+          EditorState.createWithContent(
+            ContentState.createFromBlockArray(
+              htmlToDraft(article.content).contentBlocks
+            )
+          )
+        );
+      }
     }
   };
 
@@ -198,13 +196,18 @@ const Admin = () => {
   };
 
   useEffect(() => {
+    router.push({ query: "" });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tabIndex]);
+
+  useEffect(() => {
     if (tabIndex === 0) {
       fetchUsers();
     } else {
       fetchArticles();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tabIndex]);
+  }, [router.query]);
 
   return (
     <Container maxW="container.2xl" pt={4} pb={12} px={12}>
@@ -232,7 +235,10 @@ const Admin = () => {
                 <Tbody>
                   {users.map((user, idx) => (
                     <Tr key={idx}>
-                      <Td>{idx + 1}.</Td>
+                      <Td>
+                        {" "}
+                        {(Number(router.query.page || 1) - 1) * 10 + idx + 1}.
+                      </Td>
                       <Td>{user.name}</Td>
                       <Td>
                         {user.isGraduated ? (
@@ -267,6 +273,7 @@ const Admin = () => {
                 </Tbody>
               </Table>
             </TableContainer>
+            <Pagination totalData={totalData} rowsPerPage={10} />
           </TabPanel>
           <TabPanel>
             <Flex justifyContent="flex-end" mb={4}>
@@ -290,7 +297,9 @@ const Admin = () => {
                 <Tbody>
                   {articles.map((article, idx) => (
                     <Tr key={idx}>
-                      <Td>{idx + 1}.</Td>
+                      <Td>
+                        {(Number(router.query.page || 1) - 1) * 10 + idx + 1}.
+                      </Td>
                       <Td>{article.title}</Td>
                       <Td>28 Oktober 2021 19:03</Td>
                       <Td>
@@ -314,6 +323,7 @@ const Admin = () => {
                 </Tbody>
               </Table>
             </TableContainer>
+            <Pagination totalData={totalData} rowsPerPage={10} />
           </TabPanel>
         </TabPanels>
       </Tabs>
