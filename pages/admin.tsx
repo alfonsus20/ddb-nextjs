@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Badge,
   Box,
@@ -25,7 +25,6 @@ import {
   Tabs,
   Tbody,
   Td,
-  Textarea,
   Th,
   Thead,
   Tr,
@@ -35,15 +34,16 @@ import {
 import Head from "next/head";
 import withAuth from "../utils/withAuth";
 import { getUsers } from "../fetches/user";
-import { User } from "../types/entities/user";
+import { User, UserData } from "../types/entities/user";
 import useError from "../hooks/useError";
 import {
   createArticle,
   deleteArticleById,
+  editArticle,
   getArticles,
   uploadArticleImage,
 } from "../fetches/article";
-import { ArticleData, ArticleParams } from "../types/entities/article";
+import { Article, ArticleData, ArticleParams } from "../types/entities/article";
 import { Field, Formik } from "formik";
 import dynamic from "next/dynamic";
 import { EditorProps } from "react-draft-wysiwyg";
@@ -59,19 +59,25 @@ const Editor = dynamic<EditorProps>(
 );
 
 const Admin = () => {
-  const [users, setUsers] = useState<Array<User>>([]);
+  const [users, setUsers] = useState<Array<UserData>>([]);
   const [articles, setArticles] = useState<Array<ArticleData>>([]);
   const [tabIndex, setTabIndex] = useState<number>(0);
   const [modalDeleteShown, setModalDeleteShown] = useState<boolean>(false);
   const [modalFormShown, setModalFormShown] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [deletedArticleId, setDeletedArticleId] = useState<number>(0);
-  const [deletedStudentId, setDeletedStudentId] = useState<number>(0);
+
+  const [articleId, setArticleId] = useState<number>(0);
+  const [studentId, setStudentId] = useState<number>(0);
 
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
   const { handleError } = useError();
   const toast = useToast();
+
+  const [choosenArticle, setChoosenArticle] = useState<
+    ArticleData | undefined
+  >();
+  const [choosenUser, setChoosenUser] = useState<UserData | undefined>();
 
   const fetchUsers = async () => {
     try {
@@ -94,24 +100,22 @@ const Admin = () => {
   const handleDeleteArticle = async () => {
     try {
       setIsSubmitting(true);
-      await deleteArticleById(deletedArticleId);
-      toast({ description: "Berhasil menghapus artikel", status: "success" });
-      await fetchArticles();
+      if (choosenArticle) {
+        await deleteArticleById(choosenArticle.id);
+        toast({ description: "Berhasil menghapus artikel", status: "success" });
+        await fetchArticles();
+      }
     } catch (e) {
       handleError(e);
     } finally {
       setIsSubmitting(false);
-      setModalDeleteShown(false);
+      handleCloseDeletePopup();
     }
   };
 
   const handleShowPopupDelete = (id: number) => {
     setModalDeleteShown(true);
-    if (tabIndex === 0) {
-      setDeletedStudentId(id);
-    } else {
-      setDeletedArticleId(id);
-    }
+    setChoosenValue(id);
   };
 
   const handleCreateArticle = async (body: ArticleParams) => {
@@ -128,13 +132,69 @@ const Admin = () => {
     }
   };
 
-  const handleShowPopupForm = () => {
+  const handleEditArticle = async (body: ArticleParams) => {
+    try {
+      setIsSubmitting(true);
+      await editArticle(choosenArticle!.id, body);
+      toast({ description: "Berita berhasil diedit", status: "success" });
+      await fetchArticles();
+    } catch (e) {
+      handleError(e);
+    } finally {
+      setIsSubmitting(false);
+      handleClosePopupForm();
+    }
+  };
+
+  const handleShowPopupForm = (id: number) => {
+    if (tabIndex === 0) {
+      setStudentId(id);
+    } else {
+      setArticleId(id);
+      const article = articles.find((article) => article.id === id);
+      if (article) {
+        setChoosenArticle(article);
+        setEditorState(
+          EditorState.createWithContent(
+            ContentState.createFromBlockArray(
+              htmlToDraft(article.content).contentBlocks
+            )
+          )
+        );
+      }
+    }
     setModalFormShown(true);
-    // if (tabIndex === 0) {
-    //   setDeletedStudentId(id);
-    // } else {
-    //   setDeletedArticleId(id);
-    // }
+  };
+
+  const handleClosePopupForm = () => {
+    setModalFormShown(false);
+    emptyChoosenValue();
+  };
+
+  const setChoosenValue = (id: number) => {
+    if (tabIndex === 0) {
+      const user = users.find((user) => user.id === id);
+      setChoosenUser(user);
+    } else {
+      const article = articles.find((article) => article.id === id);
+      setChoosenArticle(article);
+    }
+  };
+
+  const handleCloseDeletePopup = () => {
+    setModalDeleteShown(false);
+    emptyChoosenValue();
+  };
+
+  const emptyChoosenValue = () => {
+    if (tabIndex === 0) {
+      setChoosenUser(undefined);
+    } else {
+      if (choosenArticle) {
+        setChoosenArticle(undefined);
+        setEditorState(EditorState.createEmpty());
+      }
+    }
   };
 
   useEffect(() => {
@@ -235,7 +295,12 @@ const Admin = () => {
                       <Td>28 Oktober 2021 19:03</Td>
                       <Td>
                         <ButtonGroup>
-                          <Button colorScheme="blue">Edit</Button>
+                          <Button
+                            colorScheme="blue"
+                            onClick={() => handleShowPopupForm(article.id)}
+                          >
+                            Edit
+                          </Button>
                           <Button
                             colorScheme="red"
                             onClick={() => handleShowPopupDelete(article.id)}
@@ -256,7 +321,7 @@ const Admin = () => {
       {/* Delete Modal*/}
       <Modal
         isOpen={modalDeleteShown}
-        onClose={() => setModalDeleteShown(false)}
+        onClose={handleCloseDeletePopup}
         isCentered
       >
         <ModalOverlay />
@@ -267,7 +332,11 @@ const Admin = () => {
           </ModalHeader>
           <ModalBody>Apakah Anda yakin ingin menghapus data ini ?</ModalBody>
           <ModalFooter>
-            <Button mr={3} isDisabled={isSubmitting}>
+            <Button
+              mr={3}
+              onClick={handleCloseDeletePopup}
+              isDisabled={isSubmitting}
+            >
               Batal
             </Button>
             <Button
@@ -285,7 +354,7 @@ const Admin = () => {
       <Modal
         closeOnOverlayClick={false}
         isOpen={modalFormShown && tabIndex == 1}
-        onClose={() => setModalFormShown(false)}
+        onClose={handleClosePopupForm}
         isCentered
         size="3xl"
         scrollBehavior="inside"
@@ -296,14 +365,22 @@ const Admin = () => {
           <ModalHeader>Tambah Data Berita</ModalHeader>
           <ModalBody>
             <Formik
-              initialValues={{
-                title: "",
-                content: draftToHtml(
-                  convertToRaw(EditorState.createEmpty().getCurrentContent())
-                ),
-                imageURL: "",
-              }}
-              onSubmit={handleCreateArticle}
+              initialValues={
+                choosenArticle
+                  ? choosenArticle
+                  : {
+                      title: "",
+                      content: draftToHtml(
+                        convertToRaw(
+                          EditorState.createEmpty().getCurrentContent()
+                        )
+                      ),
+                      imageURL: "",
+                    }
+              }
+              onSubmit={
+                choosenArticle ? handleEditArticle : handleCreateArticle
+              }
             >
               {({ errors, handleSubmit, values, handleChange }) => (
                 <form onSubmit={handleSubmit}>

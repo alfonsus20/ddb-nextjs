@@ -16,6 +16,10 @@ export const getArticleById = (id: number): APIResponse<ArticleData> => {
   return api.get(`articles/${id}`);
 };
 
+export const editArticle = (id: number, body : ArticleParams): APIResponse<ArticleData> => {
+  return api.put(`articles/${id}`, body);
+};
+
 export const createArticle = (
   data: ArticleParams
 ): APIResponse<ArticleData> => {
