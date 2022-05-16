@@ -3,24 +3,42 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const Student = () => {
+type Props = {
+  name: string;
+  entryYear: number;
+  majority: string;
+  image: string;
+  id: number;
+  isGraduated?: boolean;
+};
+
+const Student = ({
+  name,
+  entryYear,
+  majority,
+  isGraduated = false,
+  image,
+  id,
+}: Props) => {
   return (
-    <Link href="/mahasiswa/1" passHref>
+    <Link href={`/${isGraduated ? "alumni" : "mahasiswa"}/${id}`} passHref>
       <Box as="a">
         <AspectRatio pos="relative" width="full" ratio={1}>
           <Image
-            src="/pengurus/fuady.jpg"
-            alt="fuady"
+            src={image}
+            alt={name}
             layout="fill"
             objectFit="cover"
-            objectPosition="top"
+            objectPosition="center"
           />
         </AspectRatio>
         <Box textAlign="center" p={4} shadow="md">
           <Text color="red.500" fontWeight="semibold" fontSize="lg">
-            Fuady Muhammad
+            {name}
           </Text>
-          <Text>Ilmu Ekonomi, 2017</Text>
+          <Text>
+            {majority}, {entryYear}
+          </Text>
         </Box>
       </Box>
     </Link>

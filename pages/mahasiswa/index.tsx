@@ -10,12 +10,19 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
+import { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 import { StudentCard } from "../../components/Card";
+import { getAllUsers } from "../../fetches/user";
+import { UserData } from "../../types/entities/user";
 
-const Mahasiswa = () => {
+type Props = {
+  data?: UserData[];
+};
+
+const Mahasiswa: NextPage<Props> = ({ data }) => {
   const {
     isOpen: isVisible,
     onClose,
@@ -70,17 +77,26 @@ const Mahasiswa = () => {
         }}
         gap={8}
       >
-        <StudentCard />
-        <StudentCard />
-        <StudentCard />
-        <StudentCard />
-        <StudentCard />
-        <StudentCard />
-        <StudentCard />
-        <StudentCard />
+        {data?.map((user) => (
+          <StudentCard
+            key={user.id}
+            id={user.id}
+            name={user.name}
+            majority={user.majority}
+            entryYear={user.entryYear}
+            image={user.profileImageURL || "/pengurus/fuady.jpg"}
+          />
+        ))}
       </Grid>
     </Container>
   );
 };
+
+export const getStaticProps: GetStaticProps = async () => {
+  const { data } = await getAllUsers();
+  return { props: { data: data.data } };
+};
+
+
 
 export default Mahasiswa;

@@ -1,9 +1,16 @@
-import { Container, Flex, Grid, Text } from "@chakra-ui/react";
+import { Container, Grid, Text } from "@chakra-ui/react";
+import { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import React from "react";
 import { StudentCard } from "../../components/Card";
+import { getAllUsers } from "../../fetches/user";
+import { UserData } from "../../types/entities/user";
 
-const Alumni = () => {
+type Props = {
+  data?: UserData[];
+};
+
+const Alumni: NextPage<Props> = ({ data }) => {
   return (
     <Container maxW="container.xl" pt={4} pb={16}>
       <Head>
@@ -21,17 +28,25 @@ const Alumni = () => {
         }}
         gap={8}
       >
-        <StudentCard />
-        <StudentCard />
-        <StudentCard />
-        <StudentCard />
-        <StudentCard />
-        <StudentCard />
-        <StudentCard />
-        <StudentCard />
+        {data?.map((user) => (
+          <StudentCard
+            key={user.id}
+            id={user.id}
+            name={user.name}
+            majority={user.majority}
+            entryYear={user.entryYear}
+            image={user.profileImageURL || "/pengurus/fuady.jpg"}
+            isGraduated
+          />
+        ))}
       </Grid>
     </Container>
   );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  const { data } = await getAllUsers(true);
+  return { props: { data: data.data } };
 };
 
 export default Alumni;
