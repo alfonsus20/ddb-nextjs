@@ -22,6 +22,10 @@ import {
   getAllArticles,
 } from "../../fetches/article";
 import { ArticleData } from "../../types/entities/article";
+import dayjs from "dayjs";
+import "dayjs/locale/id";
+
+dayjs.locale("id");
 
 type Props = {
   data: ArticleData;
@@ -36,8 +40,11 @@ const BeritaDetail: NextPage<Props> = ({ data, otherArticles }) => {
       </Head>
       <Flex gap={8} flexDirection={{ base: "column", md: "row" }}>
         <Box mb={6} w={{ base: "full", md: "65%" }}>
-          <Text fontSize="3xl" fontWeight="bold" mb={4}>
+          <Text fontSize="3xl" fontWeight="bold">
             {data.title}
+          </Text>
+          <Text mb={4} color='gray.600'>
+            Diposting pada {dayjs(data.createdAt).format("dddd, DD MMM YYYY HH:MM")}
           </Text>
           <AspectRatio
             mb={4}
@@ -64,6 +71,7 @@ const BeritaDetail: NextPage<Props> = ({ data, otherArticles }) => {
           <Flex flexWrap="wrap" gap={8} justifyContent="center">
             {otherArticles.map((article) => (
               <NewsCard
+                date={article.createdAt}
                 key={article.id}
                 id={article.id}
                 content={article.content}
@@ -84,7 +92,7 @@ export const getStaticProps: GetStaticProps = async (
 ) => {
   const { newsId } = ctx.params!;
   const { data } = await getArticleById(Number(newsId));
-  const { data: dataOtherArticles } = await getArticles({rowsPerPage : 3});
+  const { data: dataOtherArticles } = await getArticles({ rowsPerPage: 3 });
 
   return { props: { data: data.data, otherArticles: dataOtherArticles.data } };
 };
@@ -97,7 +105,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths,
-    fallback: 'blocking',
+    fallback: "blocking",
   };
 };
 

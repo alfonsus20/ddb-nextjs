@@ -31,6 +31,7 @@ const Berita: NextPage<BeritaPageProps> = ({ data }) => {
           {data?.map((article) => (
             <GridItem key={article.id}>
               <NewsCard
+                date={article.createdAt}
                 id={article.id}
                 title={article.title}
                 content={article.content}

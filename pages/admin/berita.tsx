@@ -46,6 +46,10 @@ import useError from "../../hooks/useError";
 import { ArticleData, ArticleParams } from "../../types/entities/article";
 import withAuth from "../../utils/withAuth";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import dayjs from 'dayjs'
+import "dayjs/locale/id"
+
+dayjs.locale('id');
 
 const Editor = dynamic<EditorProps>(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -199,14 +203,13 @@ const Berita = () => {
               </Tr>
             ) : (
               <>
-                {" "}
                 {articles.map((article, idx) => (
                   <Tr key={idx}>
                     <Td>
                       {(Number(router.query.page || 1) - 1) * 10 + idx + 1}.
                     </Td>
                     <Td>{article.title}</Td>
-                    <Td>28 Oktober 2021 19:03</Td>
+                    <Td>{dayjs(article.createdAt).format('dddd, DD-MM-YYYY HH:MM')}</Td>
                     <Td>
                       <ButtonGroup>
                         <Button

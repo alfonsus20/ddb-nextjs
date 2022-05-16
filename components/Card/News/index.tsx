@@ -3,6 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { convertHtmlToPlainText, getBlurDataURL } from "../../../utils/helper";
+import dayjs from "dayjs";
+import "dayjs/locale/id";
+
+dayjs.locale('id');
 
 type NewsProps = {
   id: number;
@@ -10,12 +14,13 @@ type NewsProps = {
   content: string;
   image: string;
   blurHash: string;
+  date: string;
 };
 
-const News = ({ title, content, image, id, blurHash }: NewsProps) => {
+const News = ({ title, content, image, id, blurHash, date }: NewsProps) => {
   return (
     <Link href={`/berita/${id}`} passHref>
-      <Box as="a" maxW={400} w="full">
+      <Box as="a" w="full">
         <Box pos="relative" width="full" height={60} mb={3}>
           <Image
             src={image}
@@ -28,7 +33,7 @@ const News = ({ title, content, image, id, blurHash }: NewsProps) => {
           />
         </Box>
         <VStack spacing={2} align="flex-start">
-          <Text fontSize="sm">27 Nov 2019 • 2 min</Text>
+          <Text fontSize="sm">{dayjs(date).format("dddd, DD MMM YYYY")}</Text>
           <Text fontSize="lg" fontWeight="semibold" noOfLines={2}>
             {title}
           </Text>
