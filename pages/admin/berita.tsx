@@ -13,6 +13,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Spinner,
   Table,
   TableContainer,
   Tbody,
@@ -57,7 +58,7 @@ const Berita = () => {
   const [modalFormShown, setModalFormShown] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [articles, setArticles] = useState<Array<ArticleData>>([]);
-
+  const [isFetching, setIsFetching] = useState<boolean>(false);
   const { handleError } = useError();
   const toast = useToast();
   const router = useRouter();
@@ -70,11 +71,14 @@ const Berita = () => {
 
   const fetchArticles = async () => {
     try {
+      setIsFetching(true);
       const { data } = await getArticles({ ...router.query });
       setArticles(data.data);
       setTotalData(data.totalData);
     } catch (e) {
       handleError(e);
+    } finally {
+      setIsFetching(false);
     }
   };
 
@@ -168,7 +172,7 @@ const Berita = () => {
   }, [router.query.page]);
 
   return (
-    <LayoutAdmin>
+    <LayoutAdmin title="Kelola Berita">
       <Flex justifyContent="flex-end" mb={4}>
         <Button colorScheme="green" onClick={() => setModalFormShown(true)}>
           Tambah Berita
@@ -185,29 +189,44 @@ const Berita = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {articles.map((article, idx) => (
-              <Tr key={idx}>
-                <Td>{(Number(router.query.page || 1) - 1) * 10 + idx + 1}.</Td>
-                <Td>{article.title}</Td>
-                <Td>28 Oktober 2021 19:03</Td>
-                <Td>
-                  <ButtonGroup>
-                    <Button
-                      colorScheme="blue"
-                      onClick={() => handleShowPopupForm(article.id)}
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      colorScheme="red"
-                      onClick={() => handleShowPopupDelete(article.id)}
-                    >
-                      Hapus
-                    </Button>
-                  </ButtonGroup>
+            {isFetching ? (
+              <Tr>
+                <Td colSpan={5}>
+                  <Flex h={400} justifyContent="center" alignItems="center">
+                    <Spinner colorScheme="red" />
+                  </Flex>
                 </Td>
               </Tr>
-            ))}
+            ) : (
+              <>
+                {" "}
+                {articles.map((article, idx) => (
+                  <Tr key={idx}>
+                    <Td>
+                      {(Number(router.query.page || 1) - 1) * 10 + idx + 1}.
+                    </Td>
+                    <Td>{article.title}</Td>
+                    <Td>28 Oktober 2021 19:03</Td>
+                    <Td>
+                      <ButtonGroup>
+                        <Button
+                          colorScheme="blue"
+                          onClick={() => handleShowPopupForm(article.id)}
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          colorScheme="red"
+                          onClick={() => handleShowPopupDelete(article.id)}
+                        >
+                          Hapus
+                        </Button>
+                      </ButtonGroup>
+                    </Td>
+                  </Tr>
+                ))}
+              </>
+            )}
           </Tbody>
         </Table>
       </TableContainer>

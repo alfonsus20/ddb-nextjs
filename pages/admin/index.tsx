@@ -2,6 +2,7 @@ import {
   Badge,
   Button,
   ButtonGroup,
+  Flex,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -9,6 +10,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Spinner,
   Table,
   TableContainer,
   Tbody,
@@ -33,6 +35,9 @@ const Admin = () => {
   const [modalDeleteShown, setModalDeleteShown] = useState<boolean>(false);
   const [modalFormShown, setModalFormShown] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
+  const [isFetching, setIsFetching] = useState<boolean>(false);
+
   const [users, setUsers] = useState<Array<UserData>>([]);
 
   const { handleError } = useError();
@@ -43,11 +48,14 @@ const Admin = () => {
 
   const fetchUsers = async () => {
     try {
+      setIsFetching(true);
       const { data } = await getUsers({ ...router.query });
       setUsers(data.data);
       setTotalData(data.totalData);
     } catch (e) {
       handleError(e);
+    } finally {
+      setIsFetching(false);
     }
   };
 
@@ -98,7 +106,7 @@ const Admin = () => {
   };
 
   return (
-    <LayoutAdmin>
+    <LayoutAdmin title="Kelola User">
       <TableContainer>
         <Table>
           <Thead>
@@ -111,50 +119,64 @@ const Admin = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {users.map((user, idx) => (
-              <Tr key={idx}>
-                <Td> {(Number(router.query.page || 1) - 1) * 10 + idx + 1}.</Td>
-                <Td>{user.name}</Td>
-                <Td>
-                  {user.isGraduated ? (
-                    <Badge variant="solid" colorScheme="green">
-                      Alumni
-                    </Badge>
-                  ) : (
-                    <Badge variant="solid" colorScheme="cyan">
-                      Mahasiswa Aktif
-                    </Badge>
-                  )}
-                </Td>
-                <Td>
-                  {user.isVerified ? (
-                    <Badge variant="solid" colorScheme="green">
-                      Sudah
-                    </Badge>
-                  ) : (
-                    <Badge variant="solid" colorScheme="red">
-                      Belum
-                    </Badge>
-                  )}
-                </Td>
-                <Td>
-                  <ButtonGroup>
-                    <Button
-                      colorScheme="blue"
-                      onClick={() => handleShowPopupForm(user.id)}
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      colorScheme="red"
-                      onClick={() => handleShowPopupDelete(user.id)}
-                    >
-                      Delete
-                    </Button>
-                  </ButtonGroup>
+            {isFetching ? (
+              <Tr>
+                <Td colSpan={5}>
+                  <Flex h={400} justifyContent="center" alignItems="center">
+                    <Spinner colorScheme="red" />
+                  </Flex>
                 </Td>
               </Tr>
-            ))}
+            ) : (
+              <>
+                {users.map((user, idx) => (
+                  <Tr key={idx}>
+                    <Td>
+                      {(Number(router.query.page || 1) - 1) * 10 + idx + 1}.
+                    </Td>
+                    <Td>{user.name}</Td>
+                    <Td>
+                      {user.isGraduated ? (
+                        <Badge variant="solid" colorScheme="green">
+                          Alumni
+                        </Badge>
+                      ) : (
+                        <Badge variant="solid" colorScheme="cyan">
+                          Mahasiswa Aktif
+                        </Badge>
+                      )}
+                    </Td>
+                    <Td>
+                      {user.isVerified ? (
+                        <Badge variant="solid" colorScheme="green">
+                          Sudah
+                        </Badge>
+                      ) : (
+                        <Badge variant="solid" colorScheme="red">
+                          Belum
+                        </Badge>
+                      )}
+                    </Td>
+                    <Td>
+                      <ButtonGroup>
+                        <Button
+                          colorScheme="blue"
+                          onClick={() => handleShowPopupForm(user.id)}
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          colorScheme="red"
+                          onClick={() => handleShowPopupDelete(user.id)}
+                        >
+                          Delete
+                        </Button>
+                      </ButtonGroup>
+                    </Td>
+                  </Tr>
+                ))}
+              </>
+            )}
           </Tbody>
         </Table>
       </TableContainer>

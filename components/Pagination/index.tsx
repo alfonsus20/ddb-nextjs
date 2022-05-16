@@ -55,7 +55,7 @@ const Pagination = ({ totalData, rowsPerPage }: Props) => {
         disabled={currentPage === 1}
       />
       <Box>
-        {currentPage} dari {totalPages}{" "}
+        {currentPage} dari {totalPages || 1}
       </Box>
       <IconButton
         icon={<Icon as={FaChevronRight} fontSize={16} />}
