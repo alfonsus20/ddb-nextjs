@@ -1,9 +1,9 @@
 import { Data } from ".";
 
 export type User = {
-  name: "admin";
-  email: "admin@yahoo.com";
-  majority: "ada deh";
+  name: string;
+  email: string;
+  majority: string;
   entryYear: number;
   graduationYear?: number;
   thesisURL?: string;

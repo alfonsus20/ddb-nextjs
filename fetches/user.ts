@@ -20,3 +20,9 @@ export const getUserById = (id: number): APIResponse<UserData> => {
 export const deleteUser = (id: number): APIResponse<UserData> => {
   return api.delete(`users/${id}`);
 };
+
+export const uploadProfileImage = (file: File): APIResponse<string> => {
+  const formData = new FormData();
+  formData.append("image", file);
+  return api.post("users/profileImageUpload", formData);
+};

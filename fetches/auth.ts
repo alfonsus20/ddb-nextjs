@@ -1,9 +1,9 @@
 import api from "../api";
 import { APIResponse } from "../types/apiResponse";
 import { LoginParams, RegisterParams } from "../types/entities/auth";
-import { UserData } from "../types/entities/user";
+import { User, UserData } from "../types/entities/user";
 
-export const login = (data: LoginParams): APIResponse<{token : string}> => {
+export const login = (data: LoginParams): APIResponse<{ token: string }> => {
   return api.post(`login`, data);
 };
 
@@ -13,4 +13,8 @@ export const register = (data: RegisterParams): APIResponse<UserData> => {
 
 export const getAuthenticatedUser = (): APIResponse<UserData> => {
   return api.get(`profile`);
+};
+
+export const editProfile = (body: User): APIResponse<UserData> => {
+  return api.put(`profile`, body);
 };
