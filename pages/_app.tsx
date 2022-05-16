@@ -1,17 +1,19 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { Box, ChakraProvider, Flex } from "@chakra-ui/react";
+import { Box, ChakraProvider } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
 import { extendTheme } from "@chakra-ui/react";
 import "@fontsource/nunito";
 import Footer from "../components/Footer";
 import { setLocale } from "yup";
 import NavbarMobile from "../components/Navbar/navbar.mobile";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import LoadingLayer from "../components/LoadingLayer";
 import { AnimatePresence } from "framer-motion";
 import { ChakraBox } from "../components/Animation";
 import NextNProgress from "nextjs-progressbar";
+import Cookie from "js-cookie";
+import { setAuthToken } from "../utils/auth";
 
 const theme = extendTheme({
   fonts: {
@@ -38,6 +40,13 @@ function MyApp({ Component, pageProps }: AppProps) {
     setIsSidebarOpen((prev) => !prev);
   };
 
+  useMemo(() => {
+    const token = Cookie.get("token");
+    if (token) {
+      setAuthToken(token);
+    }
+  }, []);
+
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -57,7 +66,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               animate={{ opacity: 1, transition: { stiffness: 0 } }}
               minH="100vh"
               flexDirection="column"
-              display='flex'
+              display="flex"
             >
               <Navbar
                 isSidebarOpen={isSidebarOpen}

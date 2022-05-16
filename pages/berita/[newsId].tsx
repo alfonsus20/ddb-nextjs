@@ -54,7 +54,7 @@ const BeritaDetail: NextPage<Props> = ({ data, otherArticles }) => {
             />
           </AspectRatio>
           <VStack alignItems="flex-start" textAlign="justify">
-            <Text>{data.content}</Text>
+            <Box dangerouslySetInnerHTML={{ __html: data.content }} />
           </VStack>
         </Box>
         <Box w={{ base: "full", md: "35%" }} pt={2}>
@@ -97,7 +97,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths,
-    fallback: false,
+    fallback: 'blocking',
   };
 };
 

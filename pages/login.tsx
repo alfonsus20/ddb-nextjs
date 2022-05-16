@@ -2,9 +2,6 @@ import {
   Box,
   Button,
   Container,
-  Flex,
-  Icon,
-  IconButton,
   Input,
   Text,
   VStack,
@@ -22,6 +19,7 @@ import withoutAuth from "../utils/withoutAuth";
 import Cookie from "js-cookie";
 import Router from "next/router";
 import useError from "../hooks/useError";
+import { setAuthToken } from "../utils/auth";
 
 const LoginSchema = object({
   email: string().required().email().label("email"),
@@ -36,7 +34,9 @@ const Login = () => {
     try {
       setLoading(true);
       const { data } = await login(body);
-      Cookie.set("token", data.data.token);
+      const { token } = data.data;
+      Cookie.set("token", token);
+      setAuthToken(token);
       Router.push("/profil");
     } catch (e) {
       handleError(e);

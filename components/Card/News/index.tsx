@@ -2,7 +2,7 @@ import { Box, Text, VStack } from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { getBlurDataURL } from "../../../utils/helper";
+import { convertHtmlToPlainText, getBlurDataURL } from "../../../utils/helper";
 
 type NewsProps = {
   id: number;
@@ -32,9 +32,9 @@ const News = ({ title, content, image, id, blurHash }: NewsProps) => {
           <Text fontSize="lg" fontWeight="semibold" noOfLines={2}>
             {title}
           </Text>
-          <Text fontSize="md" noOfLines={3}>
-            {content}
-          </Text>
+          <Box fontSize="md" noOfLines={3}>
+            {convertHtmlToPlainText(content)}
+          </Box>
         </VStack>
       </Box>
     </Link>

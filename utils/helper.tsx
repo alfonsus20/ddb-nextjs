@@ -9,3 +9,7 @@ export const getBlurDataURL = (blurHash: string) => {
   ctx.putImageData(imageData, 0, 0);
   return canvas.toDataURL();
 };
+
+export const convertHtmlToPlainText = (html: string) => {
+  return html.replace(/<[^>]+>/g, "");
+};
