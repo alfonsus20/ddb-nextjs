@@ -84,7 +84,7 @@ export const getStaticProps: GetStaticProps = async (
 ) => {
   const { newsId } = ctx.params!;
   const { data } = await getArticleById(Number(newsId));
-  const { data: dataOtherArticles } = await getArticles("rowsPerPage=3");
+  const { data: dataOtherArticles } = await getArticles({rowsPerPage : 3});
 
   return { props: { data: data.data, otherArticles: dataOtherArticles.data } };
 };

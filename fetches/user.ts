@@ -16,3 +16,7 @@ export const getAllUsers = (): APIResponse<Array<UserData>> => {
 export const getUserById = (id: number): APIResponse<UserData> => {
   return api.get(`users/${id}`);
 };
+
+export const deleteUser = (id: number): APIResponse<UserData> => {
+  return api.delete(`users/${id}`);
+};

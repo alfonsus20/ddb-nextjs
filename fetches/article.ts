@@ -1,6 +1,5 @@
 import api from "../api";
 import { APIResponse, APIResponsePaginated } from "../types/apiResponse";
-import { Paginated } from "../types/entities";
 import { ArticleData, ArticleParams } from "../types/entities/article";
 
 export const getArticles = (

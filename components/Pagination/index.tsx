@@ -29,19 +29,20 @@ const Pagination = ({ totalData, rowsPerPage }: Props) => {
   };
 
   useEffect(() => {
-    const { page } = router.query;
-    if (page) {
-      setCurrentPage(Number(page));
-    }
-  }, []);
-
-  useEffect(() => {
     if (mounted) {
+      console.log("kepanggil");
       router.push({
         query: { ...router.query, page: currentPage },
       });
     }
   }, [currentPage]);
+
+  useEffect(() => {
+    const { page } = router.query;
+    if (page) {
+      setCurrentPage(Number(page));
+    }
+  }, []);
 
   return (
     <Flex columnGap={4} alignItems="center" justifyContent="center">
