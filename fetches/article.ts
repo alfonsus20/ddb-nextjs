@@ -5,7 +5,6 @@ import { ArticleData, ArticleParams } from "../types/entities/article";
 export const getArticles = (
   params?: object
 ): APIResponsePaginated<Array<ArticleData>> => {
-  console.log(params)
   return api.get(`articles`, { params });
 };
 

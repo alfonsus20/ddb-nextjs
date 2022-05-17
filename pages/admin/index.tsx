@@ -25,7 +25,12 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import LayoutAdmin from "../../components/LayoutAdmin";
 import Pagination from "../../components/Pagination";
-import { deleteUser, getUsers } from "../../fetches/user";
+import {
+  deleteUser,
+  getUsers,
+  promoteToAdmin,
+  verifyUser,
+} from "../../fetches/user";
 import useError from "../../hooks/useError";
 import { UserData } from "../../types/entities/user";
 import withAuth from "../../utils/withAuth";
@@ -45,6 +50,11 @@ const Admin = () => {
   const router = useRouter();
 
   const [choosenUser, setChoosenUser] = useState<UserData | undefined>();
+
+  const [modalVerifyUserShown, setModalVerifyUserShown] =
+    useState<boolean>(false);
+  const [modalMakeAdminShown, setModalMakeAdminShown] =
+    useState<boolean>(false);
 
   const fetchUsers = async () => {
     try {
@@ -102,6 +112,64 @@ const Admin = () => {
     } finally {
       setIsSubmitting(false);
       handleCloseDeletePopup();
+    }
+  };
+
+  const handleCloseVerifyUserModal = () => {
+    setModalVerifyUserShown(false);
+    emptyState();
+  };
+
+  const handleCloseMakeAdminModal = () => {
+    setModalMakeAdminShown(false);
+    emptyState();
+  };
+
+  const handleShowVerifyUserModal = (id: number) => {
+    setChoosenValue(id);
+    setModalVerifyUserShown(true);
+  };
+
+  const handleShowMakeAdminModal = (id: number) => {
+    setChoosenValue(id);
+    setModalMakeAdminShown(true);
+  };
+
+  const handleMakeUserAsAdmin = async () => {
+    try {
+      setIsSubmitting(true);
+      if (choosenUser) {
+        await promoteToAdmin(choosenUser.id);
+        toast({
+          description: "User berhasil dijadikan admin",
+          status: "success",
+        });
+        await fetchUsers();
+      }
+    } catch (e) {
+      handleError(e);
+    } finally {
+      setIsSubmitting(false);
+      handleCloseMakeAdminModal();
+    }
+  };
+
+  const handleVerifyUser = async () => {
+    try {
+      setIsSubmitting(true);
+      if (choosenUser) {
+        await verifyUser(choosenUser.id);
+        toast({
+          description: "User berhasil diverifikasi",
+          status: "success",
+        });
+        await fetchUsers();
+      }
+    } catch (e) {
+      handleError(e);
+    } finally {
+      setIsSubmitting(false);
+      handleCloseVerifyUserModal();
     }
   };
 
@@ -165,10 +233,19 @@ const Admin = () => {
                         >
                           Edit
                         </Button>
-                        <Button colorScheme="green" onClick={() => {}}>
+                        <Button
+                          colorScheme="green"
+                          disabled={user.isVerified}
+                          onClick={() => handleShowVerifyUserModal(user.id)}
+                        >
                           Verifikasi
                         </Button>
-                        <Button colorScheme="yellow" color='white' onClick={() => {}}>
+                        <Button
+                          colorScheme="yellow"
+                          color="white"
+                          disabled={user.isAdmin}
+                          onClick={() => handleShowMakeAdminModal(user.id)}
+                        >
                           Jadikan Admin
                         </Button>
                         <Button
@@ -187,6 +264,7 @@ const Admin = () => {
         </Table>
       </TableContainer>
       <Pagination totalData={totalData} rowsPerPage={10} />
+      
       {/* Delete Modal*/}
       <Modal
         isOpen={modalDeleteShown}
@@ -209,6 +287,71 @@ const Admin = () => {
             <Button
               colorScheme="blue"
               onClick={handleDeleteUser}
+              isLoading={isSubmitting}
+            >
+              Yakin
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
+      {/* Verify User Modal*/}
+      <Modal
+        isOpen={modalVerifyUserShown}
+        onClose={handleCloseVerifyUserModal}
+        isCentered
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalCloseButton />
+          <ModalHeader>Verifikasi User</ModalHeader>
+          <ModalBody>
+            Apakah Anda yakin ingin menverifikasi user ini ? Data user akan di
+            tampilkan di halaman depan
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              mr={3}
+              onClick={handleCloseVerifyUserModal}
+              isDisabled={isSubmitting}
+            >
+              Batal
+            </Button>
+            <Button
+              colorScheme="blue"
+              onClick={handleVerifyUser}
+              isLoading={isSubmitting}
+            >
+              Yakin
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
+      {/* Promote User to Admin Modal*/}
+      <Modal
+        isOpen={modalMakeAdminShown}
+        onClose={handleCloseMakeAdminModal}
+        isCentered
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalCloseButton />
+          <ModalHeader>Jadikan User Admin</ModalHeader>
+          <ModalBody>
+            Apakah Anda yakin ingin menjadikan user ini sebagai admin ?
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              mr={3}
+              onClick={handleCloseMakeAdminModal}
+              isDisabled={isSubmitting}
+            >
+              Batal
+            </Button>
+            <Button
+              colorScheme="blue"
+              onClick={handleMakeUserAsAdmin}
               isLoading={isSubmitting}
             >
               Yakin

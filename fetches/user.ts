@@ -30,3 +30,11 @@ export const uploadProfileImage = (file: File): APIResponse<string> => {
   formData.append("image", file);
   return api.post("users/profileImageUpload", formData);
 };
+
+export const promoteToAdmin = (id: number): APIResponse<null> => {
+  return api.get(`/users/${id}/makeAdmin`);
+};
+
+export const verifyUser = (id: number): APIResponse<null> => {
+  return api.get(`/users/${id}/verify`);
+};

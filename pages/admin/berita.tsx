@@ -46,10 +46,10 @@ import useError from "../../hooks/useError";
 import { ArticleData, ArticleParams } from "../../types/entities/article";
 import withAuth from "../../utils/withAuth";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import dayjs from 'dayjs'
-import "dayjs/locale/id"
+import dayjs from "dayjs";
+import "dayjs/locale/id";
 
-dayjs.locale('id');
+dayjs.locale("id");
 
 const Editor = dynamic<EditorProps>(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -59,7 +59,12 @@ const Editor = dynamic<EditorProps>(
 const Berita = () => {
   const [totalData, setTotalData] = useState<number>(0);
   const [modalDeleteShown, setModalDeleteShown] = useState<boolean>(false);
+  const [modalVerifyUserShown, setModalVerifyUserShown] =
+    useState<boolean>(false);
+  const [modalMakeAdminShown, setModalMakeAdminShown] =
+    useState<boolean>(false);
   const [modalFormShown, setModalFormShown] = useState<boolean>(false);
+
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [articles, setArticles] = useState<Array<ArticleData>>([]);
   const [isFetching, setIsFetching] = useState<boolean>(false);
@@ -209,7 +214,11 @@ const Berita = () => {
                       {(Number(router.query.page || 1) - 1) * 10 + idx + 1}.
                     </Td>
                     <Td>{article.title}</Td>
-                    <Td>{dayjs(article.createdAt).format('dddd, DD-MM-YYYY HH:MM')}</Td>
+                    <Td>
+                      {dayjs(article.createdAt).format(
+                        "dddd, DD-MM-YYYY HH:MM"
+                      )}
+                    </Td>
                     <Td>
                       <ButtonGroup>
                         <Button
