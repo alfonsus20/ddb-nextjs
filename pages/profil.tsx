@@ -30,10 +30,40 @@ import Router from "next/router";
 import Cookie from "js-cookie";
 import { editProfile, editProfileImage } from "../fetches/auth";
 import { getBlurDataURL } from "../utils/helper";
+import { boolean, number, object, string } from "yup";
 
 type Props = {
   user?: UserData;
 };
+
+const EditProfileSchema = object({
+  name: string().required().label("nama lengkap"),
+  entryYear: number().required().label("angkatan"),
+  majority: string().required().label("program studi"),
+  isGraduated: boolean(),
+  graduationYear: number()
+    .when("isGraduated", {
+      is: true,
+      then: (schema) => schema.required(),
+      otherwise: (schema) => schema.optional().nullable(),
+    })
+    .label("tahun lulus").typeError("tahun lulus wajib berupa angka"),
+  thesisTitle: string()
+    .when("isGraduated", {
+      is: true,
+      then: (schema) => schema.required(),
+      otherwise: (schema) => schema.optional().nullable(),
+    })
+    .label("judul skripsi").typeError("judul skripsi wajib berupa kalimat"),
+  thesisURL: string()
+    .url()
+    .when("isGraduated", {
+      is: true,
+      then: (schema) => schema.required(),
+      otherwise: (schema) => schema.optional().nullable(),
+    })
+    .label("url skripsi").typeError("url skripsi wajib berupa kalimat"),
+});
 
 const Profil: NextPage<Props> = ({ user }) => {
   const toast = useToast();
@@ -66,8 +96,12 @@ const Profil: NextPage<Props> = ({ user }) => {
         <Text fontSize="3xl" fontWeight="bold" mb={4}>
           Profil Anda
         </Text>
-        <Formik initialValues={user!} onSubmit={handleEditProfile}>
-          {({ values, handleChange, handleSubmit }) => (
+        <Formik
+          initialValues={user!}
+          validationSchema={EditProfileSchema}
+          onSubmit={handleEditProfile}
+        >
+          {({ values, handleChange, handleSubmit, errors }) => (
             <form onSubmit={handleSubmit}>
               <Flex gap={8} direction={{ base: "column", md: "row" }}>
                 <Flex
@@ -110,13 +144,14 @@ const Profil: NextPage<Props> = ({ user }) => {
                       name="image"
                       id="profile-image"
                       hidden
+                      accept='.png, .jpg, .jpeg'
                       onChange={async (
                         e: React.ChangeEvent<HTMLInputElement>
                       ) => {
                         const files = e.target.files;
                         if (files != null) {
                           try {
-                            const { data } = await editProfileImage(files[0]);
+                            await editProfileImage(files[0]);
                             toast({
                               description: "Foto berhasil di update",
                               status: "success",
@@ -163,25 +198,24 @@ const Profil: NextPage<Props> = ({ user }) => {
                 </Flex>
                 <Box flex="1 1 auto">
                   <VStack spacing={4} maxW="container.sm">
-                    <FormControl>
+                    <FormControl isInvalid={!!errors.name}>
                       <FormLabel>Nama</FormLabel>
                       <Field as={Input} name="name" />
-                      <FormErrorMessage>Error</FormErrorMessage>
+                      <FormErrorMessage>{errors.name}</FormErrorMessage>
                     </FormControl>
                     <FormControl>
                       <FormLabel>Email</FormLabel>
                       <Field as={Input} name="email" type="email" disabled />
-                      <FormErrorMessage>Error</FormErrorMessage>
                     </FormControl>
-                    <FormControl>
+                    <FormControl isInvalid={!!errors.entryYear}>
                       <FormLabel>Angkatan</FormLabel>
                       <Field as={Input} name="entryYear" type="number" />
-                      <FormErrorMessage>Error</FormErrorMessage>
+                      <FormErrorMessage>{errors.entryYear}</FormErrorMessage>
                     </FormControl>
-                    <FormControl>
+                    <FormControl isInvalid={!!errors.majority}>
                       <FormLabel>Program Studi</FormLabel>
                       <Field as={Input} name="majority" />
-                      <FormErrorMessage>Error</FormErrorMessage>
+                      <FormErrorMessage>{errors.majority}</FormErrorMessage>
                     </FormControl>
                     <FormControl display="flex" alignItems="center" py={3}>
                       <FormLabel htmlFor="email-alerts" mb="0">
@@ -206,19 +240,30 @@ const Profil: NextPage<Props> = ({ user }) => {
                     </FormControl>
                     {values.isGraduated && (
                       <>
-                        <FormControl>
+                        <FormControl isInvalid={!!errors.graduationYear}>
                           <FormLabel>Tahun Lulus</FormLabel>
                           <Field
                             as={Input}
                             name="graduationYear"
                             type="number"
                           />
-                          <FormErrorMessage>Error</FormErrorMessage>
+                          <FormErrorMessage>
+                            {errors.graduationYear}
+                          </FormErrorMessage>
                         </FormControl>
-                        <FormControl>
+                        <FormControl isInvalid={!!errors.thesisTitle}>
+                          <FormLabel>Judul Skripsi / Tugas Akhir</FormLabel>
+                          <Field as={Input} name="thesisTitle" />
+                          <FormErrorMessage>
+                            {errors.thesisTitle}
+                          </FormErrorMessage>
+                        </FormControl>
+                        <FormControl isInvalid={!!errors.thesisURL}>
                           <FormLabel>Link Skripsi / Tugas Akhir</FormLabel>
                           <Field as={Input} name="thesisURL" />
-                          <FormErrorMessage>Error</FormErrorMessage>
+                          <FormErrorMessage>
+                            {errors.thesisURL}
+                          </FormErrorMessage>
                         </FormControl>
                       </>
                     )}

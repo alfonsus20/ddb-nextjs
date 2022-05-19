@@ -7,9 +7,24 @@ import {
   Textarea,
   VStack,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
+
+const emailDefaultValue = { subject: "", body: "" };
 
 const Footer = () => {
+  const [formData, setFormData] = useState({ ...emailDefaultValue });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormData({ ...emailDefaultValue });
+  };
+
   return (
     <Box bgColor="#383434" color="white">
       <Flex
@@ -42,14 +57,32 @@ const Footer = () => {
           <Text fontSize="2xl" fontWeight="semibold" mb={4}>
             Hubungi Kami
           </Text>
-          <VStack as="form" spacing={4} align="flex-start">
-            <Input placeholder="Nama" _placeholder={{ color: "white" }} />
+          <VStack
+            as="form"
+            method="GET"
+            action="mailto:ddbrawijaya@gmail.com"
+            onSubmit={handleSubmit}
+            spacing={4}
+            align="flex-start"
+          >
+            <Input
+              placeholder="Subjek"
+              name="subject"
+              _placeholder={{ color: "white" }}
+              value={formData.subject}
+              onChange={handleChange}
+            />
             <Textarea
               placeholder="Pesan"
               _placeholder={{ color: "white" }}
               resize="none"
+              name="body"
+              value={formData.body}
+              onChange={handleChange}
             />
-            <Button colorScheme="whiteAlpha">Kirim</Button>
+            <Button colorScheme="whiteAlpha" type="submit">
+              Kirim
+            </Button>
           </VStack>
         </Box>
       </Flex>

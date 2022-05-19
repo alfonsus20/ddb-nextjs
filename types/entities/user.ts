@@ -7,11 +7,12 @@ export type User = {
   entryYear: number;
   graduationYear?: number;
   thesisURL?: string;
+  thesisTitle?: string;
   profileImageURL?: string;
   hashBlur?: string;
-  isGraduated: boolean;
-  isAdmin: boolean;
-  isVerified: boolean;
+  isGraduated?: boolean;
+  isAdmin?: boolean;
+  isVerified?: boolean;
 };
 
 export type UserData = User & Data;

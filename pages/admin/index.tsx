@@ -21,6 +21,7 @@ import {
   useToast,
   VStack,
 } from "@chakra-ui/react";
+import { NextPage } from "next";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import LayoutAdmin from "../../components/LayoutAdmin";
@@ -35,7 +36,11 @@ import useError from "../../hooks/useError";
 import { UserData } from "../../types/entities/user";
 import withAuth from "../../utils/withAuth";
 
-const Admin = () => {
+type Props = {
+  user?: UserData;
+};
+
+const Admin: NextPage<Props> = ({ user: authenticatedUser }) => {
   const [totalData, setTotalData] = useState<number>(0);
   const [modalDeleteShown, setModalDeleteShown] = useState<boolean>(false);
   const [modalFormShown, setModalFormShown] = useState<boolean>(false);
@@ -60,7 +65,7 @@ const Admin = () => {
     try {
       setIsFetching(true);
       const { data } = await getUsers({ ...router.query });
-      setUsers(data.data);
+      setUsers(data.data.filter((user) => user.id !== authenticatedUser?.id));
       setTotalData(data.totalData);
     } catch (e) {
       handleError(e);
@@ -264,7 +269,7 @@ const Admin = () => {
         </Table>
       </TableContainer>
       <Pagination totalData={totalData} rowsPerPage={10} />
-      
+
       {/* Delete Modal*/}
       <Modal
         isOpen={modalDeleteShown}

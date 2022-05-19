@@ -59,10 +59,7 @@ const Editor = dynamic<EditorProps>(
 const Berita = () => {
   const [totalData, setTotalData] = useState<number>(0);
   const [modalDeleteShown, setModalDeleteShown] = useState<boolean>(false);
-  const [modalVerifyUserShown, setModalVerifyUserShown] =
-    useState<boolean>(false);
-  const [modalMakeAdminShown, setModalMakeAdminShown] =
-    useState<boolean>(false);
+
   const [modalFormShown, setModalFormShown] = useState<boolean>(false);
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
