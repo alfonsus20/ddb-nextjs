@@ -10,6 +10,8 @@ import React from "react";
 import { getAllUsers, getUserById } from "../../fetches/user";
 import { UserData } from "../../types/entities/user";
 
+import AvatarImg from "../../public/avatar.jpg";
+
 type Props = {
   data?: UserData;
 };
@@ -18,7 +20,7 @@ const MahasiswaDetail: NextPage<Props> = ({ data }) => {
   return (
     <Container maxW="container.xl" pt={6} pb={16}>
       <Flex
-        gap={8}
+        gap={{ base: 4, md: 8 }}
         alignItems="center"
         direction={{ base: "column", md: "row" }}
       >
@@ -29,7 +31,7 @@ const MahasiswaDetail: NextPage<Props> = ({ data }) => {
         >
           <AspectRatio pos="relative" ratio={1} width="full" height="full">
             <Image
-              src={data?.profileImageURL || "/pengurus/fuady.jpg"}
+              src={data?.profileImageURL || AvatarImg}
               alt={data?.name}
               layout="fill"
               objectFit="cover"
@@ -37,7 +39,7 @@ const MahasiswaDetail: NextPage<Props> = ({ data }) => {
             />
           </AspectRatio>
         </Box>
-        <Box flex="1 1 auto">
+        <Box flex="1 1 auto" width="full">
           <Box mb={6}>
             <Text fontWeight="bold" color="red.500" fontSize="3xl">
               {data?.name}
@@ -59,7 +61,7 @@ export const getStaticProps: GetStaticProps = async (
   const { mahasiswaId } = ctx.params!;
   const { data } = await getUserById(Number(mahasiswaId));
 
-  return { props: { data: data.data } };
+  return { props: { data: data.data }, revalidate: 60 * 60 * 24 };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {

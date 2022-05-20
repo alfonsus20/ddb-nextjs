@@ -10,6 +10,8 @@ import React from "react";
 import { getAllUsers, getUserById } from "../../fetches/user";
 import { UserData } from "../../types/entities/user";
 
+import AvatarImg from "../../public/avatar.jpg";
+
 type Props = {
   data?: UserData;
 };
@@ -17,17 +19,17 @@ type Props = {
 const AlumniDetail: NextPage<Props> = ({ data }) => {
   return (
     <Container maxW="container.xl" pt={6} pb={16}>
-      <Flex gap={8} alignItems="center">
-        <Box pos="relative" flex="0 0 300px" height={300}>
+      <Flex gap={{ base: 4, md: 8 }} alignItems="center">
+        <Box flex={{ base: "1 1 100%", md: "0 0 300px" }} width="full">
           <Image
-            src={data?.profileImageURL || "/pengurus/fuady.jpg"}
+            src={data?.profileImageURL || AvatarImg}
             alt={data?.name}
             layout="fill"
             objectFit="cover"
             objectPosition="center"
           />
         </Box>
-        <Box flex="1 1 auto">
+        <Box flex="1 1 auto" width="full">
           <Box mb={6}>
             <Text fontWeight="bold" color="red.500" fontSize="3xl">
               {data?.name}
@@ -69,7 +71,7 @@ export const getStaticProps: GetStaticProps = async (
   const { alumniId } = ctx.params!;
   const { data } = await getUserById(Number(alumniId));
 
-  return { props: { data: data.data } };
+  return { props: { data: data.data }, revalidate: 60 * 60 * 24 };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {

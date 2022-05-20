@@ -38,7 +38,7 @@ a {
   scroll-behavior: smooth;
 }
 
-html{
+html {
   scroll-padding: 100px;
 }
 
@@ -49,4 +49,9 @@ html{
 
 .lontara {
   font-family: "Lontara", sans-serif;
+}
+
+ol,
+ul {
+  padding-left: 1.5rem !important;
 }

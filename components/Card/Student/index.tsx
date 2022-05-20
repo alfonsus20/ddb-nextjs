@@ -3,11 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
+import AvatarImg from "../../../public/avatar.jpg";
+
 type Props = {
   name: string;
   entryYear: number;
   majority: string;
-  image: string;
+  image?: string;
   id: number;
   isGraduated?: boolean;
 };
@@ -25,7 +27,7 @@ const Student = ({
       <Box as="a">
         <AspectRatio pos="relative" width="full" ratio={1}>
           <Image
-            src={image}
+            src={image || AvatarImg}
             alt={name}
             layout="fill"
             objectFit="cover"

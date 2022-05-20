@@ -6,6 +6,7 @@ import {
   MdOutlineArrowForwardIos,
 } from "react-icons/md";
 import Carousel, { ButtonGroupProps } from "react-multi-carousel";
+import AvatarImg from "../../../public/avatar.jpg";
 
 const ButtonGroup = ({ next, previous }: ButtonGroupProps) => {
   return (
@@ -53,7 +54,7 @@ const StakeHolder = () => {
         customButtonGroup={<ButtonGroup />}
       >
         <StakeHolderCard
-          imageURL="/pengurus/fuady.jpg"
+          imageURL=""
           name="Fuady Muhammad"
           role="ketua"
           enterYear={2017}
@@ -61,7 +62,7 @@ const StakeHolder = () => {
           period="2020-2021"
         />
         <StakeHolderCard
-          imageURL="/pengurus/fuady.jpg"
+          imageURL=""
           name="Rato Ahmad"
           role="wakil"
           enterYear={2018}
@@ -69,7 +70,7 @@ const StakeHolder = () => {
           period="2020-2021"
         />
         <StakeHolderCard
-          imageURL="/pengurus/fuady.jpg"
+          imageURL=""
           name="Fuady Muhammad"
           role="ketua"
           enterYear={2017}
@@ -77,7 +78,7 @@ const StakeHolder = () => {
           period="2020-2021"
         />
         <StakeHolderCard
-          imageURL="/pengurus/fuady.jpg"
+          imageURL=""
           name="Rato Ahmad"
           role="wakil"
           enterYear={2018}
@@ -85,7 +86,7 @@ const StakeHolder = () => {
           period="2020-2021"
         />
         <StakeHolderCard
-          imageURL="/pengurus/fuady.jpg"
+          imageURL=""
           name="Fuady Muhammad"
           role="ketua"
           enterYear={2017}
@@ -93,7 +94,7 @@ const StakeHolder = () => {
           period="2020-2021"
         />
         <StakeHolderCard
-          imageURL="/pengurus/fuady.jpg"
+          imageURL=""
           name="Rato Ahmad"
           role="wakil"
           enterYear={2018}

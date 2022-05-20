@@ -1,9 +1,10 @@
-import { Box, Circle, Flex, Square, Text, VStack } from "@chakra-ui/react";
+import { Box, Circle, Flex, Text, VStack } from "@chakra-ui/react";
 import Image from "next/image";
 import React from "react";
+import AvatarImg from "../../../public/avatar.jpg";
 
 type StakeholderCardProps = {
-  imageURL: string;
+  imageURL?: string;
   role: "ketua" | "wakil";
   name: string;
   faculty: string;
@@ -29,7 +30,7 @@ const StakeHolder = ({
           overflow="hidden"
         >
           <Image
-            src={imageURL}
+            src={imageURL || AvatarImg}
             alt="fuady"
             layout="fill"
             objectFit="cover"

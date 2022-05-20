@@ -35,7 +35,7 @@ const Alumni: NextPage<Props> = ({ data }) => {
             name={user.name}
             majority={user.majority}
             entryYear={user.entryYear}
-            image={user.profileImageURL || "/pengurus/fuady.jpg"}
+            image={user.profileImageURL}
             isGraduated
           />
         ))}

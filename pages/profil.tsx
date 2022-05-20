@@ -31,6 +31,7 @@ import Cookie from "js-cookie";
 import { editProfile, editProfileImage } from "../fetches/auth";
 import { getBlurDataURL } from "../utils/helper";
 import { boolean, number, object, string } from "yup";
+import AvatarImg from "../public/avatar.jpg";
 
 type Props = {
   user?: UserData;
@@ -47,14 +48,16 @@ const EditProfileSchema = object({
       then: (schema) => schema.required(),
       otherwise: (schema) => schema.optional().nullable(),
     })
-    .label("tahun lulus").typeError("tahun lulus wajib berupa angka"),
+    .label("tahun lulus")
+    .typeError("tahun lulus wajib berupa angka"),
   thesisTitle: string()
     .when("isGraduated", {
       is: true,
       then: (schema) => schema.required(),
       otherwise: (schema) => schema.optional().nullable(),
     })
-    .label("judul skripsi").typeError("judul skripsi wajib berupa kalimat"),
+    .label("judul skripsi")
+    .typeError("judul skripsi wajib berupa kalimat"),
   thesisURL: string()
     .url()
     .when("isGraduated", {
@@ -62,7 +65,8 @@ const EditProfileSchema = object({
       then: (schema) => schema.required(),
       otherwise: (schema) => schema.optional().nullable(),
     })
-    .label("url skripsi").typeError("url skripsi wajib berupa kalimat"),
+    .label("url skripsi")
+    .typeError("url skripsi wajib berupa kalimat"),
 });
 
 const Profil: NextPage<Props> = ({ user }) => {
@@ -115,15 +119,11 @@ const Profil: NextPage<Props> = ({ user }) => {
                       overflow="hidden"
                     >
                       <Image
-                        src={values.profileImageURL || "/pengurus/fuady.jpg"}
+                        src={values.profileImageURL || AvatarImg}
                         alt="fuady"
                         layout="fill"
                         objectFit="cover"
                         objectPosition="center"
-                        placeholder="blur"
-                        blurDataURL={getBlurDataURL(
-                          values.hashBlur || "12312312"
-                        )}
                       />
                     </Circle>
                     <label htmlFor="profile-image">
@@ -144,7 +144,7 @@ const Profil: NextPage<Props> = ({ user }) => {
                       name="image"
                       id="profile-image"
                       hidden
-                      accept='.png, .jpg, .jpeg'
+                      accept=".png, .jpg, .jpeg"
                       onChange={async (
                         e: React.ChangeEvent<HTMLInputElement>
                       ) => {

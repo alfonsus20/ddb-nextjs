@@ -43,8 +43,9 @@ const BeritaDetail: NextPage<Props> = ({ data, otherArticles }) => {
           <Text fontSize="3xl" fontWeight="bold">
             {data.title}
           </Text>
-          <Text mb={4} color='gray.600'>
-            Diposting pada {dayjs(data.createdAt).format("dddd, DD MMM YYYY HH:MM")}
+          <Text mb={4} color="gray.600">
+            Diposting pada{" "}
+            {dayjs(data.createdAt).format("dddd, DD MMM YYYY HH:MM")}
           </Text>
           <AspectRatio
             mb={4}
@@ -69,17 +70,19 @@ const BeritaDetail: NextPage<Props> = ({ data, otherArticles }) => {
             Baca Berita Lainnya
           </Text>
           <Flex flexWrap="wrap" gap={8} justifyContent="center">
-            {otherArticles.map((article) => (
-              <NewsCard
-                date={article.createdAt}
-                key={article.id}
-                id={article.id}
-                content={article.content}
-                title={article.title}
-                image={article.imageURL}
-                blurHash={article.blurHash || "12345622"}
-              />
-            ))}
+            {otherArticles
+              .filter((article) => article.id !== data.id)
+              .map((article) => (
+                <NewsCard
+                  date={article.createdAt}
+                  key={article.id}
+                  id={article.id}
+                  content={article.content}
+                  title={article.title}
+                  image={article.imageURL}
+                  blurHash={article.blurHash || "12345622"}
+                />
+              ))}
           </Flex>
         </Box>
       </Flex>
