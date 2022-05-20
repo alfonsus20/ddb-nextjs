@@ -97,7 +97,10 @@ export const getStaticProps: GetStaticProps = async (
   const { data } = await getArticleById(Number(newsId));
   const { data: dataOtherArticles } = await getArticles({ rowsPerPage: 3 });
 
-  return { props: { data: data.data, otherArticles: dataOtherArticles.data } };
+  return {
+    props: { data: data.data, otherArticles: dataOtherArticles.data },
+    revalidate: 60 * 60 * 4,
+  };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {

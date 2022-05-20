@@ -1,4 +1,11 @@
-import { Box, Container, Flex, Text, VStack } from "@chakra-ui/react";
+import {
+  AspectRatio,
+  Box,
+  Container,
+  Flex,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import {
   GetStaticPaths,
   GetStaticProps,
@@ -19,15 +26,25 @@ type Props = {
 const AlumniDetail: NextPage<Props> = ({ data }) => {
   return (
     <Container maxW="container.xl" pt={6} pb={16}>
-      <Flex gap={{ base: 4, md: 8 }} alignItems="center">
-        <Box flex={{ base: "1 1 100%", md: "0 0 300px" }} width="full">
-          <Image
-            src={data?.profileImageURL || AvatarImg}
-            alt={data?.name}
-            layout="fill"
-            objectFit="cover"
-            objectPosition="center"
-          />
+      <Flex
+        gap={{ base: 4, md: 8 }}
+        alignItems="center"
+        direction={{ base: "column", md: "row" }}
+      >
+        <Box
+          pos="relative"
+          flex={{ base: "1 1 100%", md: "0 0 300px" }}
+          width="full"
+        >
+          <AspectRatio pos="relative" ratio={1} width="full" height="full">
+            <Image
+              src={data?.profileImageURL || AvatarImg}
+              alt={data?.name}
+              layout="fill"
+              objectFit="cover"
+              objectPosition="center"
+            />
+          </AspectRatio>
         </Box>
         <Box flex="1 1 auto" width="full">
           <Box mb={6}>
