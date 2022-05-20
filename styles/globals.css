@@ -35,6 +35,11 @@ a {
 
 * {
   box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+html{
+  scroll-padding: 100px;
 }
 
 @font-face {

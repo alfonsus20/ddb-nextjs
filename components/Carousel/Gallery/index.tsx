@@ -14,9 +14,9 @@ import {
 import Image from "next/image";
 import Carousel, { ButtonGroupProps } from "react-multi-carousel";
 
-const ButtonGroup = ({ next, previous, carouselState }: ButtonGroupProps) => {
+const ButtonGroup = ({ next, previous }: ButtonGroupProps) => {
   return (
-    <Flex justifyContent="center" columnGap={4} py={2} alignItems="center">
+    <Flex justifyContent="center" columnGap={6} pt={4} pb={2} alignItems="center">
       <IconButton
         aria-label="Prev"
         colorScheme="white"
@@ -24,7 +24,6 @@ const ButtonGroup = ({ next, previous, carouselState }: ButtonGroupProps) => {
         onClick={previous}
         icon={<Icon as={MdOutlineArrowBackIosNew} w={6} h={6} color="red" />}
       />
-      <Box>{(carouselState?.currentSlide! % 5) + 1} / 5</Box>
       <IconButton
         aria-label="Next"
         colorScheme="white"

@@ -9,6 +9,7 @@ import { VisionCard } from "../components/Card";
 import { ChakraBox, Slide } from "../components/Animation";
 import { InView } from "react-intersection-observer";
 import { MISI_LIST, VISI_LIST } from "../utils/constant";
+import Link from "next/link";
 
 const bigTitleAnimation = {
   animate: {
@@ -142,9 +143,11 @@ const Home: NextPage = () => {
           </ChakraBox>
           <Box overflow="hidden">
             <ChakraBox variants={buttonAboutUsAnimation}>
-              <Button colorScheme="red" width="fit-content">
-                Tentang Kami
-              </Button>
+              <Link passHref href="#about">
+                <Button colorScheme="red" width="fit-content">
+                  Tentang Kami
+                </Button>
+              </Link>
             </ChakraBox>
           </Box>
         </Flex>
@@ -159,7 +162,7 @@ const Home: NextPage = () => {
         direction={{ base: "column", md: "row" }}
         overflowX="hidden"
       >
-        <Box width={{ base: "full", md: "50%" }} pos="relative">
+        <Box width={{ base: "full", md: "50%" }} pos="relative" id="about">
           <Slide direction="left">
             <Image src={Kb19Image} alt="tentang" placeholder="blur" />
           </Slide>
