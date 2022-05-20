@@ -3,6 +3,10 @@ import {
   Button,
   ButtonGroup,
   Flex,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -11,6 +15,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Spinner,
+  Switch,
   Table,
   TableContainer,
   Tbody,
@@ -21,24 +26,59 @@ import {
   useToast,
   VStack,
 } from "@chakra-ui/react";
+import { Field, Formik } from "formik";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { boolean, number, object, string } from "yup";
 import LayoutAdmin from "../../components/LayoutAdmin";
 import Pagination from "../../components/Pagination";
 import {
   deleteUser,
+  editUser,
   getUsers,
   promoteToAdmin,
   verifyUser,
 } from "../../fetches/user";
 import useError from "../../hooks/useError";
-import { UserData } from "../../types/entities/user";
+import { User, UserData } from "../../types/entities/user";
 import withAuth from "../../utils/withAuth";
 
 type Props = {
   user?: UserData;
 };
+
+const EditProfileSchema = object({
+  name: string().required().label("nama lengkap"),
+  entryYear: number().required().label("angkatan"),
+  majority: string().required().label("program studi"),
+  isGraduated: boolean(),
+  graduationYear: number()
+    .when("isGraduated", {
+      is: true,
+      then: (schema) => schema.required(),
+      otherwise: (schema) => schema.optional().nullable(),
+    })
+    .label("tahun lulus")
+    .typeError("tahun lulus wajib berupa angka"),
+  thesisTitle: string()
+    .when("isGraduated", {
+      is: true,
+      then: (schema) => schema.required(),
+      otherwise: (schema) => schema.optional().nullable(),
+    })
+    .label("judul skripsi")
+    .typeError("judul skripsi wajib berupa kalimat"),
+  thesisURL: string()
+    .url()
+    .when("isGraduated", {
+      is: true,
+      then: (schema) => schema.required(),
+      otherwise: (schema) => schema.optional().nullable(),
+    })
+    .label("url skripsi")
+    .typeError("url skripsi wajib berupa kalimat"),
+});
 
 const Admin: NextPage<Props> = ({ user: authenticatedUser }) => {
   const [totalData, setTotalData] = useState<number>(0);
@@ -109,7 +149,25 @@ const Admin: NextPage<Props> = ({ user: authenticatedUser }) => {
       setIsSubmitting(true);
       if (choosenUser) {
         await deleteUser(choosenUser.id);
-        toast({ description: "Berhasil menghapus artikel", status: "success" });
+        toast({ description: "Berhasil menghapus user", status: "success" });
+        handleCloseDeletePopup();
+        await fetchUsers();
+      }
+    } catch (e) {
+      handleError(e);
+    } finally {
+      setIsSubmitting(false);
+      handleCloseDeletePopup();
+    }
+  };
+
+  const handleEditUser = async (body: User) => {
+    try {
+      setIsSubmitting(true);
+      if (choosenUser) {
+        await editUser(choosenUser.id, body);
+        toast({ description: "Berhasil mengedit user", status: "success" });
+        handleCloseEditFormModal();
         await fetchUsers();
       }
     } catch (e) {
@@ -127,6 +185,11 @@ const Admin: NextPage<Props> = ({ user: authenticatedUser }) => {
 
   const handleCloseMakeAdminModal = () => {
     setModalMakeAdminShown(false);
+    emptyState();
+  };
+
+  const handleCloseEditFormModal = () => {
+    setModalFormShown(false);
     emptyState();
   };
 
@@ -270,11 +333,140 @@ const Admin: NextPage<Props> = ({ user: authenticatedUser }) => {
       </TableContainer>
       <Pagination totalData={totalData} rowsPerPage={10} />
 
+      {/* Edit Form Modal */}
+      <Modal
+        isOpen={modalFormShown}
+        closeOnOverlayClick={false}
+        onClose={handleCloseEditFormModal}
+        isCentered
+        size="2xl"
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalCloseButton />
+          <ModalHeader>Edit Data User</ModalHeader>
+          <ModalBody>
+            <Formik
+              initialValues={choosenUser ? choosenUser : ({} as User)}
+              onSubmit={handleEditUser}
+              validationSchema={EditProfileSchema}
+            >
+              {({ errors, handleSubmit, values, handleChange }) => (
+                <form onSubmit={handleSubmit}>
+                  <VStack spacing={4}>
+                    <FormControl isInvalid={!!errors.name}>
+                      <Field
+                        as={Input}
+                        id="name"
+                        name="name"
+                        placeholder="Nama Lengkap"
+                      />
+                      <FormErrorMessage>{errors.name}</FormErrorMessage>
+                    </FormControl>
+                    <FormControl isInvalid={!!errors.entryYear}>
+                      <Field
+                        as={Input}
+                        id="entryYear"
+                        name="entryYear"
+                        placeholder="Angkatan"
+                      />
+                      <FormErrorMessage>{errors.entryYear}</FormErrorMessage>
+                    </FormControl>
+                    <FormControl isInvalid={!!errors.majority}>
+                      <Field
+                        as={Input}
+                        id="majority"
+                        name="majority"
+                        placeholder="Jurusan"
+                      />
+                      <FormErrorMessage>{errors.majority}</FormErrorMessage>
+                    </FormControl>
+                    <FormControl display="flex" alignItems="center" py={3}>
+                      <FormLabel htmlFor="email-alerts" mb="0">
+                        Sudah menjadi alumni
+                      </FormLabel>
+                      <Switch
+                        size="md"
+                        name="isGraduated"
+                        isChecked={values.isGraduated}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                          handleChange({
+                            ...e,
+                            target: {
+                              name: "isGraduated",
+                              value: e.target.checked,
+                            },
+                          });
+                        }}
+                      />
+                    </FormControl>
+                    {values.isGraduated && (
+                      <>
+                        <FormControl isInvalid={!!errors.graduationYear}>
+                          <FormLabel>Tahun Lulus</FormLabel>
+                          <Field
+                            as={Input}
+                            name="graduationYear"
+                            type="number"
+                          />
+                          <FormErrorMessage>
+                            {errors.graduationYear}
+                          </FormErrorMessage>
+                        </FormControl>
+                        <FormControl isInvalid={!!errors.thesisTitle}>
+                          <Field
+                            as={Input}
+                            id="thesisTitle"
+                            name="thesisTitle"
+                            placeholder="Judul Skripsi"
+                          />
+                          <FormErrorMessage>
+                            {errors.thesisTitle}
+                          </FormErrorMessage>
+                        </FormControl>
+                        <FormControl isInvalid={!!errors.thesisURL}>
+                          <Field
+                            as={Input}
+                            id="thesisURL"
+                            name="thesisURL"
+                            placeholder="Judul Skripsi"
+                          />
+                          <FormErrorMessage>
+                            {errors.thesisURL}
+                          </FormErrorMessage>
+                        </FormControl>
+                      </>
+                    )}
+                  </VStack>
+                  <ButtonGroup py={4} display="flex" justifyContent="flex-end">
+                    <Button
+                      mr={3}
+                      onClick={handleCloseEditFormModal}
+                      isDisabled={isSubmitting}
+                    >
+                      Batal
+                    </Button>
+                    <Button
+                      colorScheme="blue"
+                      type="submit"
+                      isLoading={isSubmitting}
+                    >
+                      Submit
+                    </Button>
+                  </ButtonGroup>
+                </form>
+              )}
+            </Formik>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+
       {/* Delete Modal*/}
       <Modal
         isOpen={modalDeleteShown}
         onClose={handleCloseDeletePopup}
         isCentered
+        closeOnOverlayClick={false}
       >
         <ModalOverlay />
         <ModalContent>

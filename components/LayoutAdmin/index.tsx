@@ -16,6 +16,7 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
+import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 import { FaChevronRight, FaDochub, FaUser } from "react-icons/fa";
@@ -30,6 +31,9 @@ const LayoutAdmin = ({ children, title }: Props) => {
 
   return (
     <Container maxW="container.2xl" pt={4} pb={12} pos="relative">
+      <Head>
+        <title>{title}</title>
+      </Head>
       <Drawer placement="left" isOpen={isOpen} onClose={onClose}>
         <DrawerOverlay />
         <DrawerContent>
@@ -62,7 +66,7 @@ const LayoutAdmin = ({ children, title }: Props) => {
             </VStack>
           </DrawerBody>
           <DrawerFooter>
-            <Button variant='outline' mr={3} onClick={onClose}>
+            <Button variant="outline" mr={3} onClick={onClose}>
               Tutup
             </Button>
           </DrawerFooter>

@@ -222,7 +222,6 @@ const Profil: NextPage<Props> = ({ user }) => {
                         Saya sudah menjadi alumni
                       </FormLabel>
                       <Switch
-                        id="email-alerts"
                         size="md"
                         colorScheme="red"
                         name="isGraduated"

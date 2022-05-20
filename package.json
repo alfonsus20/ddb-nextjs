@@ -34,8 +34,6 @@
     "react-icons": "^4.3.1",
     "react-intersection-observer": "^9.1.0",
     "react-multi-carousel": "^2.8.0",
-    "slate": "^0.78.0",
-    "slate-react": "^0.79.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {
