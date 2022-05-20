@@ -129,9 +129,10 @@ const Home: NextPage = () => {
                     key={idx}
                     variants={letterAnimation}
                     color="white"
-                    fontSize="6xl"
+                    fontSize={{ base: "5xl", sm: "7xl" }}
                     textAlign="center"
                     display="inline-block"
+                    className="lontara"
                   >
                     {a}
                   </ChakraBox>

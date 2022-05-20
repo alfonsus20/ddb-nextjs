@@ -36,3 +36,12 @@ a {
 * {
   box-sizing: border-box;
 }
+
+@font-face {
+  font-family: "Lontara";
+  src: url("../public/fonts/Lontara.otf");
+}
+
+.lontara {
+  font-family: "Lontara", sans-serif;
+}
