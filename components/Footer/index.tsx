@@ -25,7 +25,7 @@ const Footer = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     window.open(
-      `mailto:ddbrawijaya.com?subject=${formData.subject}&body=${formData.body}`
+      `mailto:ddbrawijaya@gmail.com?subject=${formData.subject}&body=${formData.body}`
     );
     setFormData({ ...emailDefaultValue });
   };
@@ -46,10 +46,14 @@ const Footer = () => {
           </Text>
           <Box>
             <Link href="/alumni" passHref>
-              <Box _hover={{ color: "red.500" }} cursor='pointer'>Data Alumni</Box>
+              <Box _hover={{ color: "red.500" }} cursor="pointer">
+                Data Alumni
+              </Box>
             </Link>
             <Link href="/mahasiswa" passHref>
-              <Box _hover={{ color: "red.500" }} cursor='pointer'>Data Mahasiswa Aktif</Box>
+              <Box _hover={{ color: "red.500" }} cursor="pointer">
+                Data Mahasiswa Aktif
+              </Box>
             </Link>
           </Box>
         </Box>
@@ -103,6 +107,7 @@ const Footer = () => {
               value={formData.subject}
               onChange={handleChange}
               required
+              data-testid="subject-input"
             />
             <Textarea
               placeholder="Pesan"
@@ -112,8 +117,9 @@ const Footer = () => {
               value={formData.body}
               onChange={handleChange}
               required
+              data-testid="body-input"
             />
-            <Button colorScheme="whiteAlpha" type="submit">
+            <Button colorScheme="whiteAlpha" type="submit" data-testid='btn-submit'>
               Kirim
             </Button>
           </VStack>

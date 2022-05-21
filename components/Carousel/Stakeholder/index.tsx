@@ -6,7 +6,6 @@ import {
   MdOutlineArrowForwardIos,
 } from "react-icons/md";
 import Carousel, { ButtonGroupProps } from "react-multi-carousel";
-import AvatarImg from "../../../public/avatar.jpg";
 
 const ButtonGroup = ({ next, previous }: ButtonGroupProps) => {
   return (

@@ -62,7 +62,7 @@ const BeritaDetail: NextPage<Props> = ({ data, otherArticles }) => {
             />
           </AspectRatio>
           <VStack alignItems="flex-start" textAlign="justify">
-            <Box dangerouslySetInnerHTML={{ __html: data.content }} />
+            <Box dangerouslySetInnerHTML={{ __html: data.content }} className='markdown' />
           </VStack>
         </Box>
         <Box w={{ base: "full", md: "35%" }} pt={2}>

@@ -51,7 +51,7 @@ html {
   font-family: "Lontara", sans-serif;
 }
 
-ol,
-ul {
+.markdown ol,
+.markdown ul {
   padding-left: 1.5rem !important;
 }
