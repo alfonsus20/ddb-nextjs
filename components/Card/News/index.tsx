@@ -33,7 +33,7 @@ const News = ({ title, content, image, id, blurHash, date }: NewsProps) => {
           />
         </Box>
         <VStack spacing={2} align="flex-start">
-          <Text fontSize="sm">{dayjs(date).format("dddd, DD MMM YYYY")}</Text>
+          <Text fontSize="sm" data-testid ='post-date'>{dayjs(date).format("dddd, DD MMM YYYY")}</Text>
           <Text fontSize="lg" fontWeight="semibold" noOfLines={2}>
             {title}
           </Text>
