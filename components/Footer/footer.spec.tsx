@@ -1,4 +1,4 @@
-import { fireEvent, render } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import Footer from ".";
 
 describe("Footer unit test", () => {
@@ -12,10 +12,12 @@ describe("Footer unit test", () => {
   });
 
   it("should be able to handle form change", () => {
-    const { getByTestId } = render(<Footer />);
+    render(<Footer />);
 
-    const subjectInput = getByTestId("subject-input") as HTMLInputElement;
-    const bodyInput = getByTestId("body-input") as HTMLTextAreaElement;
+    const subjectInput = screen.getByTestId(
+      "subject-input"
+    ) as HTMLInputElement;
+    const bodyInput = screen.getByTestId("body-input") as HTMLTextAreaElement;
 
     expect(subjectInput).toBeVisible();
     expect(bodyInput).toBeVisible();
@@ -28,15 +30,17 @@ describe("Footer unit test", () => {
   });
 
   it("should call window.open after submitting form when fields are complete", () => {
-    const { getByTestId } = render(<Footer />);
+    render(<Footer />);
 
-    const subjectInput = getByTestId("subject-input") as HTMLInputElement;
-    const bodyInput = getByTestId("body-input") as HTMLTextAreaElement;
+    const subjectInput = screen.getByTestId(
+      "subject-input"
+    ) as HTMLInputElement;
+    const bodyInput = screen.getByTestId("body-input") as HTMLTextAreaElement;
 
     fireEvent.change(subjectInput, { target: { value: "Judul" } });
     fireEvent.change(bodyInput, { target: { value: "Body" } });
 
-    const btnSubmit = getByTestId("btn-submit") as HTMLButtonElement;
+    const btnSubmit = screen.getByTestId("btn-submit") as HTMLButtonElement;
     fireEvent.click(btnSubmit);
 
     expect(global.open).toHaveBeenCalledWith(
@@ -45,13 +49,15 @@ describe("Footer unit test", () => {
   });
 
   it("should not call window.open after submitting form when fields are not complete", () => {
-    const { getByTestId } = render(<Footer />);
+    render(<Footer />);
 
-    const subjectInput = getByTestId("subject-input") as HTMLInputElement;
+    const subjectInput = screen.getByTestId(
+      "subject-input"
+    ) as HTMLInputElement;
 
     fireEvent.change(subjectInput, { target: { value: "Judul" } });
 
-    const btnSubmit = getByTestId("btn-submit") as HTMLButtonElement;
+    const btnSubmit = screen.getByTestId("btn-submit") as HTMLButtonElement;
     fireEvent.click(btnSubmit);
 
     expect(global.open).not.toHaveBeenCalled();

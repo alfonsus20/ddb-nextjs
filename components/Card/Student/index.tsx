@@ -24,7 +24,7 @@ const Student = ({
 }: Props) => {
   return (
     <Link href={`/${isGraduated ? "alumni" : "mahasiswa"}/${id}`} passHref>
-      <Box as="a">
+      <Box as="a" data-testid="student-card">
         <AspectRatio pos="relative" width="full" ratio={1}>
           <Image
             src={image || AvatarImg}

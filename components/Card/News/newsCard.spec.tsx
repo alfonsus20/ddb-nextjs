@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { NewsCard } from "..";
 import "jest-canvas-mock";
 
@@ -19,8 +19,8 @@ describe("News Card Component unit test", () => {
   });
 
   it("should render human readable date format", () => {
-    const { getByTestId } = render(<NewsCard {...mockedProps} />);
-    const date = getByTestId("post-date");
+    render(<NewsCard {...mockedProps} />);
+    const date = screen.getByTestId("post-date");
     expect(date.textContent).toEqual("Minggu, 22 Mei 2022");
   });
 });

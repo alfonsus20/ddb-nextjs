@@ -1,6 +1,5 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import React from "react";
-import { HiAnnotation } from "react-icons/hi";
 
 type VisionProps = {
   icon: React.ReactNode;
