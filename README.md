@@ -37,7 +37,7 @@ yarn start
 To run tests, run the following command
 
 ```bash
-  yarn test
+yarn test
 ```
 
 
