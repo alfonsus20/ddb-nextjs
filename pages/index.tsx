@@ -281,24 +281,26 @@ const Home: NextPage = () => {
               <Text fontSize="3xl" mb={4} fontWeight="semibold">
                 Data Anggota Dara Daeng Brawijaya
               </Text>
-              <Button
-                colorScheme="white"
-                variant="outline"
-                _hover={{ bg: "white", color: "red.500" }}
-              >
-                Selengkapnya
-              </Button>
+              <Link href="/mahasiswa" passHref>
+                <Button
+                  colorScheme="white"
+                  variant="outline"
+                  _hover={{ bg: "white", color: "red.500" }}
+                >
+                  Selengkapnya
+                </Button>
+              </Link>
             </Slide>
           </Box>
           <Box width={{ base: "full", md: "50%" }}>
             <Slide direction="right">
-              <Text mb={8}>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                Suscipit fuga incidunt maiores quas, dicta dolor earum ducimus
-                ab optio nihil numquam corrupti quos cumque veniam quia
-                exercitationem laborum dolorum sunt? Quod fugiat veniam
-                distinctio itaque voluptatum saepe modi enim, magni aperiam quos
-                velit voluptatem
+              <Text mb={8} textAlign='justify'>
+                Anggota Dara Daeng Brawijaya terdiri dari mahasiswa aktif dan
+                juga alumni yang datang dari latar belakang yang berbeda-beda
+                seperti suku, ras, dan agama. Namun, perbedaan itulah yang
+                menjadikan kami sebagai suatu keluarga yang senantiasa bisa
+                saling melengkapi dan saling membantu satu sama lain. Berikut
+                statistic anggota Dara Daeng Brawijaya
               </Text>
               <Flex justifyContent="space-around">
                 <Box textAlign="center">
