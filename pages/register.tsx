@@ -54,7 +54,6 @@ const Register = () => {
       setLoading(false);
     }
   };
-
   return (
     <Box bg="red.500">
       <Head>

@@ -1,7 +1,6 @@
 import {
   Box,
   Container,
-  VStack,
   Text,
   Flex,
   AspectRatio,
@@ -61,9 +60,10 @@ const BeritaDetail: NextPage<Props> = ({ data, otherArticles }) => {
               layout="fill"
             />
           </AspectRatio>
-          <VStack alignItems="flex-start" textAlign="justify">
-            <Box dangerouslySetInnerHTML={{ __html: data.content }} className='markdown' />
-          </VStack>
+          <Box
+            dangerouslySetInnerHTML={{ __html: data.content }}
+            className="markdown"
+          />
         </Box>
         <Box w={{ base: "full", md: "35%" }} pt={2}>
           <Text fontSize="2xl" fontWeight="semibold" mb={4}>
