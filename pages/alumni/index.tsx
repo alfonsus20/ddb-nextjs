@@ -17,7 +17,7 @@ const Alumni: NextPage<Props> = ({ data }) => {
         <title>Alumni</title>
       </Head>
       <Text fontSize="3xl" textAlign="center" fontWeight="bold" mb={4}>
-        Alumni Aktif
+        Alumni
       </Text>
       <Grid
         gridTemplateColumns={{

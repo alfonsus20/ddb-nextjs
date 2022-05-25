@@ -7,6 +7,7 @@ import {
   VStack,
   FormControl,
   FormErrorMessage,
+  useToast,
 } from "@chakra-ui/react";
 import { Field, Formik } from "formik";
 import Head from "next/head";
@@ -29,6 +30,7 @@ const LoginSchema = object({
 const Login = () => {
   const { handleError } = useError();
   const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
 
   const handleSubmit = async (body: LoginParams) => {
     try {
@@ -36,6 +38,7 @@ const Login = () => {
       const { data } = await login(body);
       const { token } = data.data;
       Cookie.set("token", token);
+      toast({ description: "Login Berhasil", status: "success" });
       setAuthToken(token);
       Router.push("/profil");
     } catch (e) {

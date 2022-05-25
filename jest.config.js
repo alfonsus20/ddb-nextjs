@@ -3,6 +3,7 @@ module.exports = {
     "**/*.{js,jsx,ts,tsx}",
     "!**/*.d.ts",
     "!**/node_modules/**",
+    "!**/.next/**",
   ],
   moduleNameMapper: {
     // Handle CSS imports (with CSS modules)
