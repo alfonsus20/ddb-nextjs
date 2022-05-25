@@ -1,9 +1,31 @@
+@import "react-multi-carousel/lib/styles.css";
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+@media screen and (max-width: 1280px) {
+  html {
+    font-size: 90%;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  html {
+    font-size: 85%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  html {
+    font-size: 80%;
+  }
+}
+
+body {
+  font-family: "Nunito", sans-serif;
 }
 
 a {
@@ -13,4 +35,23 @@ a {
 
 * {
   box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+html {
+  scroll-padding: 100px;
+}
+
+@font-face {
+  font-family: "Lontara";
+  src: url("../public/fonts/Lontara.otf");
+}
+
+.lontara {
+  font-family: "Lontara", sans-serif;
+}
+
+.markdown ol,
+.markdown ul {
+  padding-left: 1.5rem !important;
 }
