@@ -45,5 +45,5 @@ yarn test
 
 **Client:** Next.js, Typescript, Chakra UI
 
-**Server:** Node, Express, Typescript, PosgreeSQL
+**Server:** Node, Express, Typescript, PostgreSQL
 
