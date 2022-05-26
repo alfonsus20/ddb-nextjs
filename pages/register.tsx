@@ -19,6 +19,8 @@ import useError from "../hooks/useError";
 import { RegisterParams } from "../types/entities/auth";
 import Router from "next/router";
 import Cookie from "js-cookie";
+import { GetServerSideProps } from "next";
+import requireNoAuth from "../hoc/requireNoAuth";
 
 const RegisterSchema = object({
   name: string().required().label("nama lengkap"),
@@ -164,5 +166,7 @@ const Register = () => {
     </Box>
   );
 };
+
+export const getServerSideProps: GetServerSideProps = requireNoAuth();
 
 export default Register;

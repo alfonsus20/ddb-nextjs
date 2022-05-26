@@ -27,7 +27,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { Field, Formik } from "formik";
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { boolean, number, object, string } from "yup";
@@ -40,9 +40,9 @@ import {
   promoteToAdmin,
   verifyUser,
 } from "../../fetches/user";
+import requireAuth from "../../hoc/requireAuth";
 import useError from "../../hooks/useError";
 import { User, UserData } from "../../types/entities/user";
-import withAuth from "../../utils/withAuth";
 
 type Props = {
   user?: UserData;
@@ -560,4 +560,8 @@ const Admin: NextPage<Props> = ({ user: authenticatedUser }) => {
   );
 };
 
-export default withAuth(Admin, true);
+export const getServerSideProps: GetServerSideProps = requireAuth({
+  isAdmin: true,
+});
+
+export default Admin;

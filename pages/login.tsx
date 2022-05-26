@@ -16,11 +16,13 @@ import React, { useState } from "react";
 import { object, string } from "yup";
 import { login } from "../fetches/auth";
 import { LoginParams } from "../types/entities/auth";
-import withoutAuth from "../utils/withoutAuth";
 import Cookie from "js-cookie";
 import Router from "next/router";
 import useError from "../hooks/useError";
 import { setAuthToken } from "../utils/auth";
+import useEffectOnce from "../hooks/useEffectOnce";
+import requireNoAuth from "../hoc/requireNoAuth";
+import { GetServerSideProps } from "next";
 
 const LoginSchema = object({
   email: string().required().email().label("email"),
@@ -47,6 +49,12 @@ const Login = () => {
       setLoading(false);
     }
   };
+
+  useEffectOnce(() => {
+    if (!!Cookie.get("token")) {
+      Cookie.remove("token");
+    }
+  });
 
   return (
     <Box bg="red.500">
@@ -107,4 +115,6 @@ const Login = () => {
   );
 };
 
-export default withoutAuth(Login);
+export const getServerSideProps: GetServerSideProps = requireNoAuth();
+
+export default Login;

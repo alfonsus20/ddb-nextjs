@@ -17,19 +17,19 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { Field, Formik } from "formik";
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { FaEdit } from "react-icons/fa";
-import withAuth from "../utils/withAuth";
 import { UserData } from "../types/entities/user";
 import Router from "next/router";
 import Cookie from "js-cookie";
 import { editProfile, editProfileImage } from "../fetches/auth";
 import { boolean, number, object, string } from "yup";
 import AvatarImg from "../public/avatar.jpg";
+import requireAuth from "../hoc/requireAuth";
 
 type Props = {
   user?: UserData;
@@ -270,4 +270,6 @@ const Profil: NextPage<Props> = ({ user }) => {
   );
 };
 
-export default withAuth(Profil);
+export const getServerSideProps: GetServerSideProps = requireAuth({});
+
+export default Profil;

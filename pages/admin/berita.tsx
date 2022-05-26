@@ -42,12 +42,13 @@ import {
   getArticles,
   uploadArticleImage,
 } from "../../fetches/article";
-import useError from "../../hooks/useError";
+import { GetServerSideProps } from "next";
 import { ArticleData, ArticleParams } from "../../types/entities/article";
-import withAuth from "../../utils/withAuth";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import useError from "../../hooks/useError";
 import dayjs from "dayjs";
+import requireAuth from "../../hoc/requireAuth";
 import "dayjs/locale/id";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 dayjs.locale("id");
 
@@ -386,4 +387,6 @@ const Berita = () => {
   );
 };
 
-export default withAuth(Berita, true);
+export const getServerSideProps: GetServerSideProps = requireAuth({});
+
+export default Berita;

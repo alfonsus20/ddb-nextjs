@@ -294,7 +294,7 @@ const Home: NextPage = () => {
           </Box>
           <Box width={{ base: "full", md: "50%" }}>
             <Slide direction="right">
-              <Text mb={8} textAlign='justify'>
+              <Text mb={8} textAlign="justify">
                 Anggota Dara Daeng Brawijaya terdiri dari mahasiswa aktif dan
                 juga alumni yang datang dari latar belakang yang berbeda-beda
                 seperti suku, ras, dan agama. Namun, perbedaan itulah yang
