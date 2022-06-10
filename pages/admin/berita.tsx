@@ -46,7 +46,7 @@ import { GetServerSideProps } from "next";
 import { ArticleData, ArticleParams } from "../../types/entities/article";
 import useError from "../../hooks/useError";
 import dayjs from "dayjs";
-import requireAuth from "../../hoc/requireAuth";
+import requireAuth from "../../auth/requireAuth";
 import "dayjs/locale/id";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 

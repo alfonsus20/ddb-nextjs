@@ -20,7 +20,7 @@ import { RegisterParams } from "../types/entities/auth";
 import Router from "next/router";
 import Cookie from "js-cookie";
 import { GetServerSideProps } from "next";
-import requireNoAuth from "../hoc/requireNoAuth";
+import requireNoAuth from "../auth/requireNoAuth";
 
 const RegisterSchema = object({
   name: string().required().label("nama lengkap"),

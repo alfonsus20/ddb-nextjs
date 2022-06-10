@@ -21,7 +21,7 @@ import Router from "next/router";
 import useError from "../hooks/useError";
 import { setAuthToken } from "../utils/auth";
 import useEffectOnce from "../hooks/useEffectOnce";
-import requireNoAuth from "../hoc/requireNoAuth";
+import requireNoAuth from "../auth/requireNoAuth";
 import { GetServerSideProps } from "next";
 
 const LoginSchema = object({

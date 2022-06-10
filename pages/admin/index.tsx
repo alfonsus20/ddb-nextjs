@@ -40,7 +40,7 @@ import {
   promoteToAdmin,
   verifyUser,
 } from "../../fetches/user";
-import requireAuth from "../../hoc/requireAuth";
+import requireAuth from "../../auth/requireAuth";
 import useError from "../../hooks/useError";
 import { User, UserData } from "../../types/entities/user";
 

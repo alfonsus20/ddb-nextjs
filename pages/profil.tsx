@@ -29,7 +29,7 @@ import Cookie from "js-cookie";
 import { editProfile, editProfileImage } from "../fetches/auth";
 import { boolean, number, object, string } from "yup";
 import AvatarImg from "../public/avatar.jpg";
-import requireAuth from "../hoc/requireAuth";
+import requireAuth from "../auth/requireAuth";
 import useError from "../hooks/useError";
 
 type Props = {
