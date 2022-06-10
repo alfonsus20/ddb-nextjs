@@ -3,7 +3,7 @@ import axios from "axios";
 
 const requireAuth = ({ isAdmin = false }: { isAdmin?: boolean }) => {
   return async (ctx: GetServerSidePropsContext) => {
-    const { req } = ctx;
+    const { req , res} = ctx;
     const { token } = req.cookies;
 
     try {
@@ -12,7 +12,7 @@ const requireAuth = ({ isAdmin = false }: { isAdmin?: boolean }) => {
       }
 
       const { data } = await axios.get(
-        "https://ddb-backend.herokuapp.com/profile",
+        "https://api.ddbrawijaya.com/profile",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -26,6 +26,7 @@ const requireAuth = ({ isAdmin = false }: { isAdmin?: boolean }) => {
 
       return { props: { user: data.data } };
     } catch (e) {
+      res.setHeader("Set-Cookie", [`token=deleted`])
       return { redirect: { destination: "/login" }, props: {} };
     }
   };

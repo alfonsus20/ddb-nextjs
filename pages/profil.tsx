@@ -30,6 +30,7 @@ import { editProfile, editProfileImage } from "../fetches/auth";
 import { boolean, number, object, string } from "yup";
 import AvatarImg from "../public/avatar.jpg";
 import requireAuth from "../hoc/requireAuth";
+import useError from "../hooks/useError";
 
 type Props = {
   user?: UserData;
@@ -70,6 +71,7 @@ const EditProfileSchema = object({
 const Profil: NextPage<Props> = ({ user }) => {
   const toast = useToast();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const { handleError } = useError();
 
   const handleLogout = () => {
     Cookie.remove("token");
@@ -81,9 +83,8 @@ const Profil: NextPage<Props> = ({ user }) => {
       setIsSubmitting(true);
       await editProfile(body);
       toast({ description: "Sukses", status: "success" });
-      window.location.reload();
     } catch (e) {
-      console.log(e);
+      handleError(e);
     } finally {
       setIsSubmitting(false);
     }

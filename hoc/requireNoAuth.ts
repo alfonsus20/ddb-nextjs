@@ -6,7 +6,7 @@ const requireNoAuth = () => {
     const { token } = req.cookies;
 
     try {
-      if (token) {
+      if (token && token !== 'deleted') {
         throw new Error("Require no token");
       }
       return { props: {} };
