@@ -120,6 +120,7 @@ const Admin: NextPage<Props> = ({ user: authenticatedUser }) => {
 
   useEffect(() => {
     fetchUsers();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query.page]);
 
   const handleShowPopupForm = (id: number) => {

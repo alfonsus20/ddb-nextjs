@@ -60,21 +60,18 @@ const Editor = dynamic<EditorProps>(
 const Berita = () => {
   const [totalData, setTotalData] = useState<number>(0);
   const [modalDeleteShown, setModalDeleteShown] = useState<boolean>(false);
-
   const [modalFormShown, setModalFormShown] = useState<boolean>(false);
-
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [articles, setArticles] = useState<Array<ArticleData>>([]);
   const [isFetching, setIsFetching] = useState<boolean>(false);
+  const [choosenArticle, setChoosenArticle] = useState<ArticleData | undefined>(
+    undefined
+  );
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+
   const { handleError } = useError();
   const toast = useToast();
   const router = useRouter();
-
-  const [choosenArticle, setChoosenArticle] = useState<
-    ArticleData | undefined
-  >();
-
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
   const fetchArticles = async () => {
     try {
@@ -176,6 +173,7 @@ const Berita = () => {
 
   useEffect(() => {
     fetchArticles();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query.page]);
 
   return (
@@ -253,7 +251,7 @@ const Berita = () => {
         <ModalOverlay />
         <ModalContent>
           <ModalCloseButton />
-          <ModalHeader>Tambah Data Berita</ModalHeader>
+          <ModalHeader>Edit Data Berita</ModalHeader>
           <ModalBody>
             <Formik
               initialValues={

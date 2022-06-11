@@ -48,7 +48,7 @@ const Berita: NextPage<BeritaPageProps> = ({ data }) => {
 
 export const getStaticProps: GetStaticProps = async () => {
   const { data } = await getArticles();
-  return { props: { data: data.data } };
+  return { props: { data: data.data }, revalidate: 60 * 60 * 4 };
 };
 
 export default Berita;
