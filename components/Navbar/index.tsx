@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
 import { Box, Button, Flex } from "@chakra-ui/react";
+import cookie from "cookie";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import HamburgerMenu from "react-hamburger-menu";
 import { ChakraBox } from "../Animation";
-import cookie from "cookie";
 
 type NavbarMobileProps = {
   isSidebarOpen: boolean;

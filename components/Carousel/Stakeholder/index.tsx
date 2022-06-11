@@ -1,11 +1,10 @@
 import { Container, Flex, Icon, IconButton } from "@chakra-ui/react";
-import React from "react";
-import { StakeHolderCard } from "../../Card";
 import {
   MdOutlineArrowBackIosNew,
-  MdOutlineArrowForwardIos,
+  MdOutlineArrowForwardIos
 } from "react-icons/md";
 import Carousel, { ButtonGroupProps } from "react-multi-carousel";
+import { StakeHolderCard } from "../../Card";
 
 const ButtonGroup = ({ next, previous }: ButtonGroupProps) => {
   return (

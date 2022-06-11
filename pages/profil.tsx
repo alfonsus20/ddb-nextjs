@@ -14,23 +14,23 @@ import {
   Switch,
   Text,
   useToast,
-  VStack,
+  VStack
 } from "@chakra-ui/react";
 import { Field, Formik } from "formik";
+import Cookie from "js-cookie";
 import { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import Router from "next/router";
 import React, { useState } from "react";
 import { FaEdit } from "react-icons/fa";
-import { UserData } from "../types/entities/user";
-import Router from "next/router";
-import Cookie from "js-cookie";
-import { editProfile, editProfileImage } from "../fetches/auth";
 import { boolean, number, object, string } from "yup";
-import AvatarImg from "../public/avatar.jpg";
 import requireAuth from "../auth/requireAuth";
+import { editProfile, editProfileImage } from "../fetches/auth";
 import useError from "../hooks/useError";
+import AvatarImg from "../public/avatar.jpg";
+import { UserData } from "../types/entities/user";
 
 type Props = {
   user?: UserData;

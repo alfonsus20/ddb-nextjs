@@ -22,17 +22,22 @@ import {
   Thead,
   Tr,
   useToast,
-  VStack,
+  VStack
 } from "@chakra-ui/react";
-import { convertToRaw, EditorState, ContentState } from "draft-js";
+import dayjs from "dayjs";
+import "dayjs/locale/id";
+import { ContentState, convertToRaw, EditorState } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import { Field, Formik } from "formik";
 import htmlToDraft from "html-to-draftjs";
+import { GetServerSideProps } from "next";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { EditorProps } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import requireAuth from "../../auth/requireAuth";
 import LayoutAdmin from "../../components/LayoutAdmin";
 import Pagination from "../../components/Pagination";
 import {
@@ -40,15 +45,10 @@ import {
   deleteArticleById,
   editArticle,
   getArticles,
-  uploadArticleImage,
+  uploadArticleImage
 } from "../../fetches/article";
-import { GetServerSideProps } from "next";
-import { ArticleData, ArticleParams } from "../../types/entities/article";
 import useError from "../../hooks/useError";
-import dayjs from "dayjs";
-import requireAuth from "../../auth/requireAuth";
-import "dayjs/locale/id";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { ArticleData, ArticleParams } from "../../types/entities/article";
 
 dayjs.locale("id");
 

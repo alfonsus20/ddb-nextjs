@@ -1,15 +1,15 @@
-import type { NextPage } from "next";
 import { Box, Button, Container, Flex, Icon, Text } from "@chakra-ui/react";
+import type { NextPage } from "next";
+import Head from "next/head";
 import Image from "next/image";
-import { FaUserGraduate, FaUserAlt } from "react-icons/fa";
+import Link from "next/link";
+import { FaUserAlt, FaUserGraduate } from "react-icons/fa";
+import { InView } from "react-intersection-observer";
+import { ChakraBox, Slide } from "../components/Animation";
+import { VisionCard } from "../components/Card";
 import { StakeHolderCarousel } from "../components/Carousel";
 import Kb19Image from "../public/kambud19.jpg";
-import Head from "next/head";
-import { VisionCard } from "../components/Card";
-import { ChakraBox, Slide } from "../components/Animation";
-import { InView } from "react-intersection-observer";
 import { MISI_LIST, VISI_LIST } from "../utils/constant";
-import Link from "next/link";
 
 const bigTitleAnimation = {
   animate: {

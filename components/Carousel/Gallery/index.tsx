@@ -1,17 +1,14 @@
 import {
-  Flex,
-  Icon,
-  IconButton,
   AspectRatio,
-  Box,
-  Text,
+  Box, Flex,
+  Icon,
+  IconButton, Text
 } from "@chakra-ui/react";
-import React from "react";
+import Image from "next/image";
 import {
   MdOutlineArrowBackIosNew,
-  MdOutlineArrowForwardIos,
+  MdOutlineArrowForwardIos
 } from "react-icons/md";
-import Image from "next/image";
 import Carousel, { ButtonGroupProps } from "react-multi-carousel";
 
 const ButtonGroup = ({ next, previous }: ButtonGroupProps) => {

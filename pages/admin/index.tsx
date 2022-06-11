@@ -24,13 +24,14 @@ import {
   Thead,
   Tr,
   useToast,
-  VStack,
+  VStack
 } from "@chakra-ui/react";
 import { Field, Formik } from "formik";
 import { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { boolean, number, object, string } from "yup";
+import requireAuth from "../../auth/requireAuth";
 import LayoutAdmin from "../../components/LayoutAdmin";
 import Pagination from "../../components/Pagination";
 import {
@@ -38,9 +39,8 @@ import {
   editUser,
   getUsers,
   promoteToAdmin,
-  verifyUser,
+  verifyUser
 } from "../../fetches/user";
-import requireAuth from "../../auth/requireAuth";
 import useError from "../../hooks/useError";
 import { User, UserData } from "../../types/entities/user";
 

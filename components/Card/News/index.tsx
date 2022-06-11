@@ -1,10 +1,9 @@
 import { Box, Text, VStack } from "@chakra-ui/react";
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
-import { convertHtmlToPlainText, getBlurDataURL } from "../../../utils/helper";
 import dayjs from "dayjs";
 import "dayjs/locale/id";
+import Image from "next/image";
+import Link from "next/link";
+import { convertHtmlToPlainText, getBlurDataURL } from "../../../utils/helper";
 
 dayjs.locale('id');
 

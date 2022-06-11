@@ -1,18 +1,17 @@
-import "../styles/globals.css";
-import type { AppProps } from "next/app";
-import { Box, ChakraProvider } from "@chakra-ui/react";
-import Navbar from "../components/Navbar";
-import { extendTheme } from "@chakra-ui/react";
+import { Box, ChakraProvider, extendTheme } from "@chakra-ui/react";
 import "@fontsource/nunito";
-import Footer from "../components/Footer";
-import { setLocale } from "yup";
-import NavbarMobile from "../components/Navbar/navbar.mobile";
-import { useEffect, useMemo, useState } from "react";
-import LoadingLayer from "../components/LoadingLayer";
 import { AnimatePresence } from "framer-motion";
-import { ChakraBox } from "../components/Animation";
-import NextNProgress from "nextjs-progressbar";
 import Cookie from "js-cookie";
+import type { AppProps } from "next/app";
+import NextNProgress from "nextjs-progressbar";
+import { useEffect, useMemo, useState } from "react";
+import { setLocale } from "yup";
+import { ChakraBox } from "../components/Animation";
+import Footer from "../components/Footer";
+import LoadingLayer from "../components/LoadingLayer";
+import Navbar from "../components/Navbar";
+import NavbarMobile from "../components/Navbar/navbar.mobile";
+import "../styles/globals.css";
 import { setAuthToken } from "../utils/auth";
 
 const theme = extendTheme({

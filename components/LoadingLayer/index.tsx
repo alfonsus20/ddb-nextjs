@@ -1,5 +1,4 @@
 import { Spinner } from "@chakra-ui/react";
-import React from "react";
 import { ChakraBox } from "../Animation";
 
 const LoadingLayer = () => {

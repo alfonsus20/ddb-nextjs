@@ -1,5 +1,5 @@
-import { GetServerSidePropsContext } from "next";
 import axios from "axios";
+import { GetServerSidePropsContext } from "next";
 
 const requireAuth = ({ isAdmin = false }: { isAdmin?: boolean }) => {
   return async (ctx: GetServerSidePropsContext) => {

@@ -1,6 +1,5 @@
 import { Box, Flex } from "@chakra-ui/react";
 import Link from "next/link";
-import React from "react";
 
 type NavbarMobileProps = {
   isSidebarOpen: boolean;

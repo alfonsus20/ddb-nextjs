@@ -1,28 +1,24 @@
 import {
   Box,
   Button,
-  Container,
-  Input,
-  Text,
-  VStack,
-  FormControl,
-  FormErrorMessage,
-  useToast,
+  Container, FormControl,
+  FormErrorMessage, Input,
+  Text, useToast, VStack
 } from "@chakra-ui/react";
 import { Field, Formik } from "formik";
+import Cookie from "js-cookie";
+import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import React, { useState } from "react";
-import { object, string } from "yup";
-import { login } from "../fetches/auth";
-import { LoginParams } from "../types/entities/auth";
-import Cookie from "js-cookie";
 import Router from "next/router";
-import useError from "../hooks/useError";
-import { setAuthToken } from "../utils/auth";
-import useEffectOnce from "../hooks/useEffectOnce";
+import { useState } from "react";
+import { object, string } from "yup";
 import requireNoAuth from "../auth/requireNoAuth";
-import { GetServerSideProps } from "next";
+import { login } from "../fetches/auth";
+import useEffectOnce from "../hooks/useEffectOnce";
+import useError from "../hooks/useError";
+import { LoginParams } from "../types/entities/auth";
+import { setAuthToken } from "../utils/auth";
 
 const LoginSchema = object({
   email: string().required().email().label("email"),

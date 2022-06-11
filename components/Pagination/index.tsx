@@ -1,6 +1,6 @@
 import { Box, Flex, Icon, IconButton } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import useMounted from "../../hooks/useMounted";
 
@@ -35,6 +35,7 @@ const Pagination = ({ totalData, rowsPerPage }: Props) => {
         query: { ...router.query, page: currentPage },
       });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 
   useEffect(() => {
@@ -42,6 +43,7 @@ const Pagination = ({ totalData, rowsPerPage }: Props) => {
     if (page) {
       setCurrentPage(Number(page));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

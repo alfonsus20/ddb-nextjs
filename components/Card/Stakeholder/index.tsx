@@ -1,6 +1,5 @@
 import { Box, Circle, Flex, Text, VStack } from "@chakra-ui/react";
 import Image from "next/image";
-import React from "react";
 import AvatarImg from "../../../public/avatar.jpg";
 
 type StakeholderCardProps = {

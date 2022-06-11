@@ -1,5 +1,5 @@
 import { chakra } from "@chakra-ui/react";
-import { motion, isValidMotionProp } from "framer-motion";
+import { isValidMotionProp, motion } from "framer-motion";
 
 const ChakraBox = chakra(motion.div, {
   shouldForwardProp: (prop) => isValidMotionProp(prop) || prop === "children",

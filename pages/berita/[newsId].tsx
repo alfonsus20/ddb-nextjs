@@ -1,28 +1,22 @@
 import {
-  Box,
-  Container,
-  Text,
-  Flex,
-  AspectRatio,
+  AspectRatio, Box,
+  Container, Flex, Text
 } from "@chakra-ui/react";
+import dayjs from "dayjs";
+import "dayjs/locale/id";
 import {
   GetStaticPaths,
   GetStaticProps,
   GetStaticPropsContext,
-  NextPage,
+  NextPage
 } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import React from "react";
 import { NewsCard } from "../../components/Card";
 import {
-  getArticles,
-  getArticleById,
-  getAllArticles,
+  getAllArticles, getArticleById, getArticles
 } from "../../fetches/article";
 import { ArticleData } from "../../types/entities/article";
-import dayjs from "dayjs";
-import "dayjs/locale/id";
 
 dayjs.locale("id");
 

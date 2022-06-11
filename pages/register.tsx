@@ -1,26 +1,22 @@
 import {
   Box,
   Button,
-  Container,
-  Input,
-  Text,
-  VStack,
-  FormControl,
-  FormErrorMessage,
-  useToast,
+  Container, FormControl,
+  FormErrorMessage, Input,
+  Text, useToast, VStack
 } from "@chakra-ui/react";
 import { Field, Formik } from "formik";
+import Cookie from "js-cookie";
+import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import React, { useState } from "react";
-import { object, ref, string, number } from "yup";
+import Router from "next/router";
+import { useState } from "react";
+import { number, object, ref, string } from "yup";
+import requireNoAuth from "../auth/requireNoAuth";
 import { login, register } from "../fetches/auth";
 import useError from "../hooks/useError";
 import { RegisterParams } from "../types/entities/auth";
-import Router from "next/router";
-import Cookie from "js-cookie";
-import { GetServerSideProps } from "next";
-import requireNoAuth from "../auth/requireNoAuth";
 
 const RegisterSchema = object({
   name: string().required().label("nama lengkap"),

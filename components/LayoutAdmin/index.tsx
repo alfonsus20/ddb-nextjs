@@ -14,7 +14,7 @@ import {
   Icon,
   IconButton,
   useDisclosure,
-  VStack,
+  VStack
 } from "@chakra-ui/react";
 import Head from "next/head";
 import Link from "next/link";

@@ -1,6 +1,6 @@
+import { motion, useAnimation } from "framer-motion";
 import React from "react";
 import { InView } from "react-intersection-observer";
-import { motion, useAnimation } from "framer-motion";
 
 type SlideProps = {
   children: React.ReactNode;

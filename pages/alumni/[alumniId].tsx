@@ -4,16 +4,15 @@ import {
   Container,
   Flex,
   Text,
-  VStack,
+  VStack
 } from "@chakra-ui/react";
 import {
   GetStaticPaths,
   GetStaticProps,
   GetStaticPropsContext,
-  NextPage,
+  NextPage
 } from "next";
 import Image from "next/image";
-import React from "react";
 import { getAllUsers, getUserById } from "../../fetches/user";
 import { UserData } from "../../types/entities/user";
 

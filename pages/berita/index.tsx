@@ -1,7 +1,6 @@
 import { Box, Container, Grid, GridItem, Text } from "@chakra-ui/react";
 import { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
-import React from "react";
 import { NewsCard } from "../../components/Card";
 import { getArticles } from "../../fetches/article";
 import { ArticleData } from "../../types/entities/article";

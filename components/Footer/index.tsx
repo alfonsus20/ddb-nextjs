@@ -5,7 +5,7 @@ import {
   Input,
   Text,
   Textarea,
-  VStack,
+  VStack
 } from "@chakra-ui/react";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -94,13 +94,12 @@ const Footer = () => {
           </Text>
           <VStack
             as="form"
-            method="GET"
-            action="mailto:ddbrawijaya@gmail.com"
             onSubmit={handleSubmit}
             spacing={4}
             align="flex-start"
           >
             <Input
+              autoComplete="off"
               placeholder="Subjek"
               name="subject"
               _placeholder={{ color: "white" }}
@@ -110,6 +109,7 @@ const Footer = () => {
               data-testid="subject-input"
             />
             <Textarea
+              autoComplete="off"
               placeholder="Pesan"
               _placeholder={{ color: "white" }}
               resize="none"
@@ -119,7 +119,11 @@ const Footer = () => {
               required
               data-testid="body-input"
             />
-            <Button colorScheme="whiteAlpha" type="submit" data-testid='btn-submit'>
+            <Button
+              colorScheme="whiteAlpha"
+              type="submit"
+              data-testid="btn-submit"
+            >
               Kirim
             </Button>
           </VStack>
