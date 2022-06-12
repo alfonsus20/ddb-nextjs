@@ -15,7 +15,6 @@ import { useState } from "react";
 import { object, string } from "yup";
 import requireNoAuth from "../auth/requireNoAuth";
 import { login } from "../fetches/auth";
-import useEffectOnce from "../hooks/useEffectOnce";
 import useError from "../hooks/useError";
 import { LoginParams } from "../types/entities/auth";
 import { setAuthToken } from "../utils/auth";
@@ -35,6 +34,7 @@ const Login = () => {
       setLoading(true);
       const { data } = await login(body);
       const { token } = data.data;
+      Cookie.remove("token");
       Cookie.set("token", token);
       toast({ description: "Login Berhasil", status: "success" });
       setAuthToken(token);
@@ -45,12 +45,6 @@ const Login = () => {
       setLoading(false);
     }
   };
-
-  useEffectOnce(() => {
-    if (!!Cookie.get("token")) {
-      Cookie.remove("token");
-    }
-  });
 
   return (
     <Box bg="red.500">

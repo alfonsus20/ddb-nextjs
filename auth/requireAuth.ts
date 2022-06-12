@@ -21,12 +21,12 @@ const requireAuth = ({ isAdmin = false }: { isAdmin?: boolean }) => {
       );
 
       if (isAdmin && !data.data.isAdmin) {
-        throw new Error();
+        throw new Error("Not Authorized");
       }
 
       return { props: { user: data.data } };
     } catch (e) {
-      res.setHeader("Set-Cookie", [`token=deleted`])
+      res.setHeader("Set-Cookie", `token=; max-age=0`)
       return { redirect: { destination: "/login" }, props: {} };
     }
   };
